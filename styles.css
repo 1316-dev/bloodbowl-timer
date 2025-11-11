@@ -1,0 +1,22 @@
+html {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#timerTour {
+  font-weight:bolder;
+  font-size: 8em;
+  color: green;
+}
+
+#timerPartie {
+  font-weight: bold;
+  font-size: 4em;
+}
+
+div {
+  display: inline-block;
+}
