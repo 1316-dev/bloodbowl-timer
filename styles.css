@@ -5,6 +5,13 @@ html {
   align-items: center;
   height: 100%;
 }
+.navbar-logo {
+  /* Définir une hauteur maximale pour l'image */
+  max-height: 10px; 
+  /* Assurer que la largeur s'ajuste pour maintenir les proportions */
+  width: auto; 
+
+}
 
 #timerTour {
   font-weight:bolder;

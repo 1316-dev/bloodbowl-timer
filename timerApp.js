@@ -1,26 +1,27 @@
-let timerId;
-let compteur = 0;
+let timerId = null;
+let timerTourId = null;
 
-const dureeTour = 1;
+const dureeTour = 2;
 const NbTourParJoueur = 8;
-let tempsTour = dureeTour*60;
+const TempsTourInitial = dureeTour*60;
+
+let tempsTour = TempsTourInitial;
 let tempsPartieJ1 = (dureeTour*NbTourParJoueur) * 60;
+
 const timerTourElement = document.getElementById("timerTour");
 
-
-let minutesTour
+let minutesTour 
 let secondesTour
 
-function demmarrer(){
-  if(timerId){
+function demmarrerTour(){
+  if(timerTourId){
     console.log("Le minuteur est déjà en cours.");
     return;
   }
   console.log("Minuteur démarré")
 
 
-  timerId = setInterval(() => {
-    compteur++
+  timerTourId = setInterval(() => {
     minutesTour = parseInt(tempsTour / 60, 10);
     secondesTour = parseInt(tempsTour % 60, 10);
 
@@ -32,29 +33,45 @@ function demmarrer(){
   }, 1000);
 }
 
-function arreter() {
-  if (timerId){
-    clearInterval(timerId);
-    timerId = null;
+function arreterTour() {
+  if (timerTourId){
+    clearInterval(timerTourId);
+    timerTourId = null;
   } else
   console.log("le minuteur n'est pas actif")
+}
+
+function reinitialiserTour() {
+  arreterTour();
+  tempsTour = TempsTourInitial;
 }
 
 let $stop = document.getElementById("stop")
 $stop.addEventListener("click", function (e){
 console.log(minutesTour + ":" + secondesTour );
 arreter();
+arreterTour();
+reinitialiserTour();
 });
 
 let $start = document.getElementById("start")
 $start.addEventListener("click", function (e){
 console.log(minutesTour + ":" + secondesTour );
-demmarrer()
+demmarrer();
+demmarrerTour();
 });
 
 const timerPartieElement = document.getElementById("timerPartie");
 
-setInterval(() => {
+function demmarrer(){
+  if(timerId){
+    console.log("Le minuteur est déjà en cours.");
+    return;
+  }
+  console.log("Minuteur démarré")
+
+
+  timerId = setInterval(() => {
   let minutesPartieJ1 = parseInt(tempsPartieJ1 / 60, 10);
   let secondesPartieJ1 = parseInt(tempsPartieJ1 % 60, 10);
   let heuresPartieJ1 = Math.trunc(minutesPartieJ1 / 60);
@@ -69,6 +86,15 @@ setInterval(() => {
   timerPartieElement.innerText = `${heuresPartieJ1}${minutesPartieJ1}:${secondesPartieJ1}`;
   tempsPartieJ1 = tempsPartieJ1 <= 0 ? 0 : tempsPartieJ1 - 1;
 }, 1000);
+}
+
+function arreter() {
+  if (timerId){
+    clearInterval(timerId);
+    timerId = null;
+  } else
+  console.log("le minuteur n'est pas actif")
+}
 
 /*
 setInterval(() => {
