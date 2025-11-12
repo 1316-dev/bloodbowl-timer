@@ -59,6 +59,7 @@ function reinitialiserTour() {
   console.log(heuresPartieJ1 + " " + minutesPartieJ1 + " "+ secondesPartieJ1)
   console.log(minutesPartieJ1+(heuresPartieJ1*60))
   // opérateur Unaire Plus : pour convertir les variables de type String en int
+  // calcul de la durée du prochain tour : Temps global restants diviser par le nombre de tour restant
   tempsTour = ((minutesPartieJ1*60)+((heuresPartieJ1)*3600)+((secondesPartieJ1)))/(NbTourParJoueur-compteurTourJ1);
   console.log(tempsTour)
 }
