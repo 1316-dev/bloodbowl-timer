@@ -1,3 +1,71 @@
+//###########################################
+// Gestion des INPUT : saisi utilisateur
+//###########################################
+
+
+//====================================
+// Récupérer le temps de partie choisi
+//====================================
+
+let heuresPartieChoisies
+let minutesPartieChoisies
+
+// Récupérer les heures
+const $inputHeuresPartie = document.getElementById("inputHeuresPartie");
+$inputHeuresPartie.addEventListener('input', (event) => {
+    // variable qui mémorise le temps de partie choisi
+    heuresPartieChoisies = $inputHeuresPartie.value; 
+    console.log("heures: "+ heuresPartieChoisies);
+});
+
+// Récupérer les minutes
+const $inputminutesPartie = document.getElementById("inputminutesPartie");
+$inputminutesPartie.addEventListener('input', (event) => {
+    // variable qui mémorise le temps de partie choisi
+    minutesPartieChoisies = $inputminutesPartie.value; 
+    console.log("minutes: "+ minutesPartieChoisies);
+});
+
+//=====================================================
+// Fonction de convertion minute en minutes + secondes
+//====================================================
+
+let minutes
+let secondes
+
+function convertMinutesToMinutesAndSeconds(minutes) {
+    const totalSeconds = minutes * 60;
+    const seconds = totalSeconds % 60;
+    const remainingMinutes = (totalSeconds - seconds) / 60;
+    return {
+        minutes: remainingMinutes,
+        secondes: seconds.toFixed(0)
+    };
+}
+//=======================================
+// Calculer et afficher le temps d'un tour
+//=======================================
+
+// Variable d'état
+let tempsPartie;
+let tempsTour;
+
+let $valider = document.getElementById("valider")
+$valider.addEventListener("click", function (e){
+  tempsPartie = parseInt((heuresPartieChoisies)*60)+parseInt(minutesPartieChoisies)
+  tempsTour = tempsPartie/(NbTourParJoueur*2).toFixed(2);
+  const conversion = convertMinutesToMinutesAndSeconds(tempsTour);
+  console.log("temps de partie" + tempsPartie)
+const tempstourElement = document.getElementById("timerTour");
+tempstourElement.innerText = `Durée d'un tour : ${conversion.minutes}:${conversion.secondes}`;
+});
+
+
+
+//###########################################
+// Gestion des timers
+//###########################################
+
 // identifiant des minuteurs
 let timerId = null;
 let timerTourId = null;
@@ -9,9 +77,9 @@ const NbTourParJoueur = 16;
 const TempsTourInitial = dureeTour*60;
 
 // Variable d'état
-let tempsTour = TempsTourInitial;
 let tempsPartieJ1 = (dureeTour*NbTourParJoueur) * 60;
 let compteurTourJ1 = 0;
+
 
 
 //====================================
@@ -128,18 +196,3 @@ $start.addEventListener("click", function (e){
 demmarrer();
 demmarrerTour();
 });
-
-
-
-/*
-setInterval(() => {
-  let minutesTour = parseInt(tempsTour / 60, 10);
-  let secondesTour = parseInt(tempsTour % 60, 10);
-
-  minutesTour  = minutesTour  < 10 ? "0" + minutesTour  : minutesTour ;
-  secondesTour = secondesTour < 10 ? "0" + secondesTour : secondesTour;
-
-  timerTourElement.innerText = `${minutesTour }:${secondesTour}`;
-  tempsTour = tempsTour <= 0 ? 0 : tempsTour - 1;
-}, 1000);
-*/
