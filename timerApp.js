@@ -49,15 +49,20 @@ function convertMinutesToMinutesAndSeconds(minutes) {
 // Variable d'état
 let tempsPartie;
 let tempsTour;
+let tempsPartieJ1;
+let conversion;
+let tempsTourJ1
 
 let $valider = document.getElementById("valider")
 $valider.addEventListener("click", function (e){
   tempsPartie = parseInt((heuresPartieChoisies)*60)+parseInt(minutesPartieChoisies)
   tempsTour = tempsPartie/(NbTourParJoueur*2).toFixed(2);
-  const conversion = convertMinutesToMinutesAndSeconds(tempsTour);
-  console.log("temps de partie" + tempsPartie)
+  conversion = convertMinutesToMinutesAndSeconds(tempsTour);
+  console.log("temps de tour :" + tempsTour)
 const tempstourElement = document.getElementById("timerTour");
 tempstourElement.innerText = `Durée d'un tour : ${conversion.minutes}:${conversion.secondes}`;
+  tempsPartieJ1 = (tempsPartie/2)*60;
+  tempsTourJ1 = tempsTour*60
 });
 
 
@@ -77,7 +82,7 @@ const NbTourParJoueur = 16;
 const TempsTourInitial = dureeTour*60;
 
 // Variable d'état
-let tempsPartieJ1 = (dureeTour*NbTourParJoueur) * 60;
+//let tempsPartieJ1 = (dureeTour*NbTourParJoueur) * 60;
 let compteurTourJ1 = 0;
 
 
@@ -101,14 +106,15 @@ function demmarrerTour(){
   console.log("Minuteur démarré")
 
   timerTourId = setInterval(() => {
-    minutesTour = parseInt(tempsTour / 60, 10);
-    secondesTour = parseInt(tempsTour % 60, 10);
+    minutesTour = parseInt(tempsTourJ1 / 60, 10);
+    secondesTour = parseInt(tempsTourJ1 % 60, 10);
+    
 
     minutesTour  = minutesTour  < 10 ? "0" + minutesTour  : minutesTour ;
     secondesTour = secondesTour < 10 ? "0" + secondesTour : secondesTour;
 
     timerTourElement.innerText = `${minutesTour }:${secondesTour}`;
-    tempsTour = tempsTour <= 0 ? 0 : tempsTour - 1;
+    tempsTourJ1 = tempsTourJ1 <= 0 ? 0 : tempsTourJ1 - 1;
   }, 1000);
 }
 
@@ -128,8 +134,8 @@ function reinitialiserTour() {
   console.log(minutesPartieJ1+(heuresPartieJ1*60))
   // opérateur Unaire Plus : pour convertir les variables de type String en int
   // calcul de la durée du prochain tour : Temps global restants diviser par le nombre de tour restant
-  tempsTour = ((minutesPartieJ1*60)+((heuresPartieJ1)*3600)+((secondesPartieJ1)))/(NbTourParJoueur-compteurTourJ1);
-  console.log(tempsTour)
+  tempsTourJ1 = ((minutesPartieJ1*60)+((heuresPartieJ1)*3600)+((secondesPartieJ1)))/(NbTourParJoueur-compteurTourJ1);
+  console.log(tempsTourJ1)
 }
 
 //=======================================
