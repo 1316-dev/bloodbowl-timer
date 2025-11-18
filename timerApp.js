@@ -7,8 +7,8 @@
 // Récupérer le temps de partie choisi
 //====================================
 
-let heuresPartieChoisies
-let minutesPartieChoisies
+let heuresPartieChoisies;
+let minutesPartieChoisies;
 
 // Récupérer les heures
 const $inputHeuresPartie = document.getElementById("inputHeuresPartie");
@@ -194,6 +194,8 @@ function arreterj1() {
 // Gestion des clicks sur les boutons
 // ==================================
 
+let compteur =0;
+
 let $stopJ1 = document.getElementById("stopJ1")
 $stopJ1.addEventListener("click", function (e){
 arreterj1();
@@ -204,8 +206,23 @@ compteurTourJ1+=1
 
 let $startJ1 = document.getElementById("startJ1")
 $startJ1.addEventListener("click", function (e){
-demmarrerj1();
-demmarrerTourj1();
+compteur+=1
+console.log(compteur)
+if (compteur % 2 != 0) {
+  demmarrerj1();
+  demmarrerTourj1();
+  } else {
+      arreterj1();
+      arreterTourj1();
+      reinitialiserTourJ1();
+      compteurTourJ1+=1
+}
+});
+
+let $pauseJ1 = document.getElementById("pauseJ1")
+$pauseJ1.addEventListener("click", function (e){
+arreterj1();
+arreterTourj1();
 });
 
 //###########################################
