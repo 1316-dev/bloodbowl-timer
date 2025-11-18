@@ -194,15 +194,15 @@ function arreterj1() {
 // Gestion des clicks sur les boutons
 // ==================================
 
-let compteur =0;
+let compteur = 0;
 
-let $stopJ1 = document.getElementById("stopJ1")
-$stopJ1.addEventListener("click", function (e){
-arreterj1();
-arreterTourj1();
-reinitialiserTourJ1();
-compteurTourJ1+=1
-});
+// let $stopJ1 = document.getElementById("stopJ1")
+// $stopJ1.addEventListener("click", function (e){
+// arreterj1();
+// arreterTourj1();
+// reinitialiserTourJ1();
+// compteurTourJ1+=1
+// });
 
 let $startJ1 = document.getElementById("startJ1")
 $startJ1.addEventListener("click", function (e){
