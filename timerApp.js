@@ -194,7 +194,8 @@ function arreterj1() {
 // Gestion des clicks sur les boutons
 // ==================================
 
-let compteur = 0;
+let compteurJ1 = 0;
+let compteurJ2 = 0;
 
 // let $stopJ1 = document.getElementById("stopJ1")
 // $stopJ1.addEventListener("click", function (e){
@@ -206,12 +207,11 @@ let compteur = 0;
 
 let $startJ1 = document.getElementById("startJ1")
 $startJ1.addEventListener("click", function (e){
-compteur+=1
-console.log(compteur)
-if (compteur % 2 != 0) {
+compteurJ1+=1
+if (compteurJ2 == 0 && compteurJ1 % 2 != 0) {
   demmarrerj1();
   demmarrerTourj1();
-  } else {
+  } else if (compteurJ1 % 2 != 0){ {
       arreterj1();
       arreterTourj1();
       reinitialiserTourJ1();
