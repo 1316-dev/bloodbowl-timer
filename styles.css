@@ -13,16 +13,7 @@ html {
 
 }
 
-#timerTour {
-  font-weight:bolder;
-  font-size: 8em;
-  color: green;
-}
 
-#timerPartie {
-  font-weight: bold;
-  font-size: 4em;
-}
 
 div {
   display: inline-block;

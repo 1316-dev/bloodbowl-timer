@@ -65,9 +65,9 @@ $valider.addEventListener("click", function (e){
 const tempstourElement = document.getElementById("tempstour");
 tempstourElement.innerText = `Durée d'un tour : ${conversion.minutes}:${conversion.secondes}`;
   tempsPartieJ1 = (tempsPartie/2)*60;
-  tempsTourJ1 = tempsTour*60
+  tempsTourJ1 = tempsTour*60;
   tempsPartieJ2 = (tempsPartie/2)*60;
-  tempsTourJ2 = tempsTour*60
+  tempsTourJ2 = tempsTour*60;
 });
 
 
@@ -205,25 +205,45 @@ let compteurJ2 = 0;
 // compteurTourJ1+=1
 // });
 
+// transformation en un seul bouton start/stop
 let $startJ1 = document.getElementById("startJ1")
 $startJ1.addEventListener("click", function (e){
 compteurJ1+=1
+console.log("compteurJ2 :" + compteurJ2)
 if (compteurJ2 == 0 && compteurJ1 % 2 != 0) {
+  console.log("ici");
   demmarrerj1();
   demmarrerTourj1();
-  } else if (compteurJ1 % 2 != 0){ {
-      arreterj1();
-      arreterTourj1();
-      reinitialiserTourJ1();
-      compteurTourJ1+=1
+  } else {
+    console.log("la");
+      arreterJ2();
+      arreterTourJ2();
+      reinitialiserTourJ2();
+      demmarrerj1();
+      demmarrerTourj1();
+      compteurTourJ2+=1
 }
 });
 
+let compteurPause = 0
 let $pauseJ1 = document.getElementById("pauseJ1")
 $pauseJ1.addEventListener("click", function (e){
+if (compteurPause % 2 == 0) {
 arreterj1();
 arreterTourj1();
+compteurPause+=1
+} else {
+  demmarrerj1();
+  demmarrerTourj1();
+}
 });
+
+//=======================================
+// Gestion d'affichage du nombre de tour
+//=======================================
+
+// élément du DOM
+const timerPartieElementJ1 = document.getElementById("timerPartieJ1");
 
 //###########################################
 // Gestion des timers du joueur 2
@@ -256,12 +276,12 @@ let minutesTourJ2;
 let secondesTourJ2;
 
 // Démarre le timer du tour
-function demmarrerTour(){
-  if(timerTourIdJ2){
-    console.log("Le minuteur est déjà en cours.");
-    return;
-  }
-  console.log("Minuteur démarré")
+function demmarrerTourJ2(){
+  // if(timerTourIdJ2){
+  //   console.log("Le minuteur est déjà en cours.");
+  //   return;
+  // }
+  // console.log("Minuteur démarré")
 
   timerTourIdJ2 = setInterval(() => {
     minutesTourJ2 = parseInt(tempsTourJ2 / 60, 10);
@@ -277,7 +297,7 @@ function demmarrerTour(){
 }
 
 // Arreter le timer de Tour
-function arreterTour() {
+function arreterTourJ2() {
   if (timerTourIdJ2){
     clearInterval(timerTourIdJ2);
     timerTourIdJ2 = null;
@@ -286,8 +306,8 @@ function arreterTour() {
 }
 
 //Réinitialiser le timer du tour
-function reinitialiserTour() {
-  arreterTour();
+function reinitialiserTourJ2() {
+  arreterTourJ2();
   console.log(heuresPartieJ2 + " " + minutesPartieJ2 + " "+ secondesPartieJ2)
   console.log(minutesPartieJ2+(heuresPartieJ2*60))
   // opérateur Unaire Plus : pour convertir les variables de type String en int
@@ -309,12 +329,12 @@ let secondesPartieJ2;
 let heuresPartieJ2; 
 
 // Lancer le Timer de partie
-function demmarrer(){
-  if(timerIdJ2){
-    console.log("Le minuteur est déjà en cours.");
-    return;
-  }
-  console.log("Minuteur démarré")
+function demmarrerJ2(){
+  // if(timerIdJ2){
+  //   console.log("Le minuteur est déjà en cours.");
+  //   return;
+  // }
+  // console.log("Minuteur démarré")
 
 
   timerIdJ2 = setInterval(() => {
@@ -335,7 +355,7 @@ function demmarrer(){
 }
 
 // Arreter le timer de partie
-function arreter() {
+function arreterJ2() {
   if (timerIdJ2){
     clearInterval(timerIdJ2);
     timerIdJ2 = null;
@@ -347,16 +367,32 @@ function arreter() {
 // Gestion des clicks sur les boutons
 // ==================================
 
-let $stop = document.getElementById("stopJ2")
-$stop.addEventListener("click", function (e){
-arreter();
-arreterTour();
-reinitialiserTour();
-compteurTourJ2+=1
-});
+// let $stop = document.getElementById("stopJ2")
+// $stop.addEventListener("click", function (e){
+// arreter();
+// arreterTour();
+// reinitialiserTour();
+// compteurTourJ2+=1
+// });
 
-let $start = document.getElementById("startJ2")
-$start.addEventListener("click", function (e){
-demmarrer();
-demmarrerTour();
+// let $start = document.getElementById("startJ2")
+// $start.addEventListener("click", function (e){
+// demmarrer();
+// demmarrerTour();
+// });
+let $startJ2 = document.getElementById("startJ2")
+$startJ2.addEventListener("click", function (e){
+compteurJ2+=1
+if (compteurJ1 == 0 && compteurJ2 % 2 != 0) {
+  demmarrerJ2();
+  demmarrerTourJ2();
+  } else {
+    console.log("temps" + tempsTourJ2)
+      demmarrerTourJ2();  
+      demmarrerJ2();
+      arreterj1();
+      arreterTourj1();
+      reinitialiserTourJ1();
+      compteurTourJ2+=1
+}
 });
