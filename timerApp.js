@@ -214,6 +214,9 @@ if (compteurJ2 == 0 && compteurJ1 % 2 != 0) {
   console.log("ici");
   demmarrerj1();
   demmarrerTourj1();
+  compteurTourJ1 = 1;
+  compteurTourJ2 = 1;
+  $numeroTourJ1.innerText = `Tour n°:${compteurTourJ1}`;
   } else {
     console.log("la");
       arreterJ2();
@@ -222,6 +225,7 @@ if (compteurJ2 == 0 && compteurJ1 % 2 != 0) {
       demmarrerj1();
       demmarrerTourj1();
       compteurTourJ2+=1
+      $numeroTourJ1.innerText = `Tour n°:${compteurTourJ1}`;
 }
 });
 
@@ -243,7 +247,7 @@ compteurPause+=1
 //=======================================
 
 // élément du DOM
-const timerPartieElementJ1 = document.getElementById("timerPartieJ1");
+const $numeroTourJ1 = document.getElementById("numeroTourJ1");
 
 //###########################################
 // Gestion des timers du joueur 2
@@ -386,6 +390,9 @@ compteurJ2+=1
 if (compteurJ1 == 0 && compteurJ2 % 2 != 0) {
   demmarrerJ2();
   demmarrerTourJ2();
+  compteurTourJ2 = 1;
+  compteurTourJ1 = 1;
+  $numeroTourJ2.innerText = `Tour n°:${compteurTourJ2}`;
   } else {
     console.log("temps" + tempsTourJ2)
       demmarrerTourJ2();  
@@ -393,6 +400,14 @@ if (compteurJ1 == 0 && compteurJ2 % 2 != 0) {
       arreterj1();
       arreterTourj1();
       reinitialiserTourJ1();
-      compteurTourJ2+=1
+      compteurTourJ1+=1
+      $numeroTourJ2.innerText = `Tour n°:${compteurTourJ2}`;
 }
 });
+
+//=======================================
+// Gestion d'affichage du nombre de tour
+//=======================================
+
+// élément du DOM
+const $numeroTourJ2 = document.getElementById("numeroTourJ2");
