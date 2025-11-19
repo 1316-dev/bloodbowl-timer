@@ -6,13 +6,16 @@
     <title>Bloodbowl Timer</title>
     <!-- CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.x.x/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">            
-              <a class="navbar-brand" href="#">Bloodbowl Timer</a>
+              <a class="navbar-brand" href="#">
+              <img src="img/Turn-Yellow-600x450.jpg" alt="Logo" width="30" height="max" class="d-inline-block align-text-top">
+              Bloddbowl Timer
+              </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -34,45 +37,63 @@
             </div>
           </nav>
     </header>
-    <div >
-      <h2>Temps de Partie</h2>
-      <input type="text" id="inputHeuresPartie" placeholder="heures">
-      <input type="text" id="inputminutesPartie" placeholder="minutes">
-      <input type="button" value="Calculer Tour" id="valider">
-      <h2 id = "tempstour"></h2>
-    </div>
-
-    <div id="J1">
-    
-    <h3>Joueur 1</h3>
-      <div id="numeroTourJ1"></div>
-    
-    <div id="timerTourJ1"></div>
-
-       <div>
-      <input type="button" value="pause" id="pauseJ1">
+    <div class="container" >
+      <div class="col text-center mt-4">
+        <h2>Temps de Partie</h2>
+        <input type="text" id="inputHeuresPartie" placeholder="heures">
+        <input type="text" id="inputminutesPartie" placeholder="minutes">
+        <input type="button" value="Calculer Tour" id="valider">
+        <h2 id = "tempstour"></h2>
       </div>
-    <!-- <div>
-      <input type="button" value="stop" id="stopJ1">
-    </div> -->
-    <div>
-      <input type="button" value="start" id="startJ1">
-    </div>
+    
 
-    <div id="timerPartieJ1"></div>
-    </div>
-      <h3>Joueur 2</h3>
-        <div id="numeroTourJ2"></div>
-    <div id="timerTourJ2"></div>
+      <div class="col text-center mt-4 ">
+    
+        <div id="J1"  class="btn btn-success p-5">
+        <h3 id="nomJ1">Prenom J1</h3>
+        <h3 id="consigneJ1">Cliquez ici pour lancer <br>le timer de l'adversaire</h3>
+        
+        <div id="numeroTourJ1"></div>
+        <div id="timerTourJ1"></div>
+        
+        
+        <!-- <div>
+          <input type="button" value="stop" id="stopJ1">
+        </div> -->
+        <!-- <div>
+          <input type="button" value="start" id="startJ1">
+        </div> -->
 
-    <!-- <div>
-      <input type="button" value="stop" id="stopJ2">
-    </div> -->
-    <div>
-      <input type="button" value="start" id="startJ2">
-    </div>
+        <div id="timerPartieJ1"></div>
+        </div>
+      </div>
+    
 
-    <div id="timerPartieJ2"></div>
+      <div class="col text-center mt-4">
+        <div id="J2"  class="btn btn-warning p-5 ">
+            <h3 id="nomJ2">Prenom J2</h3>
+            <h3 id="consigneJ2">Cliquez ici pour lancer <br>le timer de l'adversaire</h3>
+           
+            <div id="numeroTourJ2"></div>
+          <div id="timerTourJ2"></div>
+
+          <!-- <div>
+            <input type="button" value="stop" id="stopJ2">
+          </div> -->
+          <!-- <div>
+            <input type="button" value="start" id="startJ2">
+          </div> -->
+        
+
+          <div id="timerPartieJ2"></div>
+        </div>
+      </div>
+      <div class="col text-center mt-4"> 
+      <input type="button" value="pause" id="pauseJ1"  class="btn btn-secondary p-3">
+      </div>
+      
+    </div>
+      
     <!-- Footer -->
 
 <footer class="bg-dark text-white mt-5">

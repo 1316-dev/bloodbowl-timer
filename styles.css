@@ -1,20 +1,17 @@
-html {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-.navbar-logo {
-  /* Définir une hauteur maximale pour l'image */
-  max-height: 10px; 
-  /* Assurer que la largeur s'ajuste pour maintenir les proportions */
-  width: auto; 
 
+
+#consigneJ1 {
+display: block;
 }
 
+#consigneJ2 {
+display: block;
+}
 
+#nomJ1{
+visibility: hidden;
+}
 
-div {
-  display: inline-block;
+#nomJ2{
+visibility: hidden;
 }
