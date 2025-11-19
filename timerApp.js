@@ -103,7 +103,7 @@ let minutesTourJ1;
 let secondesTourJ1;
 
 // Démarre le timer du tour
-function demmarrerTourj1(){
+function demmarrerTourJ1(){
   if(timerTourIdJ1){
     console.log("Le minuteur est déjà en cours.");
     return;
@@ -124,7 +124,7 @@ function demmarrerTourj1(){
 }
 
 // Arreter le timer de Tour
-function arreterTourj1() {
+function arreterTourJ1() {
   if (timerTourIdJ1){
     clearInterval(timerTourIdJ1);
     timerTourIdJ1 = null;
@@ -156,7 +156,7 @@ let secondesPartieJ1;
 let heuresPartieJ1; 
 
 // Lancer le Timer de partie
-function demmarrerj1(){
+function demmarrerJ1(){
   if(timerIdJ1){
     console.log("Le minuteur est déjà en cours.");
     return;
@@ -182,7 +182,7 @@ function demmarrerj1(){
 }
 
 // Arreter le timer de partie
-function arreterj1() {
+function arreterJ1() {
   if (timerIdJ1){
     clearInterval(timerIdJ1);
     timerIdJ1 = null;
@@ -197,35 +197,36 @@ function arreterj1() {
 let compteurJ1 = 0;
 let compteurJ2 = 0;
 
-// let $stopJ1 = document.getElementById("stopJ1")
-// $stopJ1.addEventListener("click", function (e){
-// arreterj1();
-// arreterTourj1();
-// reinitialiserTourJ1();
-// compteurTourJ1+=1
-// });
+// élément du DOM
+const $consigneJ1 = document.getElementById("consigneJ1");
+const $consigneJ2 = document.getElementById("consigneJ2");
+const $nomJ1 = document.getElementById("nomJ1");
+const $nomJ2 = document.getElementById("nomJ2");
 
 // transformation en un seul bouton start/stop
-let $startJ1 = document.getElementById("startJ1")
+let $startJ1 = document.getElementById("J1");
 $startJ1.addEventListener("click", function (e){
-compteurJ1+=1
-console.log("compteurJ2 :" + compteurJ2)
+   $consigneJ1.style.display='none';
+  $consigneJ2.style.display='none';
+  $nomJ1.style.visibility='visible';
+  $nomJ2.style.visibility='visible';
+compteurJ1+=1;
 if (compteurJ2 == 0 && compteurJ1 % 2 != 0) {
   console.log("ici");
-  demmarrerj1();
-  demmarrerTourj1();
+  demmarrerJ2();
+  demmarrerTourJ2();
   compteurTourJ1 = 1;
   compteurTourJ2 = 1;
-  $numeroTourJ1.innerText = `Tour n°:${compteurTourJ1}`;
+  $numeroTourJ2.innerText = `Tour n°:${compteurTourJ2}`;
   } else {
     console.log("la");
-      arreterJ2();
-      arreterTourJ2();
+      arreterJ1();
+      arreterTourJ1();
       reinitialiserTourJ2();
-      demmarrerj1();
-      demmarrerTourj1();
-      compteurTourJ2+=1
-      $numeroTourJ1.innerText = `Tour n°:${compteurTourJ1}`;
+      demmarrerJ2();
+      demmarrerTourJ2();
+      compteurTourJ1+=1
+      $numeroTourJ2.innerText = `Tour n°:${compteurTourJ2}`;
 }
 });
 
@@ -233,12 +234,12 @@ let compteurPause = 0
 let $pauseJ1 = document.getElementById("pauseJ1")
 $pauseJ1.addEventListener("click", function (e){
 if (compteurPause % 2 == 0) {
-arreterj1();
-arreterTourj1();
+arreterJ1();
+arreterTourJ1();
 compteurPause+=1
 } else {
-  demmarrerj1();
-  demmarrerTourj1();
+  demmarrerJ1();
+  demmarrerTourJ1();
 }
 });
 
@@ -384,24 +385,28 @@ function arreterJ2() {
 // demmarrer();
 // demmarrerTour();
 // });
-let $startJ2 = document.getElementById("startJ2")
+let $startJ2 = document.getElementById("J2")
 $startJ2.addEventListener("click", function (e){
+  $consigneJ1.style.display='none';
+  $consigneJ2.style.display='none';
+  $nomJ1.style.visibility='visible';
+  $nomJ2.style.visibility='visible';
 compteurJ2+=1
 if (compteurJ1 == 0 && compteurJ2 % 2 != 0) {
-  demmarrerJ2();
+  demmarrerJ1();
   demmarrerTourJ2();
   compteurTourJ2 = 1;
   compteurTourJ1 = 1;
-  $numeroTourJ2.innerText = `Tour n°:${compteurTourJ2}`;
+  $numeroTourJ1.innerText = `Tour n°:${compteurTourJ1}`;
   } else {
     console.log("temps" + tempsTourJ2)
-      demmarrerTourJ2();  
-      demmarrerJ2();
-      arreterj1();
-      arreterTourj1();
-      reinitialiserTourJ1();
-      compteurTourJ1+=1
-      $numeroTourJ2.innerText = `Tour n°:${compteurTourJ2}`;
+      demmarrerTourJ1();  
+      demmarrerJ1();
+      arreterJ2();
+      arreterTourJ2();
+      reinitialiserTourJ2();
+      compteurTourJ2+=1
+      $numeroTourJ1.innerText = `Tour n°:${compteurTourJ1}`;
 }
 });
 
