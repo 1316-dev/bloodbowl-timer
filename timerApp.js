@@ -26,6 +26,24 @@ $inputminutesPartie.addEventListener('input', (event) => {
     console.log("minutes: "+ minutesPartieChoisies);
 });
 
+
+// Récupérer le nom du joueur Vert
+const $nomJ1 = document.getElementById("inputNomJ1");
+$nomJ1.addEventListener('input', (event) => {
+    // variable qui mémorise le temps de partie choisi
+    const nomJ1Str = $nomJ1.value; 
+    console.log(nomJ1Str)
+    $inputNomJ1.innerText = `${nomJ1Str}`;
+});
+
+// Récupérer le nom du joueur Vert
+const $nomJ2 = document.getElementById("inputNomJ2");
+$nomJ2.addEventListener('input', (event) => {
+    // variable qui mémorise le temps de partie choisi
+    const nomJ2Str = $nomJ2.value; 
+    $inputNomJ2.innerText = `${nomJ2Str}`;
+});
+
 //=====================================================
 // Fonction de convertion minute en minutes + secondes
 //====================================================
@@ -200,16 +218,16 @@ let compteurJ2 = 0;
 // élément du DOM
 const $consigneJ1 = document.getElementById("consigneJ1");
 const $consigneJ2 = document.getElementById("consigneJ2");
-const $nomJ1 = document.getElementById("nomJ1");
-const $nomJ2 = document.getElementById("nomJ2");
+const $inputNomJ1 = document.getElementById("nomJ1");
+const $inputNomJ2 = document.getElementById("nomJ2");
 
 // transformation en un seul bouton start/stop
 let $startJ1 = document.getElementById("J1");
 $startJ1.addEventListener("click", function (e){
    $consigneJ1.style.display='none';
   $consigneJ2.style.display='none';
-  $nomJ1.style.visibility='visible';
-  $nomJ2.style.visibility='visible';
+  $inputNomJ1.style.visibility='visible';
+  $inputNomJ2.style.visibility='visible';
 compteurJ1+=1;
 if (compteurJ2 == 0 && compteurJ1 % 2 != 0) {
   console.log("ici");
