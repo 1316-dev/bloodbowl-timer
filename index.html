@@ -40,17 +40,43 @@
     <div class="container" >
       <div class="col text-center mt-4">
         <h2>Temps de Partie</h2>
-        <input type="text" id="inputHeuresPartie" placeholder="heures">
-        <input type="text" id="inputminutesPartie" placeholder="minutes">
-        <input type="button" value="Calculer Tour" id="valider">
+        <div class="row">
+          <div class="col-6">
+            <input type="text" id="inputHeuresPartie" placeholder="heures" class="form-control text-center m-3 mr-sm-3">
+          </div>
+          <div class="col-6">
+            <input type="text" id="inputminutesPartie" placeholder="minutes" class="form-control text-center m-3 mr-sm-3">
+          </div>  
+        </div>
+        <div class="col mx-auto">
+        <input type="button" value="Calculer Tour" id="valider" class = "btn btn-outline-dark mx-auto ">
+        </div>
         <h2 id = "tempstour"></h2>
       </div>
+    
+      
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-6">
+            <input type="text" id="inputNomJ1" placeholder="Nom du joueur" class="form-control text-center border border-success m-3 mr-sm-3">
+          <div class="col-3"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-6">
+            <input type="text" id="inputNomJ2" placeholder="Nom du joueur" class="form-control text-center border border-warning m-3 mr-sm-3">
+          <div class="col-3"></div>
+          </div> 
+          </div>
+           
+    
     
 
       <div class="col text-center mt-4 ">
     
         <div id="J1"  class="btn btn-success p-5">
-        <h3 id="nomJ1">Prenom J1</h3>
+        <h3 id="nomJ1"></h3>
         <h3 id="consigneJ1">Cliquez ici pour lancer <br>le timer de l'adversaire</h3>
         
         <div id="numeroTourJ1"></div>
@@ -71,7 +97,7 @@
 
       <div class="col text-center mt-4">
         <div id="J2"  class="btn btn-warning p-5 ">
-            <h3 id="nomJ2">Prenom J2</h3>
+            <h3 id="nomJ2"></h3>
             <h3 id="consigneJ2">Cliquez ici pour lancer <br>le timer de l'adversaire</h3>
            
             <div id="numeroTourJ2"></div>
@@ -89,7 +115,7 @@
         </div>
       </div>
       <div class="col text-center mt-4"> 
-      <input type="button" value="pause" id="pauseJ1"  class="btn btn-secondary p-3">
+      <input type="button" value="Pause" id="pauseJ1"  class="btn btn-secondary btn-lg">
       </div>
       
     </div>
