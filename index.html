@@ -38,42 +38,47 @@
           </nav>
     </header>
     <div class="container" >
-      <div class="col text-center mt-4">
-        <h2>Temps de Partie</h2>
-        <div class="row">
-          <div class="col-6">
-            <input type="text" id="inputHeuresPartie" placeholder="heures" class="form-control text-center m-3 mr-sm-3">
+      
+        <div class="row justify-content-center">
+          <h2 class="text-center mt-2">Temps de Partie</h2>
+        </div>
+        
+        <div class="row mt-3">
+          <div class="col-sm-2 mx-auto w-50">
+            <input type="text" id="inputHeuresPartie" placeholder="heures" class="form-control text-center">
           </div>
-          <div class="col-6">
-            <input type="text" id="inputminutesPartie" placeholder="minutes" class="form-control text-center m-3 mr-sm-3">
-          </div>  
         </div>
-        <div class="col mx-auto">
-        <input type="button" value="Calculer Tour" id="valider" class = "btn btn-outline-dark mx-auto ">
+        <div class="row  mt-3">
+          <div class="col-sm-2 mx-auto w-50">
+            <input type="text" id="inputminutesPartie" placeholder="minutes" class="form-control text-center">
+          </div> 
+          </div> 
+        
+        <div class="row mt-3">
+        <div class="text-center">
+        <input type="button" value="Calculer Tour" id="valider" class = "btn btn-outline-dark">
         </div>
-        <h2 id = "tempstour"></h2>
-      </div>
+        </div>
+        <h2 class="text-center" id = "tempstour"></h2>
+      
     
       
-        <div class="row">
-          <div class="col-3"></div>
-          <div class="col-6">
-            <input type="text" id="inputNomJ1" placeholder="Nom du joueur" class="form-control text-center border border-success m-3 mr-sm-3">
-          <div class="col-3"></div>
+        <div class="row mt-4">
+          <div class="col-sm-2 mx-auto mt-2 w-50">
+            <input type="text" id="inputNomJ1" placeholder="Nom du joueur" class="form-control text-center border border-success">
           </div>
         </div>
-        <div class="row">
-          <div class="col-3"></div>
-          <div class="col-6">
-            <input type="text" id="inputNomJ2" placeholder="Nom du joueur" class="form-control text-center border border-warning m-3 mr-sm-3">
-          <div class="col-3"></div>
+        <div class="row  mt-3">
+          
+          <div class="col-sm-2 mx-auto w-50">
+            <input type="text" id="inputNomJ2" placeholder="Nom du joueur" class="form-control text-center border border-warning">
           </div> 
           </div>
            
     
     
 
-      <div class="col text-center mt-4 ">
+      <div class="text-center mt-4">
     
         <div id="J1"  class="btn btn-success p-5">
         <h3 id="nomJ1"></h3>
@@ -95,7 +100,7 @@
       </div>
     
 
-      <div class="col text-center mt-4">
+      <div class="text-center mt-4">
         <div id="J2"  class="btn btn-warning p-5 ">
             <h3 id="nomJ2"></h3>
             <h3 id="consigneJ2">Cliquez ici pour lancer <br>le timer de l'adversaire</h3>
@@ -114,7 +119,7 @@
           <div id="timerPartieJ2"></div>
         </div>
       </div>
-      <div class="col text-center mt-4"> 
+      <div class="text-center mt-4"> 
       <input type="button" value="Pause" id="pauseJ1"  class="btn btn-secondary btn-lg">
       </div>
       
