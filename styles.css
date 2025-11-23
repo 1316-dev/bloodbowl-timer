@@ -37,3 +37,6 @@ visibility: hidden;
     min-width: 20em;
 }
 
+.timerDisplay {
+    font-size: 1.5em;
+}

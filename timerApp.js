@@ -152,9 +152,8 @@ function arreterTourJ1() {
 
 //Réinitialiser le timer du tour
 function reinitialiserTourJ1() {
-  arreterTourj1();
-  console.log(heuresPartieJ1 + " " + minutesPartieJ1 + " "+ secondesPartieJ1)
-  console.log(minutesPartieJ1+(heuresPartieJ1*60))
+  arreterTourJ1();
+
   // opérateur Unaire Plus : pour convertir les variables de type String en int
   // calcul de la durée du prochain tour : Temps global restants diviser par le nombre de tour restant
   tempsTourJ1 = ((minutesPartieJ1*60)+((heuresPartieJ1)*3600)+((secondesPartieJ1)))/(NbTourParJoueur-compteurTourJ1);
@@ -175,11 +174,11 @@ let heuresPartieJ1;
 
 // Lancer le Timer de partie
 function demmarrerJ1(){
-  if(timerIdJ1){
-    console.log("Le minuteur est déjà en cours.");
-    return;
-  }
-  console.log("Minuteur démarré")
+  // if(timerIdJ1){
+  //   console.log("Le minuteur est déjà en cours.");
+  //   return;
+  // }
+  // console.log("Minuteur démarré")
 
 
   timerIdJ1 = setInterval(() => {
@@ -214,6 +213,9 @@ function arreterJ1() {
 
 let compteurJ1 = 0;
 let compteurJ2 = 0;
+// Si le premier Joueur de la partie est J1 alors let joueurActif = 1
+// Si le premier Joueur de la partie est J2 alors let joueurActif = 2
+let joueurActif;
 
 // élément du DOM
 const $consigneJ1 = document.getElementById("consigneJ1");
@@ -224,20 +226,19 @@ const $inputNomJ2 = document.getElementById("nomJ2");
 // transformation en un seul bouton start/stop
 let $startJ1 = document.getElementById("J1");
 $startJ1.addEventListener("click", function (e){
-   $consigneJ1.style.display='none';
+  $consigneJ1.style.display='none';
   $consigneJ2.style.display='none';
   $inputNomJ1.style.visibility='visible';
   $inputNomJ2.style.visibility='visible';
 compteurJ1+=1;
 if (compteurJ2 == 0 && compteurJ1 % 2 != 0) {
-  console.log("ici");
+  joueurActif = 2;
   demmarrerJ2();
   demmarrerTourJ2();
   compteurTourJ1 = 1;
   compteurTourJ2 = 1;
   $numeroTourJ2.innerText = `Tour n°:${compteurTourJ2}`;
-  } else {
-    console.log("la");
+  } else if (joueurActif == 1) {
       arreterJ1();
       arreterTourJ1();
       reinitialiserTourJ2();
@@ -245,6 +246,7 @@ if (compteurJ2 == 0 && compteurJ1 % 2 != 0) {
       demmarrerTourJ2();
       compteurTourJ1+=1
       $numeroTourJ2.innerText = `Tour n°:${compteurTourJ2}`;
+      joueurActif = 2;
 }
 });
 
@@ -276,14 +278,8 @@ const $numeroTourJ1 = document.getElementById("numeroTourJ1");
 let timerIdJ2 = null;
 let timerTourIdJ2 = null;
 
-//Paramètre du jeu si fixe
-// durée tour en minutes
-//const dureeTour = 4;  
-//const NbTourParJoueur = 16;
-//const TempsTourInitial = dureeTour*60;
 
 // Variable d'état
-//let tempsPartieJ2 = (dureeTour*NbTourParJoueur) * 60;
 let compteurTourJ2 = 0;
 
 
@@ -331,12 +327,10 @@ function arreterTourJ2() {
 //Réinitialiser le timer du tour
 function reinitialiserTourJ2() {
   arreterTourJ2();
-  console.log(heuresPartieJ2 + " " + minutesPartieJ2 + " "+ secondesPartieJ2)
-  console.log(minutesPartieJ2+(heuresPartieJ2*60))
   // opérateur Unaire Plus : pour convertir les variables de type String en int
   // calcul de la durée du prochain tour : Temps global restants diviser par le nombre de tour restant
   tempsTourJ2 = ((minutesPartieJ2*60)+((heuresPartieJ2)*3600)+((secondesPartieJ2)))/(NbTourParJoueur-compteurTourJ2);
-  console.log(tempsTourJ2)
+
 }
 
 //=======================================
@@ -353,12 +347,6 @@ let heuresPartieJ2;
 
 // Lancer le Timer de partie
 function demmarrerJ2(){
-  // if(timerIdJ2){
-  //   console.log("Le minuteur est déjà en cours.");
-  //   return;
-  // }
-  // console.log("Minuteur démarré")
-
 
   timerIdJ2 = setInterval(() => {
   minutesPartieJ2 = parseInt(tempsPartieJ2 / 60, 10);
@@ -390,34 +378,21 @@ function arreterJ2() {
 // Gestion des clicks sur les boutons
 // ==================================
 
-// let $stop = document.getElementById("stopJ2")
-// $stop.addEventListener("click", function (e){
-// arreter();
-// arreterTour();
-// reinitialiserTour();
-// compteurTourJ2+=1
-// });
-
-// let $start = document.getElementById("startJ2")
-// $start.addEventListener("click", function (e){
-// demmarrer();
-// demmarrerTour();
-// });
 let $startJ2 = document.getElementById("J2")
 $startJ2.addEventListener("click", function (e){
   $consigneJ1.style.display='none';
   $consigneJ2.style.display='none';
-  $nomJ1.style.visibility='visible';
-  $nomJ2.style.visibility='visible';
+  $inputNomJ1.style.visibility='visible';
+  $inputNomJ2.style.visibility='visible';
 compteurJ2+=1
 if (compteurJ1 == 0 && compteurJ2 % 2 != 0) {
+  joueurActif == 1;
   demmarrerJ1();
   demmarrerTourJ2();
   compteurTourJ2 = 1;
   compteurTourJ1 = 1;
   $numeroTourJ1.innerText = `Tour n°:${compteurTourJ1}`;
-  } else {
-    console.log("temps" + tempsTourJ2)
+  } else if (joueurActif == 2){
       demmarrerTourJ1();  
       demmarrerJ1();
       arreterJ2();
@@ -425,6 +400,9 @@ if (compteurJ1 == 0 && compteurJ2 % 2 != 0) {
       reinitialiserTourJ2();
       compteurTourJ2+=1
       $numeroTourJ1.innerText = `Tour n°:${compteurTourJ1}`;
+      joueurActif = 1;
+
+      
 }
 });
 
