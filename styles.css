@@ -40,3 +40,18 @@ visibility: hidden;
 .timerDisplay {
     font-size: 1.5em;
 }
+
+.imgBackground {
+  /* Spécifie l'image de fond */
+  background-image: url('../img/Terrain-BloodBowl-humains_1500x.jpg');
+  
+  /* **Empêche la répétition** de l'image */
+  background-repeat: no-repeat; 
+  
+  /* **Centre** l'image horizontalement et verticalement */
+  background-position: center center; 
+  
+  /* Fait en sorte que l'image **couvre toute la zone** sans être étirée, 
+     en coupant les bords si nécessaire. C'est souvent ce que les gens veulent pour un fond d'écran. */
+  background-size: cover; 
+}

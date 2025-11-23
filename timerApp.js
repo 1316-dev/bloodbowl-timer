@@ -1,4 +1,14 @@
 //###########################################
+// Message d'alerte si on quitte la page
+//###########################################
+
+
+window.onbeforeunload = function() {
+  if(joueurActif != null)
+    return confirm("Si vous quittez la page le Timer sera réinitialisé?");
+};
+
+//###########################################
 // Gestion des INPUT : saisi utilisateur
 //###########################################
 
@@ -122,11 +132,11 @@ let secondesTourJ1;
 
 // Démarre le timer du tour
 function demmarrerTourJ1(){
-  if(timerTourIdJ1){
-    console.log("Le minuteur est déjà en cours.");
-    return;
-  }
-  console.log("Minuteur démarré")
+  // if(timerTourIdJ1){
+  //   console.log("Le minuteur est déjà en cours.");
+  //   return;
+  // }
+  // console.log("Minuteur démarré")
 
   timerTourIdJ1 = setInterval(() => {
     minutesTourJ1 = parseInt(tempsTourJ1 / 60, 10);
