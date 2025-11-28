@@ -241,6 +241,9 @@ $startJ1.addEventListener("click", function (e) {
   $inputNomJ1.style.visibility = "visible";
   $inputNomJ2.style.visibility = "visible";
   compteurJ1 += 1;
+    if (compteurJ2 > 1){
+  reinitialiserTourJ2();  
+  }
   if (compteurJ2 == 0 && compteurJ1 % 2 != 0) {
     $form.style.display = "none";
     joueurActif = 2;
@@ -253,12 +256,13 @@ $startJ1.addEventListener("click", function (e) {
     console.log("ici")
     arreterJ1();
     arreterTourJ1();
-    reinitialiserTourJ2();
+    //reinitialiserTourJ2();
     demmarrerJ2();
     demmarrerTourJ2();
     compteurTourJ1 += 1;
     $numeroTourJ2.innerText = `Tour n°:${compteurTourJ2}`;
     joueurActif = 2;
+    compteurJ1 += 1;
   }
 });
 
@@ -384,24 +388,27 @@ $startJ2.addEventListener("click", function (e) {
   $inputNomJ1.style.visibility = "visible";
   $inputNomJ2.style.visibility = "visible";
   compteurJ2 += 1;
+  if (compteurJ1 > 1){
+  reinitialiserTourJ1();  
+  }
   if (compteurJ1 == 0 && compteurJ2 % 2 != 0) {
     $form.style.display = "none";
-    joueurActif == 1;
+    joueurActif = 1;
     demmarrerJ1();
-    demmarrerTourJ2();
+    demmarrerTourJ1();
     compteurTourJ2 = 1;
     compteurTourJ1 = 1;
     $numeroTourJ1.innerText = `Tour n°:${compteurTourJ1}`;
   } else if (joueurActif == 2) {
     console.log("la")
-    demmarrerTourJ1();
-    demmarrerJ1();
     arreterJ2();
     arreterTourJ2();
-    reinitialiserTourJ2();
+    demmarrerJ1();
+    demmarrerTourJ1();
     compteurTourJ2 += 1;
     $numeroTourJ1.innerText = `Tour n°:${compteurTourJ1}`;
     joueurActif = 1;
+    compteurJ2 += 1;
   }
 });
 
