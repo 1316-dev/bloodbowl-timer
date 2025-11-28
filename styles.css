@@ -47,7 +47,7 @@ visibility: hidden;
 
 .imgBackground {
   /* Spécifie l'image de fond */
-  background-image: url('img/Terrain.jpg');
+  background-image: url('img/Terrain.JPG');
   
   /* **Empêche la répétition** de l'image */
   background-repeat: no-repeat; 
