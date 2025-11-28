@@ -446,3 +446,23 @@ $pause.addEventListener("click", function (e) {
     compteurPause += 1
   }}
 });
+
+//=======================================
+// Gestion du switch
+//=======================================
+
+  let $switch = document.getElementById("switch"); 
+
+    let $textRotate = document.getElementById("J1"); 
+    let compteur =0; 
+    
+    $switch.addEventListener("click", function (e) { 
+      console.log("hello")
+      if(compteur == 0){ 
+      $textRotate.classList.add("rotate"); 
+      compteur = 1; 
+      } 
+      else { 
+          $textRotate.classList.remove("rotate"); 
+          compteur = 0;} 
+    });

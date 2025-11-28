@@ -47,7 +47,7 @@ visibility: hidden;
 
 .imgBackground {
   /* Spécifie l'image de fond */
-  background-image: url('../img/Terrain-BloodBowl-humains_1500x.jpg');
+  background-image: url('../img/Terrain.jpg');
   
   /* **Empêche la répétition** de l'image */
   background-repeat: no-repeat; 
@@ -60,3 +60,8 @@ visibility: hidden;
   background-size: cover; 
 }
 
+.rotate { 
+
+    transform: rotate(180deg); 
+
+   } 
