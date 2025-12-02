@@ -95,12 +95,13 @@ export function reinitialiserTour(joueur) {
 
 export function passerAuJoueur(joueurSuivant) {
     if (joueurSuivant === 1) {
-        compteurTourJ1 += 1;
-    } else if (joueurSuivant === 2) {
         compteurTourJ2 += 1;
+    } else if (joueurSuivant === 2) {
+        compteurTourJ1 += 1;
     }
     joueurActif = joueurSuivant;
 }
+
 
 // =======================================
 // Mise à jour de l'état du compteur Pause

@@ -27,8 +27,6 @@ let heuresPartieChoisies = 0;
 let minutesPartieChoisies = 0;
 let nomJ1Str = "";
 let nomJ2Str = "";
-let compteurJ1 = 0;
-let compteurJ2 = 0;
 let timerLoopJ1 = null;
 let timerLoopJ2 = null;
 
@@ -92,7 +90,8 @@ $valider.addEventListener("click", () => {
     const conversion = calculerTempsInitiaux(heuresPartieChoisies, minutesPartieChoisies);
     
     // 2. Appel de la View pour l'affichage
-    afficherDureeTour(conversion.minutes, conversion.secondes);
+    // on affiche le temps de tour d'un joueur pour éviter les erreurs d'arrondi
+    afficherDureeTour(tempsTourJ1);
     afficherTempsGlobal(1, tempsPartieJ1);
     afficherTempsGlobal(2, tempsPartieJ2);
     afficherTempsTour(1, tempsTourJ1);
@@ -106,24 +105,20 @@ $valider.addEventListener("click", () => {
 // =======================================
 
 $startJ1.addEventListener("click", () => {
-    masquerFormulaireEtConsignes();
-    compteurJ1 += 1;
+   
+    if (joueurActif === null){
+   
+        masquerFormulaireEtConsignes();
 
-    if (compteurJ2 > 1) {
-        reinitialiserTour(1); // Le tour de J1 est réinitialisé par J2
-    }
-
-    if (compteurJ2 === 0 && compteurJ1 === 1) {
-        // Début de partie (J2 commence)
+        // Début de partie (J1 clique et donc lance le time de J2 qui commence la partie)
         passerAuJoueur(2); 
         demarrerTimer(2);
-        afficherNumeroTour(1, 1);
+        
         afficherNumeroTour(2, 1);
     } else if (joueurActif === 1) {
         // J1 termine son tour, passe à J2
         arreterTimer(1);
-        reinitialiserTour(1); // Réinitialise le temps de tour du prochain joueur (J2)
-        
+        reinitialiserTour(1); // Réinitialise le temps de tour du prochain joueur (J2)  
         passerAuJoueur(2);
         demarrerTimer(2);
         afficherNumeroTour(2, compteurTourJ2);
@@ -135,18 +130,13 @@ $startJ1.addEventListener("click", () => {
 // =======================================
 
 $startJ2.addEventListener("click", () => {
-    masquerFormulaireEtConsignes();
-    compteurJ2 += 1;
-
-    if (compteurJ1 > 1) {
-        reinitialiserTour(2); // Le tour de J2 est réinitialisé par J1
-    }
-
-    if (compteurJ1 === 0 && compteurJ2 === 1) {
+    if (joueurActif === null){
+   
+        masquerFormulaireEtConsignes();
         // Début de partie (J1 commence)
         passerAuJoueur(1);
         demarrerTimer(1);
-        afficherNumeroTour(1, 1);
+        
         afficherNumeroTour(2, 1);
     } else if (joueurActif === 2) {
         // J2 termine son tour, passe à J1
@@ -166,7 +156,6 @@ $startJ2.addEventListener("click", () => {
 $pause.addEventListener("click", () => {
 
     let etatCompeur = etatCompteurPause();
-
 
     if (joueurActif === 1) {
         if (etatCompeur === PAUSE_ON) {

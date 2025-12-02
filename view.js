@@ -86,8 +86,8 @@ export function afficherTempsTour(joueur, tempsTotalSecondes) {
     element.innerText = `Tour ${formaterTemps(tempsTotalSecondes)}`;
 }
 
-export function afficherDureeTour(minutes, secondes) {
-    $tempstourElement.innerText = `Durée d'un tour : ${minutes}:${secondes}`;
+export function afficherDureeTour(tempsTotalSecondes) {
+    $tempstourElement.innerText = `Durée d'un tour : ${formaterTemps(tempsTotalSecondes)}`;
 }
 
 export function afficherNumeroTour(joueur, numeroTour) {
