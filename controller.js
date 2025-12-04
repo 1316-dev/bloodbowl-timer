@@ -20,19 +20,12 @@ import {
 } from './view.js';
 
 
-// =======================================
-// Variables locales au Controller
-// =======================================
-let heuresPartieChoisies = 0;
-let minutesPartieChoisies = 0;
-let nomJ1Str = "";
-let nomJ2Str = "";
-let timerLoopJ1 = null;
-let timerLoopJ2 = null;
 
 // =======================================
 // Fonctions de Timer (Gère l'intervalle)
 // =======================================
+let timerLoopJ1 = null;
+let timerLoopJ2 = null;
 
 function demarrerTimer(joueur) {
     if (joueur === 1) {
@@ -66,6 +59,11 @@ function arreterTimer(joueur) {
 // Gestion des Inputs
 // =======================================
 
+let nomJ1Str = "";
+let nomJ2Str = "";
+let heuresPartieChoisies = 0;
+let minutesPartieChoisies = 0;
+
 $inputHeuresPartie.addEventListener("input", () => {
     heuresPartieChoisies = $inputHeuresPartie.value;
 });
@@ -85,6 +83,8 @@ $nomJ2.addEventListener("input", () => {
 // Gestion du Clic "Valider"
 // =======================================
 
+let etatPartie = 0;
+
 $valider.addEventListener("click", () => {
     // 1. Appel du Model pour le calcul
     const conversion = calculerTempsInitiaux(heuresPartieChoisies, minutesPartieChoisies);
@@ -96,6 +96,7 @@ $valider.addEventListener("click", () => {
     afficherTempsGlobal(2, tempsPartieJ2);
     afficherTempsTour(1, tempsTourJ1);
     afficherTempsTour(2, tempsTourJ2);
+    etatPartie = 1;
 
     console.log(`Temps de tour initial : ${conversion.minutes}:${conversion.secondes}`);
 });
@@ -106,22 +107,24 @@ $valider.addEventListener("click", () => {
 
 $startJ1.addEventListener("click", () => {
    
-    if (joueurActif === null){
-   
-        masquerFormulaireEtConsignes();
+    if (etatPartie === 1) {
+        if (joueurActif === null){
+    
+            masquerFormulaireEtConsignes();
 
-        // Début de partie (J1 clique et donc lance le time de J2 qui commence la partie)
-        passerAuJoueur(2); 
-        demarrerTimer(2);
-        
-        afficherNumeroTour(2, 1);
-    } else if (joueurActif === 1) {
-        // J1 termine son tour, passe à J2
-        arreterTimer(1);
-        reinitialiserTour(1); // Réinitialise le temps de tour du prochain joueur (J2)  
-        passerAuJoueur(2);
-        demarrerTimer(2);
-        afficherNumeroTour(2, compteurTourJ2);
+            // Début de partie (J1 clique et donc lance le time de J2 qui commence la partie)
+            passerAuJoueur(2); 
+            demarrerTimer(2);
+            
+            afficherNumeroTour(2, 1);
+        } else if (joueurActif === 1) {
+            // J1 termine son tour, passe à J2
+            arreterTimer(1);
+            reinitialiserTour(1); // Réinitialise le temps de tour du prochain joueur (J2)  
+            passerAuJoueur(2);
+            demarrerTimer(2);
+            afficherNumeroTour(2, compteurTourJ2);
+        }
     }
 });
 
@@ -130,22 +133,25 @@ $startJ1.addEventListener("click", () => {
 // =======================================
 
 $startJ2.addEventListener("click", () => {
-    if (joueurActif === null){
-   
-        masquerFormulaireEtConsignes();
-        // Début de partie (J1 commence)
-        passerAuJoueur(1);
-        demarrerTimer(1);
-        
-        afficherNumeroTour(2, 1);
-    } else if (joueurActif === 2) {
-        // J2 termine son tour, passe à J1
-        arreterTimer(2);
-        reinitialiserTour(2); // Réinitialise le temps de tour du prochain joueur (J1)
-        
-        passerAuJoueur(1);
-        demarrerTimer(1);
-        afficherNumeroTour(1, compteurTourJ1);
+    
+    if (etatPartie === 1) {
+        if (joueurActif === null){
+    
+            masquerFormulaireEtConsignes();
+            // Début de partie (J1 commence)
+            passerAuJoueur(1);
+            demarrerTimer(1);
+            
+            afficherNumeroTour(2, 1);
+        } else if (joueurActif === 2) {
+            // J2 termine son tour, passe à J1
+            arreterTimer(2);
+            reinitialiserTour(2); // Réinitialise le temps de tour du prochain joueur (J1)
+            
+            passerAuJoueur(1);
+            demarrerTimer(1);
+            afficherNumeroTour(1, compteurTourJ1);
+        }
     }
 });
 
@@ -155,6 +161,7 @@ $startJ2.addEventListener("click", () => {
 
 $pause.addEventListener("click", () => {
 
+    if (etatPartie === 1) {
     let etatCompeur = etatCompteurPause();
 
     if (joueurActif === 1) {
@@ -176,6 +183,7 @@ $pause.addEventListener("click", () => {
             console.log(joueurActif);
         }
     }
+}
 });
 
 // =======================================
