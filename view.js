@@ -1,5 +1,7 @@
 // ===================================
 // view.js
+// Gestion de l'ensemble des liens avec la manipulation du DOM
+//
 // ===================================
 
 // Éléments du DOM

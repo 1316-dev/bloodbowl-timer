@@ -1,25 +1,10 @@
 // ===================================
 // model.js
+// fichier regroupement les fonctions :
+// - de gestion des timer
+// - converstion de temps
+// - gestion des compteurs de tour et joueur actif
 // ===================================
-
-// Constantes
-export const NbTourParJoueur = 16;
-// null = pas démarré, 1 = J1, 2 = J2
-export let joueurActif = null; 
-
-// Variables d'état (temps en secondes)
-export let tempsPartieJ1 = 0;
-export let tempsTourJ1 = 0;
-export let tempsPartieJ2 = 0;
-export let tempsTourJ2 = 0;
-export let compteurTourJ1 = 0;
-export let compteurTourJ2 = 0;
-
-// Variables pour les IDs des intervalles, utilisé pour arrêter les timers
-export let timerIdJ1 = null;
-export let timerTourIdJ1 = null;
-export let timerIdJ2 = null;
-export let timerTourIdJ2 = null;
 
 
 // =====================================================
@@ -38,6 +23,14 @@ export function convertMinutesToMinutesAndSeconds(minutesFloat) {
 // =======================================
 // Calculer et initialiser les temps
 // =======================================
+
+export const NbTourParJoueur = 16;
+// Variables d'état (temps en secondes)
+export let tempsPartieJ1 = 0;
+export let tempsTourJ1 = 0;
+export let tempsPartieJ2 = 0;
+export let tempsTourJ2 = 0;
+
 export function calculerTempsInitiaux(heuresPartieChoisies, minutesPartieChoisies) {
     const tempsPartieTotalMinutes =
         parseInt(heuresPartieChoisies) * 60 + parseInt(minutesPartieChoisies);
@@ -62,6 +55,18 @@ export function calculerTempsInitiaux(heuresPartieChoisies, minutesPartieChoisie
 // =======================================
 // Mise à jour de l'état (fonctions de jeu)
 // =======================================
+
+export let compteurTourJ1 = 0;
+export let compteurTourJ2 = 0;
+
+// Variables pour les IDs des intervalles, utilisé pour arrêter les timers
+export let timerIdJ1 = null;
+export let timerTourIdJ1 = null;
+export let timerIdJ2 = null;
+export let timerTourIdJ2 = null;
+
+// null = pas démarré, 1 = J1, 2 = J2
+export let joueurActif = null; 
 
 // L'intervalle de temps (1 seconde)
 export function decrementerTemps() {
