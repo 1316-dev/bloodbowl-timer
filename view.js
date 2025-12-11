@@ -65,7 +65,7 @@ function formaterTemps(secondesTotal) {
     const minutesStr = minutes < 10 ? "0" + minutes : minutes;
     const secondesStr = secondes < 10 ? "0" + secondes : secondes;
 
-    return `${heuresStr}${minutesStr}:${secondesStr}`;
+    return `${heuresStr} ${minutesStr} : ${secondesStr}`;
 }
 
 /**
@@ -89,7 +89,7 @@ export function afficherTempsTour(joueur, tempsTotalSecondes) {
 }
 
 export function afficherDureeTour(tempsTotalSecondes) {
-    $tempstourElement.innerText = `Durée d'un tour : ${formaterTemps(tempsTotalSecondes)}`;
+    $tempstourElement.innerText = `Durée d'un tour ${formaterTemps(tempsTotalSecondes)}`;
 }
 
 export function afficherNumeroTour(joueur, numeroTour) {
