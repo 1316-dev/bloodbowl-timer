@@ -86,8 +86,18 @@ $nomJ2.addEventListener("input", () => {
 let etatPartie = 0;
 
 $valider.addEventListener("click", () => {
+    const heures = Number(heuresPartieChoisies);
+    const minutes = Number(minutesPartieChoisies);
+    
+    // 2. Validation stricte
+    if (isNaN(heures) || isNaN(minutes) || heures === "" || minutes === "" || heures < 0 || minutes < 0) {
+        
+        // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
+        alert("Merci de remplir les champs d'heures et de minutes avec des nombres valides.");
+        
+    } else  {
     // 1. Appel du Model pour le calcul
-    const conversion = calculerTempsInitiaux(heuresPartieChoisies, minutesPartieChoisies);
+    const conversion = calculerTempsInitiaux(heures, minutes);
     
     // 2. Appel de la View pour l'affichage
     // on affiche le temps de tour d'un joueur pour éviter les erreurs d'arrondi
@@ -97,8 +107,7 @@ $valider.addEventListener("click", () => {
     afficherTempsTour(1, tempsTourJ1);
     afficherTempsTour(2, tempsTourJ2);
     etatPartie = 1;
-
-    console.log(`Temps de tour initial : ${conversion.minutes}:${conversion.secondes}`);
+    }
 });
 
 // =======================================
