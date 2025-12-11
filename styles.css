@@ -1,47 +1,43 @@
-p{
-    text-align: left;
-    margin-bottom: 5px;
+:root {
+    --couleur-vert: rgba(40, 167, 69, 0.5);
+    --couleur-jaune: rgba(255, 193, 7, 0.5);
+    --couleur-neutre: rgba(100, 102, 101, 0.5);
+    
+    --shadow-model: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
+
 
 h1 {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
 }
-#consigneJ1 {
+#consigneJ1, #consigneJ2{
 display: block;
 }
 
-#consigneJ2 {
-display: block;
-}
 
-#nomJ1{
-visibility: hidden;
-}
-
-#nomJ2{
-visibility: hidden;
+#nomJ1, #nomJ2{
+display: none;
 }
 
 #inputNomJ1:focus  {
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(40, 167, 69, 0.5);
+    box-shadow: var(--shadow-model), 0 0 8px var(--couleur-vert);
+    border-color: var(--couleur-vert);
+
 }
 
 #inputNomJ2:focus  {
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 193, 7, 0.5);
+     box-shadow: var(--shadow-model), 0 0 8px var(----couleur-jaune);
+    border-color: var(----couleur-jaune);
 }
 
-#inputHeuresPartie:focus {
-    border-color: rgba(100, 102, 101, 0.5);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(100, 102, 101, 0.5);
+#inputHeuresPartie:focus, #inputHeuresPartie:focus {
+    border-color: var(--couleur-neutre);
+    box-shadow: var(--shadow-model), 0 0 8px var(--couleur-neutre);
 }
 
-#inputHeuresPartie:focus {
-    border-color: rgba(100, 102, 101, 0.5);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(100, 102, 101, 0.5);
-}
 
 #J1,#J2 {
-    min-width: 20em;
+    width: 45%;
 }
 
 .timerDisplay {
@@ -49,17 +45,10 @@ visibility: hidden;
 }
 
 .imgBackground {
-  /* Spécifie l'image de fond */
+
   background-image: url('./img/terrain.png');
-  
-  /* **Empêche la répétition** de l'image */
   background-repeat: no-repeat; 
-  
-  /* **Centre** l'image horizontalement et verticalement */
   background-position: center center; 
-  
-  /* Fait en sorte que l'image **couvre toute la zone** sans être étirée, 
-     en coupant les bords si nécessaire. C'est souvent ce que les gens veulent pour un fond d'écran. */
   background-size: cover; 
 }
 

@@ -97,10 +97,11 @@ export function afficherNumeroTour(joueur, numeroTour) {
     element.innerText = `Tour n°:${numeroTour}`;
 }
 
-export function mettreAJourNoms(nomJ1Str, nomJ2Str) {
-    $nomAfficheJ1.innerText = nomJ1Str;
-    $nomAfficheJ2.innerText = nomJ2Str;
+export function mettreAJourNoms(nomJoueurStr, $nomAfficheJoueur) {
+    $nomAfficheJoueur.innerText = nomJoueurStr;
+   
 }
+
 
 /**
  * Une fois la partie lancer plusieurs éléments changent d'état
@@ -112,6 +113,6 @@ export function masquerFormulaireEtConsignes() {
     $consigneJ1.style.display = "none";
     $consigneJ2.style.display = "none";
     // Rendez les zones d'affichage des noms visibles si elles étaient cachées
-    $nomAfficheJ1.style.visibility = "visible";
-    $nomAfficheJ2.style.visibility = "visible";
+    $nomAfficheJ1.style.display = "block";
+    $nomAfficheJ2.style.display = "block";
 }

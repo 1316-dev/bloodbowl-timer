@@ -6,8 +6,7 @@
 // Importations du Model (Logique/État)
 import { 
     joueurActif, tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2, 
-    compteurTourJ1, compteurTourJ2, timerIdJ1, timerTourIdJ1, timerIdJ2, timerTourIdJ2,
-    etatCompteurPause, PAUSE_ON, PAUSE_OFF,
+    compteurTourJ1, compteurTourJ2, etatCompteurPause, PAUSE_ON, 
     calculerTempsInitiaux, decrementerTemps, passerAuJoueur, reinitialiserTour 
 } from './model.js';
 
@@ -16,7 +15,7 @@ import {
     $inputHeuresPartie, $inputminutesPartie, $nomJ1, $nomJ2,
     afficherDureeTour, afficherTempsGlobal, afficherTempsTour, afficherNumeroTour,
     masquerFormulaireEtConsignes, mettreAJourNoms,
-    $valider, $startJ1, $startJ2, $pause, $switch 
+    $valider, $startJ1, $startJ2, $pause, $switch , $nomAfficheJ1, $nomAfficheJ2
 } from './view.js';
 
 
@@ -72,12 +71,13 @@ $inputminutesPartie.addEventListener("input", () => {
 });
 $nomJ1.addEventListener("input", () => {
     nomJ1Str = $nomJ1.value;
-    mettreAJourNoms(nomJ1Str, nomJ2Str);
+    mettreAJourNoms(nomJ1Str, $nomAfficheJ1);
 });
 $nomJ2.addEventListener("input", () => {
     nomJ2Str = $nomJ2.value;
-    mettreAJourNoms(nomJ1Str, nomJ2Str);
+    mettreAJourNoms(nomJ2Str, $nomAfficheJ2);
 });
+
 
 // =======================================
 // Gestion du Clic "Valider"
@@ -96,16 +96,11 @@ $valider.addEventListener("click", () => {
         alert("Merci de remplir les champs d'heures et de minutes avec des nombres valides.");
         
     } else  {
-    // 1. Appel du Model pour le calcul
+    
     const conversion = calculerTempsInitiaux(heures, minutes);
     
-    // 2. Appel de la View pour l'affichage
     // on affiche le temps de tour d'un joueur pour éviter les erreurs d'arrondi
     afficherDureeTour(tempsTourJ1);
-    afficherTempsGlobal(1, tempsPartieJ1);
-    afficherTempsGlobal(2, tempsPartieJ2);
-    afficherTempsTour(1, tempsTourJ1);
-    afficherTempsTour(2, tempsTourJ2);
     etatPartie = 1;
     }
 });
@@ -116,10 +111,14 @@ $valider.addEventListener("click", () => {
 
 $startJ1.addEventListener("click", () => {
    
-    if (etatPartie === 1) {
+    if (etatPartie === 1 && tempsTourJ1 > 0) {
         if (joueurActif === null){
     
             masquerFormulaireEtConsignes();
+            afficherTempsGlobal(1, tempsPartieJ1);
+            afficherTempsGlobal(2, tempsPartieJ2);
+            afficherTempsTour(1, tempsTourJ1);
+            afficherTempsTour(2, tempsTourJ2);
 
             // Début de partie (J1 clique et donc lance le time de J2 qui commence la partie)
             passerAuJoueur(2); 
@@ -143,10 +142,14 @@ $startJ1.addEventListener("click", () => {
 
 $startJ2.addEventListener("click", () => {
     
-    if (etatPartie === 1) {
+    if (etatPartie === 1 && tempsTourJ1 > 0) {
         if (joueurActif === null){
     
             masquerFormulaireEtConsignes();
+            afficherTempsGlobal(1, tempsPartieJ1);
+            afficherTempsGlobal(2, tempsPartieJ2);
+            afficherTempsTour(1, tempsTourJ1);
+            afficherTempsTour(2, tempsTourJ2);
             // Début de partie (J1 commence)
             passerAuJoueur(1);
             demarrerTimer(1);
@@ -176,20 +179,14 @@ $pause.addEventListener("click", () => {
     if (joueurActif === 1) {
         if (etatCompeur === PAUSE_ON) {
             arreterTimer(1);
-            console.log(etatCompeur);
-            console.log(joueurActif);
         } else {
             demarrerTimer(1);
         }
     } else if (joueurActif === 2) {
         if (etatCompeur === PAUSE_ON) {
             arreterTimer(2);
-            console.log(etatCompeur);
-            console.log(joueurActif);
         } else {
             demarrerTimer(2);
-            console.log(etatCompeur);
-            console.log(joueurActif);
         }
     }
 }
