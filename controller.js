@@ -27,6 +27,7 @@ let timerLoopJ1 = null;
 let timerLoopJ2 = null;
 
 function demarrerTimer(joueur) {
+    
     if (joueur === 1) {
         if (timerLoopJ1) return; // Déjà démarré
         timerLoopJ1 = setInterval(() => {
@@ -109,6 +110,7 @@ $valider.addEventListener("click", () => {
 // Gestion du Clic J1
 // =======================================
 
+
 $startJ1.addEventListener("click", () => {
    
     if (etatPartie === 1 && tempsTourJ1 > 0) {
@@ -120,17 +122,20 @@ $startJ1.addEventListener("click", () => {
             afficherTempsTour(1, tempsTourJ1);
             afficherTempsTour(2, tempsTourJ2);
 
-            // Début de partie (J1 clique et donc lance le time de J2 qui commence la partie)
-            passerAuJoueur(2); 
-            demarrerTimer(2);
+            // Début de partie (J1 clique et donc lance le timer de J2 qui commence la partie)
             
-            afficherNumeroTour(2, 1);
+            demarrerTimer(2);
+            passerAuJoueur(2);
+            afficherNumeroTour(2, compteurTourJ2);
+            
         } else if (joueurActif === 1) {
             // J1 termine son tour, passe à J2
             arreterTimer(1);
             reinitialiserTour(1); // Réinitialise le temps de tour du prochain joueur (J2)  
             passerAuJoueur(2);
+            if (compteurTourJ1 < 17 ) {
             demarrerTimer(2);
+            }
             afficherNumeroTour(2, compteurTourJ2);
         }
     }
@@ -154,15 +159,21 @@ $startJ2.addEventListener("click", () => {
             passerAuJoueur(1);
             demarrerTimer(1);
             
-            afficherNumeroTour(2, 1);
+            afficherNumeroTour(1, compteurTourJ1);
+            
         } else if (joueurActif === 2) {
+           
             // J2 termine son tour, passe à J1
             arreterTimer(2);
-            reinitialiserTour(2); // Réinitialise le temps de tour du prochain joueur (J1)
-            
-            passerAuJoueur(1);
+            reinitialiserTour(2);
+             console.log(compteurTourJ1) // Réinitialise le temps de tour du prochain joueur (J1)
+            if (compteurTourJ2 < 17 ) {
             demarrerTimer(1);
+            }
+            passerAuJoueur(1);
+            
             afficherNumeroTour(1, compteurTourJ1);
+             console.log("CJ1 =" + compteurTourJ1)
         }
     }
 });

@@ -94,7 +94,9 @@ export function afficherDureeTour(tempsTotalSecondes) {
 
 export function afficherNumeroTour(joueur, numeroTour) {
     const element = joueur === 1 ? $numeroTourJ1 : $numeroTourJ2;
-    element.innerText = `Tour n°:${numeroTour}`;
+    if(numeroTour < 17) {
+    element.innerText = `Tour n° ${numeroTour}`;
+    } else element.innerText = `Fin de partie`;
 }
 
 export function mettreAJourNoms(nomJoueurStr, $nomAfficheJoueur) {

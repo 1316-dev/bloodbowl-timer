@@ -82,27 +82,28 @@ export function decrementerTemps() {
 export function reinitialiserTour(joueur) {
     // Calcul de la durée du prochain tour : Temps global restants diviser par le nombre de tour restant
     if (joueur === 1) {
-        const tempsRestantGlobal = tempsPartieJ1; 
-        const toursRestants = NbTourParJoueur - compteurTourJ1;
-        if (toursRestants > 0) {
+        let tempsRestantGlobalJ2 = tempsPartieJ2; 
+        let toursRestantsJ2 = NbTourParJoueur - compteurTourJ2;
+        if (toursRestantsJ2 > 0) {
             // IMPORTANT : on réinitialise le tour du prochain joueur
-            tempsTourJ2 = tempsRestantGlobal / toursRestants; 
-        }
+            tempsTourJ2 = tempsRestantGlobalJ2 / toursRestantsJ2; 
+        } 
     } else if (joueur === 2) {
-        const tempsRestantGlobal = tempsPartieJ2;
-        const toursRestants = NbTourParJoueur - compteurTourJ2;
-        if (toursRestants > 0) {
+        let tempsRestantGlobalJ1 = tempsPartieJ1;
+        let toursRestantsJ1 = NbTourParJoueur - compteurTourJ1;
+        if (toursRestantsJ1 > 0) {
             // IMPORTANT : on réinitialise le tour du prochain joueur
-            tempsTourJ1 = tempsRestantGlobal / toursRestants; 
-        }
+            tempsTourJ1 = tempsRestantGlobalJ1 / toursRestantsJ1; 
+            console.log(tempsTourJ1,toursRestantsJ1)
+        } 
     }
 }
 
 export function passerAuJoueur(joueurSuivant) {
     if (joueurSuivant === 1) {
-        compteurTourJ2 += 1;
-    } else if (joueurSuivant === 2) {
         compteurTourJ1 += 1;
+    } else if (joueurSuivant === 2) {
+        compteurTourJ2 += 1;
     }
     joueurActif = joueurSuivant;
 }
