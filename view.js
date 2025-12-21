@@ -122,6 +122,10 @@ export function masquerFormulaireEtConsignes() {
 export function contourJoueurActif(joueur) {
     const elementJoueurActif = joueur === 1 ? $startJ1 : $startJ2;
     elementJoueurActif.style.border = "thick solid white";
+    elementJoueurActif.style.boxShadow = "0 0 8px grey";
+    elementJoueurActif.style.fontWeight = "600";
     const elementJoueurPassif = joueur === 1 ? $startJ2 : $startJ1;
     elementJoueurPassif.style.border = "";
+    elementJoueurPassif.style.boxShadow = "";
+    elementJoueurPassif.style.fontWeight = "400";
 }
