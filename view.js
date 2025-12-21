@@ -118,3 +118,10 @@ export function masquerFormulaireEtConsignes() {
     $nomAfficheJ1.style.display = "block";
     $nomAfficheJ2.style.display = "block";
 }
+
+export function contourJoueurActif(joueur) {
+    const elementJoueurActif = joueur === 1 ? $startJ1 : $startJ2;
+    elementJoueurActif.style.border = "thick solid white";
+    const elementJoueurPassif = joueur === 1 ? $startJ2 : $startJ1;
+    elementJoueurPassif.style.border = "";
+}

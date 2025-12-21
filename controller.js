@@ -15,7 +15,8 @@ import {
     $inputHeuresPartie, $inputminutesPartie, $nomJ1, $nomJ2,
     afficherDureeTour, afficherTempsGlobal, afficherTempsTour, afficherNumeroTour,
     masquerFormulaireEtConsignes, mettreAJourNoms,
-    $valider, $startJ1, $startJ2, $pause, $switch , $nomAfficheJ1, $nomAfficheJ2
+    $valider, $startJ1, $startJ2, $pause, $switch , $nomAfficheJ1, $nomAfficheJ2,
+    contourJoueurActif
 } from './view.js';
 
 
@@ -124,6 +125,7 @@ $startJ1.addEventListener("click", () => {
 
             // Début de partie (J1 clique et donc lance le timer de J2 qui commence la partie)
             
+            contourJoueurActif(2);
             demarrerTimer(2);
             passerAuJoueur(2);
             afficherNumeroTour(2, compteurTourJ2);
@@ -132,6 +134,7 @@ $startJ1.addEventListener("click", () => {
             // J1 termine son tour, passe à J2
             arreterTimer(1);
             reinitialiserTour(1); // Réinitialise le temps de tour du prochain joueur (J2)  
+            contourJoueurActif(2);
             passerAuJoueur(2);
             if (compteurTourJ1 < 17 ) {
             demarrerTimer(2);
@@ -156,6 +159,7 @@ $startJ2.addEventListener("click", () => {
             afficherTempsTour(1, tempsTourJ1);
             afficherTempsTour(2, tempsTourJ2);
             // Début de partie (J1 commence)
+            contourJoueurActif(1);
             passerAuJoueur(1);
             demarrerTimer(1);
             
@@ -167,6 +171,7 @@ $startJ2.addEventListener("click", () => {
             arreterTimer(2);
             reinitialiserTour(2);
              console.log(compteurTourJ1) // Réinitialise le temps de tour du prochain joueur (J1)
+            contourJoueurActif(1);
             if (compteurTourJ2 < 17 ) {
             demarrerTimer(1);
             }
