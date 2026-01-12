@@ -114,7 +114,7 @@ $valider.addEventListener("click", () => {
 
 $startJ1.addEventListener("click", () => {
    
-    if (etatPartie === 1 && tempsTourJ1 > 0) {
+    if (etatPartie === 1) {
         if (joueurActif === null){
     
             masquerFormulaireEtConsignes();
@@ -150,7 +150,7 @@ $startJ1.addEventListener("click", () => {
 
 $startJ2.addEventListener("click", () => {
     
-    if (etatPartie === 1 && tempsTourJ1 > 0) {
+    if (etatPartie === 1) {
         if (joueurActif === null){
     
             masquerFormulaireEtConsignes();
