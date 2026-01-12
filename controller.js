@@ -241,16 +241,22 @@ window.onbeforeunload = function () {
 const $radioNouvelle = document.getElementById("radioNouvelle");
 const $radioEnCours = document.getElementById("radioEnCours");
 const $formNouvelle = document.getElementById("formNouvelle");
-const $formEncours = document.getElementById("formEncours");
+const $formEncours = document.querySelectorAll('.formEncours');
 
 $radioEnCours.addEventListener("click", () => {
     $formNouvelle.style.display = "none";
-    $formEncours.style.display = "block";
+    $formEncours.forEach(form => {
+        form.style.display = "block";
+    });
+    $valider.value = "Valider";
   
 })
 
 $radioNouvelle.addEventListener("click", () => {
     $formNouvelle.style.display = "block";
-    $formEncours.style.display = "none";
+    $formEncours.forEach(form => {
+        form.style.display = "none";
+    });
+    $valider.value = "Calculer Tour";
 
 })
