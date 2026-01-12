@@ -28,19 +28,16 @@ display: block;
 display: none;
 }
 
-#inputNomJ1:focus  {
+#inputNomJ1:focus, #inputTourECJ1:focus, #inputMinutesPartieECJ1:focus, #inputheuresPartieECJ1:focus  {
     box-shadow: var(--shadow-model), 0 0 8px var(--couleur-vert);
-    border-color: var(--couleur-vert);
+}
+
+#inputNomJ2:focus, #inputTourECJ2:focus, #inputMinutesPartieECJ2:focus, #inputheuresPartieECJ2:focus  {
+    box-shadow: var(--shadow-model), 0 0 8px var(----couleur-jaune);
 
 }
 
-#inputNomJ2:focus  {
-     box-shadow: var(--shadow-model), 0 0 8px var(----couleur-jaune);
-    border-color: var(----couleur-jaune);
-}
-
-#inputHeuresPartie:focus, #inputHeuresPartie:focus {
-    border-color: var(--couleur-neutre);
+#inputHeuresPartie:focus, #inputMinutesPartie:focus {
     box-shadow: var(--shadow-model), 0 0 8px var(--couleur-neutre);
 }
 
