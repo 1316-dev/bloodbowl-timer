@@ -10,6 +10,15 @@
 h1 {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
 }
+
+#form {
+    display: block;
+}
+
+#formEncours{
+    display: none;
+}
+
 #consigneJ1, #consigneJ2{
 display: block;
 }

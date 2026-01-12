@@ -233,3 +233,24 @@ window.onbeforeunload = function () {
         return "Si vous quittez la page le Timer sera réinitialisé?";
     }
 };
+
+// =======================================
+// Gestion des boutons radio (Rotation de l'affichage)
+// =======================================
+
+const $radioNouvelle = document.getElementById("radioNouvelle");
+const $radioEnCours = document.getElementById("radioEnCours");
+const $formNouvelle = document.getElementById("formNouvelle");
+const $formEncours = document.getElementById("formEncours");
+
+$radioEnCours.addEventListener("click", () => {
+    $formNouvelle.style.display = "none";
+    $formEncours.style.display = "block";
+  
+})
+
+$radioNouvelle.addEventListener("click", () => {
+    $formNouvelle.style.display = "block";
+    $formEncours.style.display = "none";
+
+})

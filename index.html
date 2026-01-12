@@ -126,6 +126,8 @@
                     </div>
                 </div>
             </div>
+
+            
             
             <div class="d-flex justify-content-center align-items-center">
                 <p class="text-secondary mt-3 me-2">Mode Duel</p>
@@ -134,50 +136,155 @@
                     <span class="slider"></span>
                 </label>
             </div>
+        
         </div>
+
+        <div class="d-flex justify-content-center align-items-center">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="radioPartie" id="radioNouvelle" value="nouvelle" checked>
+                    <label class="form-check-label" for="inlineRadio1">Nouvelle partie</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="radioPartie" id="radioEnCours" value="enCours">
+                    <label class="form-check-label" for="inlineRadio2">Partie en Cours</label>
+                </div>
+            </div>
         
         <h3 class="text-center mt-3" id="tempstour"></h3>
     
         <div class="align-items-center imgBackground">
             <div class="row mt-3"></div>
 
+        
             <div id="form">
-                <div class="row mt-4">
-                    <div class="col-sm-2 mx-auto w-50">
-                      <label for="inputHeuresPartie" class="visually-hidden">Nombre d'heures pour la partie</label>
-                        <input
-                            type="number"
-                            id="inputHeuresPartie"
-                            placeholder="heures"
-                            class="form-control text-center"
-                            required
-                            min="1"
-                        />
+
+                <!-- Formulaire pour une nouvelle partie  --> 
+                 <div id="formNouvelle">
+                    <div class="row mt-4">
+                        <div class="col-sm-2 mx-auto w-50">
+                        <label for="inputHeuresPartie" class="visually-hidden">Nombre d'heures pour la partie</label>
+                            <input
+                                type="number"
+                                id="inputHeuresPartie"
+                                placeholder="heures"
+                                class="form-control text-center"
+                                required
+                                min="1"
+                            />
+                        </div>
                     </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-2 mx-auto w-50">
+                        <label for="inputminutesPartie" class="visually-hidden">Nombre d'heures pour la partie</label>
+                            <input
+                                type="number"
+                                id="inputminutesPartie"
+                                placeholder="minutes"
+                                class="form-control text-center"
+                                required
+                                min="1"
+                            />
+                        </div>
+                    </div>
+
+                    
                 </div>
-                <div class="row mt-3">
-                    <div class="col-sm-2 mx-auto w-50">
-                      <label for="inputminutesPartie" class="visually-hidden">Nombre d'heures pour la partie</label>
-                        <input
-                            type="number"
-                            id="inputminutesPartie"
-                            placeholder="minutes"
-                            class="form-control text-center"
-                            required
-                            min="1"
-                        />
+
+                <!-- Formulaire pour reprendre une partie  --> 
+                 <div id="formEncours">
+                    <!-- Pour le joeur 1 : Vert  --> 
+                    <div class="row mt-4">
+                        <div class="col-sm-2 mx-auto w-50">
+                        <label for="inputHeuresPartieECJ1" class="visually-hidden">Nombre d'heures pour la partie</label>
+                            <input
+                                type="number"
+                                id="inputHeuresPartieECJ1"
+                                placeholder="heures joueur 1 (vert)"
+                                class="form-control text-center"
+                                required
+                                min="1"
+                            />
+                        </div>
                     </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-2 mx-auto w-50">
+                        <label for="inputminutesPartieECJ1" class="visually-hidden">Nombre d'heures pour la partie</label>
+                            <input
+                                type="number"
+                                id="inputminutesPartieECJ1"
+                                placeholder="minutes joueur 1 (vert)"
+                                class="form-control text-center"
+                                required
+                                min="1"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-2 mx-auto w-50">
+                        <label for="inputTourECJ1" class="visually-hidden">Nombre d'heures pour la partie</label>
+                            <input
+                                type="number"
+                                id="inputTourECJ1"
+                                placeholder="numéro Tour joueur 1 (vert)"
+                                class="form-control text-center"
+                                required
+                                min="1"
+                            />
+                        </div>
+                    </div>
+
+                     <!-- Pour le joeur 2 : Jaune  -->
+                     <div class="row mt-4">
+                        <div class="col-sm-2 mx-auto w-50">
+                        <label for="inputHeuresPartieECJ2" class="visually-hidden">Nombre d'heures pour la partie</label>
+                            <input
+                                type="number"
+                                id="inputHeuresPartieECJ2"
+                                placeholder="heures joueur 2 (Jaune)"
+                                class="form-control text-center"
+                                required
+                                min="1"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-2 mx-auto w-50">
+                        <label for="inputminutesPartieECJ2" class="visually-hidden">Nombre d'heures pour la partie</label>
+                            <input
+                                type="number"
+                                id="inputminutesPartieECJ2"
+                                placeholder="minutes joueur 2 (Jaune)"
+                                class="form-control text-center"
+                                required
+                                min="1"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-2 mx-auto w-50">
+                        <label for="inputTourECJ2" class="visually-hidden">Nombre d'heures pour la partie</label>
+                            <input
+                                type="number"
+                                id="inputTourECJ2"
+                                placeholder="numéro Tour joueur 2 (Jaune)"
+                                class="form-control text-center"
+                                required
+                                min="1"
+                            />
+                        </div>
+                    </div>
+    
                 </div>
 
                 <div class="row mt-3">
-                    <div class="text-center">
-                        <input
-                            type="button"
-                            value="Calculer Tour"
-                            id="valider"
-                            class="btn btn btn-secondary"
-                        />
-                    </div>
+                        <div class="text-center">
+                            <input
+                                type="button"
+                                value="Valider"
+                                id="valider"
+                                class="btn btn btn-secondary"
+                            />
+                        </div>
                 </div>
 
                 <div class="row mt-4">
