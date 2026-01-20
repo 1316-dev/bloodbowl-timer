@@ -16,7 +16,7 @@ import {
     afficherDureeTour, afficherTempsGlobal, afficherTempsTour, afficherNumeroTour,
     masquerFormulaireEtConsignes, mettreAJourNoms,
     $valider, $startJ1, $startJ2, $pause, $switch , $nomAfficheJ1, $nomAfficheJ2,
-    contourJoueurActif
+    contourJoueurActif, afficherTerrain
 } from './view.js';
 
 
@@ -88,6 +88,7 @@ $nomJ2.addEventListener("input", () => {
 let etatPartie = 0;
 
 $valider.addEventListener("click", () => {
+    
     const heures = Number(heuresPartieChoisies);
     const minutes = Number(minutesPartieChoisies);
     
@@ -116,7 +117,7 @@ $startJ1.addEventListener("click", () => {
    
     if (etatPartie === 1) {
         if (joueurActif === null){
-    
+            afficherTerrain();
             masquerFormulaireEtConsignes();
             afficherTempsGlobal(1, tempsPartieJ1);
             afficherTempsGlobal(2, tempsPartieJ2);
@@ -152,7 +153,7 @@ $startJ2.addEventListener("click", () => {
     
     if (etatPartie === 1) {
         if (joueurActif === null){
-    
+            afficherTerrain();
             masquerFormulaireEtConsignes();
             afficherTempsGlobal(1, tempsPartieJ1);
             afficherTempsGlobal(2, tempsPartieJ2);

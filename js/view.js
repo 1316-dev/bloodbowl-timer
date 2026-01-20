@@ -129,3 +129,9 @@ export function contourJoueurActif(joueur) {
     elementJoueurPassif.style.boxShadow = "";
     elementJoueurPassif.style.fontWeight = "400";
 }
+
+const $background = document.getElementById("background");
+
+export function afficherTerrain(){
+    $background.classList.add('imgBackground')
+}

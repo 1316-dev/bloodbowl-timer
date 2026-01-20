@@ -49,7 +49,7 @@ display: none;
 }
 
 .imgBackground {
-  min-height: 100vh;
+  min-height: 70vh;
   background-image: url('/img/terrain.png');
   background-repeat: no-repeat; 
   background-position: center center; 
