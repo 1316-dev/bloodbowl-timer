@@ -86,6 +86,14 @@ export function calculerTempsEncours(joueur,heuresPartieEncours, minutesPartieEn
 export let compteurTourJ1 = 0;
 export let compteurTourJ2 = 0;
 
+export function setCompteurTourJ1(nouvelleValeur) {
+    compteurTourJ1 = nouvelleValeur;
+}
+
+export function setCompteurTourJ2(nouvelleValeur) {
+    compteurTourJ2 = nouvelleValeur;
+}
+
 // Variables pour les IDs des intervalles, utilisé pour arrêter les timers
 export let timerIdJ1 = null;
 export let timerTourIdJ1 = null;

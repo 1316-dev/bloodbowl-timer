@@ -7,7 +7,7 @@
 import { 
     joueurActif, tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2, 
     compteurTourJ1, compteurTourJ2, etatCompteurPause, PAUSE_ON, 
-    calculerTempsInitiaux, decrementerTemps, passerAuJoueur, reinitialiserTour,calculerTempsEncours 
+    calculerTempsInitiaux, decrementerTemps, passerAuJoueur, reinitialiserTour,calculerTempsEncours, setCompteurTourJ1, setCompteurTourJ2 
 } from './model.js';
 
 // Importations de la View (DOM)
@@ -92,6 +92,7 @@ let heuresPartieECJ1 = 0;
 let minutesPartieECJ1 = 0;
 let tourECJ1 = 0;
 
+
 $inputHeuresPartieECJ1.addEventListener("input", () => {
     heuresPartieECJ1 = $inputHeuresPartieECJ1.value;
 });
@@ -99,12 +100,14 @@ $inputMinutesPartieECJ1.addEventListener("input", () => {
     minutesPartieECJ1 = $inputMinutesPartieECJ1.value;
 });
 $inputTourECJ1.addEventListener("input", () => {
-    tourECJ1 = $inputTourECJ1.value;
+    setCompteurTourJ1(Number($inputTourECJ1.value));
+    tourECJ1 = Number($inputTourECJ1.value);
 });
 
 let heuresPartieECJ2 = 0;
 let minutesPartieECJ2 = 0;
 let tourECJ2 = 0;
+
 
 $inputHeuresPartieECJ2.addEventListener("input", () => {
     heuresPartieECJ2 = $inputHeuresPartieECJ2.value;
@@ -113,7 +116,8 @@ $inputMinutesPartieECJ2.addEventListener("input", () => {
     minutesPartieECJ2 = $inputMinutesPartieECJ2.value;
 });
 $inputTourECJ2.addEventListener("input", () => {
-    tourECJ2 = $inputTourECJ2.value;
+    setCompteurTourJ2(Number($inputTourECJ2.value));
+    tourECJ2 = Number($inputTourECJ2.value);
 });
 
 // =======================================
