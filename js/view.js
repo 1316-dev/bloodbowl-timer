@@ -7,10 +7,19 @@
 // Éléments du DOM
 
 // Temps de Jeux choisit par les utilisateurs (input heures et input minutes)
-// cette div nommé "form" disparaitra au lancement de la partie
+// cette div nommé "form Nouvelle Partie" disparaitra au lancement de la partie
 export const $form = document.getElementById("form");
 export const $inputHeuresPartie = document.getElementById("inputHeuresPartie");
 export const $inputminutesPartie = document.getElementById("inputminutesPartie");
+
+// cette div nommé "form Partie en Cours" disparaitra au lancement de la partie
+export const $inputHeuresPartieECJ1 = document.getElementById("inputHeuresPartieECJ1");
+export const $inputMinutesPartieECJ1 = document.getElementById("inputMinutesPartieECJ1");
+export const $inputTourECJ1 = document.getElementById("inputTourECJ1");
+
+export const $inputHeuresPartieECJ2 = document.getElementById("inputHeuresPartieECJ2");
+export const $inputMinutesPartieECJ2 = document.getElementById("inputMinutesPartieECJ2");
+export const $inputTourECJ2 = document.getElementById("inputTourECJ2");
 
 //Affichage du temps moyen d'un tour en début de partie
 export const $tempstourElement = document.getElementById("tempstour");
@@ -134,4 +143,15 @@ const $background = document.getElementById("background");
 
 export function afficherTerrain(){
     $background.classList.add('imgBackground')
+}
+
+
+const $inputRadio = document.getElementById("radio");;
+export function choixRadio(callback) {
+    $inputRadio.addEventListener("change", (e) => {
+  if (e.target.name === 'radioPartie' && e.target.type === 'radio') {
+    callback(e.target.value);
+  }
+});
+
 }
