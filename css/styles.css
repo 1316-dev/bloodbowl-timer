@@ -19,10 +19,13 @@ h1 {
     display: none;
 }
 
-#consigneJ1, #consigneJ2{
+#consigneJ1, #consigneJ2 {
 display: block;
 }
 
+#tempstour {
+    white-space: pre-line;
+}
 
 #nomJ1, #nomJ2{
 display: none;

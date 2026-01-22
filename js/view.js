@@ -52,6 +52,7 @@ export const $startJ1 = document.getElementById("J1");
 export const $startJ2 = document.getElementById("J2");
 export const $pause = document.getElementById("pause");
 export const $switch = document.getElementById("switch");
+export const $inputRadio = document.getElementById("radio");   
 
 
 // =======================================
@@ -100,6 +101,10 @@ export function afficherTempsTour(joueur, tempsTotalSecondes) {
 export function afficherDureeTour(tempsTotalSecondes) {
     $tempstourElement.innerText = `Durée d'un tour ${formaterTemps(tempsTotalSecondes)}`;
 }
+export function afficherDureeTourEnCours(tempsTotalSecondesJ1, tempsTotalSecondesJ2) {
+    $tempstourElement.innerText = `Durée d'un tour \nJ1 ${formaterTemps(tempsTotalSecondesJ1)}\nJ2 ${formaterTemps(tempsTotalSecondesJ2)}`;
+}
+
 
 export function afficherNumeroTour(joueur, numeroTour) {
     const element = joueur === 1 ? $numeroTourJ1 : $numeroTourJ2;
@@ -119,10 +124,14 @@ export function mettreAJourNoms(nomJoueurStr, $nomAfficheJoueur) {
  * Le formulaire du choix de l'heure et les consignes passent en display none
  * et les noms des joueurs deviennet visible
  */
+
+
 export function masquerFormulaireEtConsignes() {
     $form.style.display = "none";
     $consigneJ1.style.display = "none";
     $consigneJ2.style.display = "none";
+    $inputRadio.classList.remove('d-flex', 'justify-content-center', 'align-items-center');
+    $inputRadio.classList.add('d-none');
     // Rendez les zones d'affichage des noms visibles si elles étaient cachées
     $nomAfficheJ1.style.display = "block";
     $nomAfficheJ2.style.display = "block";
@@ -146,7 +155,7 @@ export function afficherTerrain(){
 }
 
 
-const $inputRadio = document.getElementById("radio");;
+
 export function choixRadio(callback) {
     $inputRadio.addEventListener("change", (e) => {
   if (e.target.name === 'radioPartie' && e.target.type === 'radio') {

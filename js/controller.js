@@ -13,7 +13,7 @@ import {
 // Importations de la View (DOM)
 import { 
     $inputHeuresPartie, $inputminutesPartie, $nomJ1, $nomJ2,
-    afficherDureeTour, afficherTempsGlobal, afficherTempsTour, afficherNumeroTour,
+    afficherDureeTour, afficherTempsGlobal, afficherTempsTour, afficherNumeroTour, afficherDureeTourEnCours,
     masquerFormulaireEtConsignes, mettreAJourNoms,
     $valider, $startJ1, $startJ2, $pause, $switch , $nomAfficheJ1, $nomAfficheJ2,
     contourJoueurActif, afficherTerrain, choixRadio, $inputHeuresPartieECJ1, $inputMinutesPartieECJ1, $inputTourECJ1, $inputHeuresPartieECJ2, $inputMinutesPartieECJ2, $inputTourECJ2
@@ -181,6 +181,9 @@ $valider.addEventListener("click", () => {
         } else  {
         calculerTempsEncours(1, heuresJ1, minutesJ1, tourJ1);
         calculerTempsEncours(2, heuresJ2, minutesJ2, tourJ2);
+        // on affiche le temps de tour des joeurs
+        afficherDureeTourEnCours(tempsTourJ1, tempsTourJ2);
+            
 
         console.log("ici" +tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2);
         etatPartie = 1;
