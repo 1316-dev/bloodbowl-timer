@@ -151,6 +151,7 @@ export function contourJoueurActif(joueur) {
 const $background = document.getElementById("background");
 
 export function afficherTerrain(){
+    $background.classList.remove('imgBackgroundBegin');
     $background.classList.add('imgBackground')
 }
 

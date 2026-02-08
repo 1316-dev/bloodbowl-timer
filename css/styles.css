@@ -53,7 +53,14 @@ display: none;
 
 .imgBackground {
   min-height: 70vh;
-  background-image: url('/img/terrain.png');
+  background-image: url('../img/terrain.png');
+  background-repeat: no-repeat; 
+  background-position: center center; 
+  background-size: cover; 
+}
+.imgBackgroundBegin {
+  min-height: 70vh;
+  background-image: url('../img/confrontation.png');
   background-repeat: no-repeat; 
   background-position: center center; 
   background-size: cover; 
