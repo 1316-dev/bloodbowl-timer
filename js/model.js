@@ -6,6 +6,11 @@
 // - gestion des compteurs de tour et joueur actif
 // ===================================
 
+//=================================
+// Paramètre lié au règle du jeu
+//==================================
+
+export const MAX_TOURS = 17;
 
 // =====================================================
 // Fonction de convertion minute en minutes + secondes

@@ -165,3 +165,46 @@ export function choixRadio(callback) {
 });
 
 }
+
+// =======================================
+// Gestion du switch (Rotation de l'affichage)
+// =======================================
+
+let compteurRotation = 0;
+$switch.addEventListener("click", () => {
+    const $textRotate = document.getElementById("J1"); 
+    if (compteurRotation === 0) {
+        $textRotate.classList.add("rotate");
+        compteurRotation = 1;
+    } else {
+        $textRotate.classList.remove("rotate");
+        compteurRotation = 0;
+    }
+});
+
+// =======================================
+// Gestion des boutons radio
+// =======================================
+
+const $radioNouvelle = document.getElementById("radioNouvelle");
+const $radioEnCours = document.getElementById("radioEnCours");
+const $formNouvelle = document.getElementById("formNouvelle");
+const $formEncours = document.querySelectorAll('.formEncours');
+
+$radioEnCours.addEventListener("click", () => {
+    $formNouvelle.style.display = "none";
+    $formEncours.forEach(form => {
+        form.style.display = "block";
+    });
+    $valider.value = "Valider";
+  
+})
+
+$radioNouvelle.addEventListener("click", () => {
+    $formNouvelle.style.display = "block";
+    $formEncours.forEach(form => {
+        form.style.display = "none";
+    });
+    $valider.value = "Calculer Tour";
+
+})

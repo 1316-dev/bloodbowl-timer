@@ -5,7 +5,7 @@
 
 // Importations du Model (Logique/État)
 import { 
-    joueurActif, tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2, 
+    MAX_TOURS,joueurActif, tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2, 
     compteurTourJ1, compteurTourJ2, etatCompteurPause, PAUSE_ON, 
     calculerTempsInitiaux, decrementerTemps, passerAuJoueur, reinitialiserTour,calculerTempsEncours, setCompteurTourJ1, setCompteurTourJ2 
 } from './model.js';
@@ -72,16 +72,12 @@ choixRadio((valeurRecue) => {
 // Gestion des Inputs Nom joeurs
 // =======================================
 
-let nomJ1Str = "";
-let nomJ2Str = "";
 
 $nomJ1.addEventListener("input", () => {
-    nomJ1Str = $nomJ1.value;
-    mettreAJourNoms(nomJ1Str, $nomAfficheJ1);
+    mettreAJourNoms($nomJ1.value, $nomAfficheJ1);
 });
 $nomJ2.addEventListener("input", () => {
-    nomJ2Str = $nomJ2.value;
-    mettreAJourNoms(nomJ2Str, $nomAfficheJ2);
+    mettreAJourNoms($nomJ2.value, $nomAfficheJ2);
 });
 
 // =======================================
@@ -183,10 +179,7 @@ $valider.addEventListener("click", () => {
         calculerTempsEncours(2, heuresJ2, minutesJ2, tourJ2);
         // on affiche le temps de tour des joeurs
         afficherDureeTourEnCours(tempsTourJ1, tempsTourJ2);
-            
-
-        console.log("ici" +tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2);
-        etatPartie = 1;
+                    etatPartie = 1;
         }    
     }
 });   
@@ -220,7 +213,7 @@ $startJ1.addEventListener("click", () => {
             reinitialiserTour(1); // Réinitialise le temps de tour du prochain joueur (J2)  
             contourJoueurActif(2);
             passerAuJoueur(2);
-            if (compteurTourJ1 < 17 ) {
+            if (compteurTourJ1 < MAX_TOURS ) {
             demarrerTimer(2);
             }
             afficherNumeroTour(2, compteurTourJ2);
@@ -256,7 +249,7 @@ $startJ2.addEventListener("click", () => {
             reinitialiserTour(2);
              console.log(compteurTourJ1) // Réinitialise le temps de tour du prochain joueur (J1)
             contourJoueurActif(1);
-            if (compteurTourJ2 < 17 ) {
+            if (compteurTourJ2 < MAX_TOURS ) {
             demarrerTimer(1);
             }
             passerAuJoueur(1);
@@ -292,21 +285,7 @@ $pause.addEventListener("click", () => {
 }
 });
 
-// =======================================
-// Gestion du switch (Rotation de l'affichage)
-// =======================================
 
-let compteurRotation = 0;
-$switch.addEventListener("click", () => {
-    const $textRotate = document.getElementById("J1"); 
-    if (compteurRotation === 0) {
-        $textRotate.classList.add("rotate");
-        compteurRotation = 1;
-    } else {
-        $textRotate.classList.remove("rotate");
-        compteurRotation = 0;
-    }
-});
 
 // =======================================
 // Gestion du onbeforeunload
@@ -318,29 +297,3 @@ window.onbeforeunload = function () {
     }
 };
 
-// =======================================
-// Gestion des boutons radio (Rotation de l'affichage)
-// =======================================
-
-const $radioNouvelle = document.getElementById("radioNouvelle");
-const $radioEnCours = document.getElementById("radioEnCours");
-const $formNouvelle = document.getElementById("formNouvelle");
-const $formEncours = document.querySelectorAll('.formEncours');
-
-$radioEnCours.addEventListener("click", () => {
-    $formNouvelle.style.display = "none";
-    $formEncours.forEach(form => {
-        form.style.display = "block";
-    });
-    $valider.value = "Valider";
-  
-})
-
-$radioNouvelle.addEventListener("click", () => {
-    $formNouvelle.style.display = "block";
-    $formEncours.forEach(form => {
-        form.style.display = "none";
-    });
-    $valider.value = "Calculer Tour";
-
-})
