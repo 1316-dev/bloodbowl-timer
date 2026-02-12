@@ -80,57 +80,6 @@ $nomJ2.addEventListener("input", () => {
     mettreAJourNoms($nomJ2.value, $nomAfficheJ2);
 });
 
-// =======================================
-// Gestion des Inputs Partie en Cours
-// =======================================
-
-let heuresPartieECJ1 = 0;
-let minutesPartieECJ1 = 0;
-let tourECJ1 = 0;
-
-
-$inputHeuresPartieECJ1.addEventListener("input", () => {
-    heuresPartieECJ1 = $inputHeuresPartieECJ1.value;
-});
-$inputMinutesPartieECJ1.addEventListener("input", () => {
-    minutesPartieECJ1 = $inputMinutesPartieECJ1.value;
-});
-$inputTourECJ1.addEventListener("input", () => {
-    setCompteurTourJ1(Number($inputTourECJ1.value));
-    tourECJ1 = Number($inputTourECJ1.value);
-});
-
-let heuresPartieECJ2 = 0;
-let minutesPartieECJ2 = 0;
-let tourECJ2 = 0;
-
-
-$inputHeuresPartieECJ2.addEventListener("input", () => {
-    heuresPartieECJ2 = $inputHeuresPartieECJ2.value;
-});
-$inputMinutesPartieECJ2.addEventListener("input", () => {
-    minutesPartieECJ2 = $inputMinutesPartieECJ2.value;
-});
-$inputTourECJ2.addEventListener("input", () => {
-    setCompteurTourJ2(Number($inputTourECJ2.value));
-    tourECJ2 = Number($inputTourECJ2.value);
-});
-
-// =======================================
-// Gestion des Inputs Nouvelle Partie
-// =======================================
-
-let heuresPartieChoisies = 0;
-let minutesPartieChoisies = 0;
-
-$inputHeuresPartie.addEventListener("input", () => {
-    heuresPartieChoisies = $inputHeuresPartie.value;
-});
-$inputminutesPartie.addEventListener("input", () => {
-    minutesPartieChoisies = $inputminutesPartie.value;
-});
-
-
 
 // =======================================
 // Gestion du Clic "Valider"
@@ -143,8 +92,8 @@ $valider.addEventListener("click", () => {
     
     if (choixPartie !== "enCours") {
         
-        const heures = Number(heuresPartieChoisies);
-        const minutes = Number(minutesPartieChoisies);
+        const heures = Number($inputHeuresPartie.value);
+        const minutes = Number($inputminutesPartie.value);
         
         // 2. Validation stricte
         if (isNaN(heures) || isNaN(minutes) || heures === "" || minutes === "" || heures < 0 || minutes < 0) {
@@ -163,12 +112,14 @@ $valider.addEventListener("click", () => {
         }
     }
     else if (choixPartie === "enCours") {
-        const heuresJ1 = Number(heuresPartieECJ1);
-        const minutesJ1 = Number(minutesPartieECJ1);
-        const tourJ1 = Number(tourECJ1);
-        const heuresJ2 = Number(heuresPartieECJ2);
-        const minutesJ2 = Number(minutesPartieECJ2);
-        const tourJ2 = Number(tourECJ2);    
+        const heuresJ1 = Number($inputHeuresPartieECJ1.value);
+        const minutesJ1 = Number($inputMinutesPartieECJ1.value);
+        const tourJ1 = Number($inputTourECJ1.value);
+        setCompteurTourJ1(tourJ1);
+        const heuresJ2 = Number($inputHeuresPartieECJ2.value);
+        const minutesJ2 = Number($inputMinutesPartieECJ2.value);
+        const tourJ2 = Number($inputTourECJ2.value);  
+        setCompteurTourJ2(tourJ2);
         // 2. Validation stricte
         if (isNaN(heuresJ1) || isNaN(minutesJ1) || isNaN(tourJ1) || heuresJ1 === "" || minutesJ1 === "" || tourJ1 === "" || heuresJ1 < 0 || minutesJ1 < 0 || tourJ1 <= 0 ||
             isNaN(heuresJ2) || isNaN(minutesJ2) || isNaN(tourJ2) || heuresJ2 === "" || minutesJ2 === "" || tourJ2 === "" || heuresJ2 < 0 || minutesJ2 < 0 || tourJ2 <= 0) {     
