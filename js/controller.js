@@ -64,7 +64,6 @@ let choixPartie = "nouvelle";
 
 choixRadio((valeurRecue) => {
     choixPartie = valeurRecue;
-    console.log(choixPartie);
 });
 
 
@@ -95,13 +94,13 @@ $valider.addEventListener("click", () => {
         const heures = Number($inputHeuresPartie.value);
         const minutes = Number($inputminutesPartie.value);
         
-        // 2. Validation stricte
-        if (isNaN(heures) || isNaN(minutes) || heures === "" || minutes === "" || heures < 0 || minutes < 0) {
-            
+      // 2. Validation stricte
+        if (!validerInputsJoueur(heures,minutes)) {
             // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
-            alert("Merci de remplir les champs d'heures et de minutes avec des nombres valides.");
-            
-        } else  {
+            alert("Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.");
+        }
+        
+         else  {
         
         calculerTempsInitiaux(heures, minutes);
         
@@ -121,19 +120,36 @@ $valider.addEventListener("click", () => {
         const tourJ2 = Number($inputTourECJ2.value);  
         setCompteurTourJ2(tourJ2);
         // 2. Validation stricte
-        if (isNaN(heuresJ1) || isNaN(minutesJ1) || isNaN(tourJ1) || heuresJ1 === "" || minutesJ1 === "" || tourJ1 === "" || heuresJ1 < 0 || minutesJ1 < 0 || tourJ1 <= 0 ||
-            isNaN(heuresJ2) || isNaN(minutesJ2) || isNaN(tourJ2) || heuresJ2 === "" || minutesJ2 === "" || tourJ2 === "" || heuresJ2 < 0 || minutesJ2 < 0 || tourJ2 <= 0) {     
+        if (!validerInputsJoueur(heuresJ1,minutesJ1,tourJ1) || !validerInputsJoueur(heuresJ2,minutesJ2,tourJ2)) {
             // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
             alert("Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.");
+        }
+        
         } else  {
         calculerTempsEncours(1, heuresJ1, minutesJ1, tourJ1);
         calculerTempsEncours(2, heuresJ2, minutesJ2, tourJ2);
         // on affiche le temps de tour des joeurs
         afficherDureeTourEnCours(tempsTourJ1, tempsTourJ2);
-                    etatPartie = 1;
+        etatPartie = 1;
         }    
     }
-});   
+);   
+
+function validerInputsJoueur(heures, minutes, tour = null) {
+    if (isNaN(heures) || isNaN(minutes) || isNaN(tour) || 
+        heures === "" || minutes === "" || tour === "" || 
+        heures < 0 || minutes < 0 || tour <= 0)
+             {     
+            return false;             
+        } 
+    if (tour !== null) {
+         if ( isNaN(tour) ||  tour === "" || tour <= 0)
+             {     
+            return false;             
+        } 
+    }
+    return true;
+}
 
 // =======================================
 // Gestion du Clic J1
