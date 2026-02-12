@@ -80,9 +80,28 @@ $nomJ2.addEventListener("input", () => {
 });
 
 
+
+
+
 // =======================================
 // Gestion du Clic "Valider"
 // =======================================
+
+function validerInputsJoueur(heures, minutes, tour = null) {
+    if (isNaN(heures) || isNaN(minutes)  || 
+        heures === "" || minutes === "" || 
+        heures < 0 || minutes < 0 )
+             {     
+            return false;             
+        } 
+    if (tour !== null) {
+         if ( isNaN(tour) ||  tour === "" || tour <= 0)
+             {     
+            return false;             
+        } 
+    }
+    return true;
+}
 
 let etatPartie = 0;
 
@@ -95,18 +114,18 @@ $valider.addEventListener("click", () => {
         const minutes = Number($inputminutesPartie.value);
         
       // 2. Validation stricte
-        if (!validerInputsJoueur(heures,minutes)) {
-            // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
-            alert("Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.");
+        if (validerInputsJoueur(heures,minutes)) {
+            calculerTempsInitiaux(heures, minutes);
+            // on affiche le temps de tour d'un joueur pour éviter les erreurs d'arrondi
+            afficherDureeTour(tempsTourJ1);
+            etatPartie = 1;
         }
         
          else  {
+        // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
+            alert("Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.");
+       
         
-        calculerTempsInitiaux(heures, minutes);
-        
-        // on affiche le temps de tour d'un joueur pour éviter les erreurs d'arrondi
-        afficherDureeTour(tempsTourJ1);
-        etatPartie = 1;
         
         }
     }
@@ -135,21 +154,6 @@ $valider.addEventListener("click", () => {
     }
 );   
 
-function validerInputsJoueur(heures, minutes, tour = null) {
-    if (isNaN(heures) || isNaN(minutes) || isNaN(tour) || 
-        heures === "" || minutes === "" || tour === "" || 
-        heures < 0 || minutes < 0 || tour <= 0)
-             {     
-            return false;             
-        } 
-    if (tour !== null) {
-         if ( isNaN(tour) ||  tour === "" || tour <= 0)
-             {     
-            return false;             
-        } 
-    }
-    return true;
-}
 
 // =======================================
 // Gestion du Clic J1
