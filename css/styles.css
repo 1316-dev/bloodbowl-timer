@@ -71,3 +71,13 @@ display: none;
     transform: rotate(180deg); 
 
    } 
+
+.joueurActif {
+  border: thick solid white;
+  box-shadow: 0 0 8px grey;
+  font-weight: 600;
+}
+
+.grise {
+    opacity: 0.8;         
+}
