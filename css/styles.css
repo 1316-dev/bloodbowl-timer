@@ -1,0 +1,73 @@
+:root {
+    --couleur-vert: rgba(40, 167, 69, 0.5);
+    --couleur-jaune: rgba(255, 193, 7, 0.5);
+    --couleur-neutre: rgba(100, 102, 101, 0.5);
+    
+    --shadow-model: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+
+h1 {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+}
+
+#form {
+    display: block;
+}
+
+.formEncours{
+    display: none;
+}
+
+#consigneJ1, #consigneJ2 {
+display: block;
+}
+
+#tempstour {
+    white-space: pre-line;
+}
+
+#nomJ1, #nomJ2{
+display: none;
+}
+
+#inputNomJ1:focus, #inputTourECJ1:focus, #inputMinutesPartieECJ1:focus, #inputheuresPartieECJ1:focus  {
+    box-shadow: var(--shadow-model), 0 0 8px var(--couleur-vert);
+}
+
+#inputNomJ2:focus, #inputTourECJ2:focus, #inputMinutesPartieECJ2:focus, #inputheuresPartieECJ2:focus  {
+    box-shadow: var(--shadow-model), 0 0 8px var(----couleur-jaune);
+
+}
+
+#inputHeuresPartie:focus, #inputMinutesPartie:focus {
+    box-shadow: var(--shadow-model), 0 0 8px var(--couleur-neutre);
+}
+
+
+
+
+.timerDisplay {
+    font-size: 1.5em;
+}
+
+.imgBackground {
+  min-height: 70vh;
+  background-image: url('../img/terrain.png');
+  background-repeat: no-repeat; 
+  background-position: center center; 
+  background-size: cover; 
+}
+.imgBackgroundBegin {
+  min-height: 70vh;
+  background-image: url('../img/confrontation.png');
+  background-repeat: no-repeat; 
+  background-position: center center; 
+  background-size: cover; 
+}
+
+.rotate { 
+
+    transform: rotate(180deg); 
+
+   } 

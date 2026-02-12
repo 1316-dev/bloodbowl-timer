@@ -7,10 +7,19 @@
 // Éléments du DOM
 
 // Temps de Jeux choisit par les utilisateurs (input heures et input minutes)
-// cette div nommé "form" disparaitra au lancement de la partie
+// cette div nommé "form Nouvelle Partie" disparaitra au lancement de la partie
 export const $form = document.getElementById("form");
 export const $inputHeuresPartie = document.getElementById("inputHeuresPartie");
 export const $inputminutesPartie = document.getElementById("inputminutesPartie");
+
+// cette div nommé "form Partie en Cours" disparaitra au lancement de la partie
+export const $inputHeuresPartieECJ1 = document.getElementById("inputHeuresPartieECJ1");
+export const $inputMinutesPartieECJ1 = document.getElementById("inputMinutesPartieECJ1");
+export const $inputTourECJ1 = document.getElementById("inputTourECJ1");
+
+export const $inputHeuresPartieECJ2 = document.getElementById("inputHeuresPartieECJ2");
+export const $inputMinutesPartieECJ2 = document.getElementById("inputMinutesPartieECJ2");
+export const $inputTourECJ2 = document.getElementById("inputTourECJ2");
 
 //Affichage du temps moyen d'un tour en début de partie
 export const $tempstourElement = document.getElementById("tempstour");
@@ -43,6 +52,7 @@ export const $startJ1 = document.getElementById("J1");
 export const $startJ2 = document.getElementById("J2");
 export const $pause = document.getElementById("pause");
 export const $switch = document.getElementById("switch");
+export const $inputRadio = document.getElementById("radio");   
 
 
 // =======================================
@@ -91,6 +101,10 @@ export function afficherTempsTour(joueur, tempsTotalSecondes) {
 export function afficherDureeTour(tempsTotalSecondes) {
     $tempstourElement.innerText = `Durée d'un tour ${formaterTemps(tempsTotalSecondes)}`;
 }
+export function afficherDureeTourEnCours(tempsTotalSecondesJ1, tempsTotalSecondesJ2) {
+    $tempstourElement.innerText = `Durée d'un tour \nJ1 ${formaterTemps(tempsTotalSecondesJ1)}\nJ2 ${formaterTemps(tempsTotalSecondesJ2)}`;
+}
+
 
 export function afficherNumeroTour(joueur, numeroTour) {
     const element = joueur === 1 ? $numeroTourJ1 : $numeroTourJ2;
@@ -110,10 +124,14 @@ export function mettreAJourNoms(nomJoueurStr, $nomAfficheJoueur) {
  * Le formulaire du choix de l'heure et les consignes passent en display none
  * et les noms des joueurs deviennet visible
  */
+
+
 export function masquerFormulaireEtConsignes() {
     $form.style.display = "none";
     $consigneJ1.style.display = "none";
     $consigneJ2.style.display = "none";
+    $inputRadio.classList.remove('d-flex', 'justify-content-center', 'align-items-center');
+    $inputRadio.classList.add('d-none');
     // Rendez les zones d'affichage des noms visibles si elles étaient cachées
     $nomAfficheJ1.style.display = "block";
     $nomAfficheJ2.style.display = "block";
@@ -128,4 +146,22 @@ export function contourJoueurActif(joueur) {
     elementJoueurPassif.style.border = "";
     elementJoueurPassif.style.boxShadow = "";
     elementJoueurPassif.style.fontWeight = "400";
+}
+
+const $background = document.getElementById("background");
+
+export function afficherTerrain(){
+    $background.classList.remove('imgBackgroundBegin');
+    $background.classList.add('imgBackground')
+}
+
+
+
+export function choixRadio(callback) {
+    $inputRadio.addEventListener("change", (e) => {
+  if (e.target.name === 'radioPartie' && e.target.type === 'radio') {
+    callback(e.target.value);
+  }
+});
+
 }

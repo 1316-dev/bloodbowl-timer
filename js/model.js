@@ -52,12 +52,47 @@ export function calculerTempsInitiaux(heuresPartieChoisies, minutesPartieChoisie
     return convertMinutesToMinutesAndSeconds(tempsTourMinutes); 
 }
 
+export function calculerTempsEncours(joueur,heuresPartieEncours, minutesPartieEncours,tourEncours) {
+    const tempsPartieTotalMinutes =
+        parseInt(heuresPartieEncours) * 60 + parseInt(minutesPartieEncours);
+    
+    // Temps de Tour en minutes (float)
+    const tempsTourMinutes = tempsPartieTotalMinutes / (tourEncours); 
+    
+    // Temps total en secondes
+    const tempsPartieTotalSecondes = tempsPartieTotalMinutes * 60;
+    const tempsTourSecondes = tempsTourMinutes * 60;
+
+    // Mise à jour de l'état global (en secondes)
+    if (joueur === 1) {
+        tempsPartieJ1 = tempsPartieTotalSecondes;
+        tempsTourJ1 = tempsTourSecondes;
+    } else if (joueur === 2) {
+        tempsPartieJ2 = tempsPartieTotalSecondes;
+        tempsTourJ2 = tempsTourSecondes
+    }
+    
+    // Retourne la valeur pour l'affichage
+    return convertMinutesToMinutesAndSeconds(tempsTourMinutes);
+
+}
+
+
+
 // =======================================
 // Mise à jour de l'état (fonctions de jeu)
 // =======================================
 
 export let compteurTourJ1 = 0;
 export let compteurTourJ2 = 0;
+
+export function setCompteurTourJ1(nouvelleValeur) {
+    compteurTourJ1 = nouvelleValeur;
+}
+
+export function setCompteurTourJ2(nouvelleValeur) {
+    compteurTourJ2 = nouvelleValeur;
+}
 
 // Variables pour les IDs des intervalles, utilisé pour arrêter les timers
 export let timerIdJ1 = null;
