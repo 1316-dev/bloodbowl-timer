@@ -175,6 +175,8 @@ export function choixRadio(callback) {
 // =======================================
 
 let compteurRotation = 0;
+
+export function gestionSwitch() {
 $switch.addEventListener("click", () => {
     const $textRotate = document.getElementById("J1"); 
     if (compteurRotation === 0) {
@@ -185,10 +187,13 @@ $switch.addEventListener("click", () => {
         compteurRotation = 0;
     }
 });
+}
 
 // =======================================
 // Gestion des boutons radio
 // =======================================
+
+export const gestionBoutonsRadio = () => {
 
 const $radioNouvelle = document.getElementById("radioNouvelle");
 const $radioEnCours = document.getElementById("radioEnCours");
@@ -212,3 +217,4 @@ $radioNouvelle.addEventListener("click", () => {
     $valider.value = "Calculer Tour";
 
 })
+}

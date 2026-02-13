@@ -5,21 +5,27 @@
 
 // Importations du Model (Logique/État)
 import { 
-    MAX_TOURS,joueurActif, tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2, 
+    MI_TEMPS,MAX_TOURS,joueurActif, tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2, 
     compteurTourJ1, compteurTourJ2, etatCompteurPause, PAUSE_ON, 
     calculerTempsInitiaux, decrementerTemps, passerAuJoueur, reinitialiserTour,calculerTempsEncours, setCompteurTourJ1, setCompteurTourJ2 
 } from './model.js';
 
 // Importations de la View (DOM)
 import { 
-    $inputHeuresPartie, $inputminutesPartie, $nomJ1, $nomJ2,
+    $inputHeuresPartie, $inputminutesPartie, $nomJ1, $nomJ2, gestionBoutonsRadio,
     afficherDureeTour, afficherTempsGlobal, afficherTempsTour, afficherNumeroTour, afficherDureeTourEnCours,
     masquerFormulaireEtConsignes, mettreAJourNoms,
-    $valider, $startJ1, $startJ2, $pause, $switch , $nomAfficheJ1, $nomAfficheJ2, afficherNom,
+    $valider, $startJ1, $startJ2, $pause, gestionSwitch , $nomAfficheJ1, $nomAfficheJ2, afficherNom,
     contourJoueurActif, afficherTerrain, choixRadio, $inputHeuresPartieECJ1, $inputMinutesPartieECJ1, $inputTourECJ1, $inputHeuresPartieECJ2, $inputMinutesPartieECJ2, $inputTourECJ2
 } from './view.js';
 
 
+
+//========================================
+// Fonctions de Contrôleur (Gère les interactions entre le Model et la View)
+// =======================================
+gestionBoutonsRadio();
+gestionSwitch();
 
 // =======================================
 // Fonctions de Timer (Gère l'intervalle)
@@ -180,10 +186,25 @@ $startJ1.addEventListener("click", () => {
             afficherNumeroTour(2, compteurTourJ2);
             
         } else if (joueurActif === 1) {
+            if (compteurTourJ1 === MI_TEMPS && compteurTourJ2 === MI_TEMPS) {
+                arreterTimer(1);
+                etatCompteurPause()
+                confirm("Mi temps ! Appuyer une fois prêt pour lancer le timer ?");
+                etatCompteurPause()
+                reinitialiserTour(2);  
+                contourJoueurActif(1);
+                passerAuJoueur(1);
+                demarrerTimer(1);
+                afficherNumeroTour(1, compteurTourJ1);
+                return;
+            }
             // J1 termine son tour, passe à J2
             arreterTimer(1);
-            reinitialiserTour(1); // Réinitialise le temps de tour du prochain joueur (J2)  
+            reinitialiserTour(2); // Réinitialise le temps de tour du prochain joueur (J2)  
             contourJoueurActif(2);
+            
+
+            
             passerAuJoueur(2);
             if (compteurTourJ1 < MAX_TOURS ) {
             demarrerTimer(2);
@@ -216,11 +237,20 @@ $startJ2.addEventListener("click", () => {
             afficherNumeroTour(1, compteurTourJ1);
             
         } else if (joueurActif === 2) {
-           
+            if (compteurTourJ1 === MI_TEMPS && compteurTourJ2 === MI_TEMPS) {
+                arreterTimer(2);            
+                confirm("Mi temps ! Appuyer une fois prêt pour lancer le timer ?");
+                reinitialiserTour(1); 
+                contourJoueurActif(2);
+                demarrerTimer(2);
+                passerAuJoueur(2);
+                afficherNumeroTour(2, compteurTourJ2);
+                return;
+            }
             // J2 termine son tour, passe à J1
             arreterTimer(2);
-            reinitialiserTour(2);
-             console.log(compteurTourJ1) // Réinitialise le temps de tour du prochain joueur (J1)
+            reinitialiserTour(1); // Réinitialise le temps de tour du prochain joueur (J1)
+      
             contourJoueurActif(1);
             if (compteurTourJ2 < MAX_TOURS ) {
             demarrerTimer(1);
