@@ -10,7 +10,7 @@ import {
   MAX_TOURS,
   joueurActif,
   //tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2, compteurTourJ1, compteurTourJ2,
-  etatCompteurPause,
+  basculerPause,
   PAUSE_ON,
   calculerTempsInitiaux,
   decrementerTemps,
@@ -61,7 +61,6 @@ const ETAT_PARTIE = {
   DEMARREE: 1,
 };
 
-
 //========================================
 // Fonctions de Contrôleur (Gère les interactions entre le Model et la View)
 // =======================================
@@ -70,8 +69,6 @@ gestionSwitch();
 joueurs[1].$btnStart = $startJ1;
 joueurs[2].$btnStart = $startJ2;
 
-
-
 // =======================================
 // Fonctions de Timer (Gère l'intervalle)
 // =======================================
@@ -79,22 +76,20 @@ let timerLoopJ1 = null;
 let timerLoopJ2 = null;
 
 function demarrerTimer(numeroJoueur) {
- 
   if (joueurs[numeroJoueur].timerLoop) {
-    return; 
-  }// Déjà démarré
-    joueurs[numeroJoueur].timerLoop = setInterval(() => {
-      decrementerTemps(numeroJoueur);
-      afficherTempsGlobal(numeroJoueur, joueurs[numeroJoueur].tempsPartie);
-      afficherTempsTour(numeroJoueur, joueurs[numeroJoueur].tempsTour);
-    }, 1000);
+    return;
+  } // Déjà démarré
+  joueurs[numeroJoueur].timerLoop = setInterval(() => {
+    decrementerTemps(numeroJoueur);
+    afficherTempsGlobal(numeroJoueur, joueurs[numeroJoueur].tempsPartie);
+    afficherTempsTour(numeroJoueur, joueurs[numeroJoueur].tempsTour);
+  }, 1000);
 }
 
 function arreterTimer(numeroJoueur) {
   clearInterval(joueurs[numeroJoueur].timerLoop);
   joueurs[numeroJoueur].timerLoop = null;
 }
-
 
 //========================================
 // choix radio - Nouvelle Partie ou en cours
@@ -178,8 +173,46 @@ $valider.addEventListener("click", () => {
         "Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.",
       );
     }
-  } 
+  }
 });
+
+function lancerPartie(joueur, adversaire) {
+  afficherTerrain();
+  masquerFormulaireEtConsignes();
+  afficherNom();
+  afficherTempsGlobal(joueur, joueurs[joueur].tempsPartie);
+  afficherTempsGlobal(adversaire, joueurs[adversaire].tempsPartie);
+  afficherTempsTour(joueur, joueurs[joueur].tempsTour);
+  afficherTempsTour(adversaire, joueurs[adversaire].tempsTour);
+
+  // Début de partie (Joueur clique et donc lance le timer de l'adversaire qui commence la partie)
+
+  contourJoueurActif(adversaire);
+  demarrerTimer(adversaire);
+  passerAuJoueur(adversaire);
+  afficherNumeroTour(adversaire, joueurs[adversaire].compteurTour);
+}
+
+function lancerMiTemps(joueur) {
+  arreterTimer(joueur);
+  basculerPause();
+  confirm("Mi temps ! Appuyer une fois prêt pour lancer le timer ?");
+  basculerPause();
+  reinitialiserTour(joueur);
+  contourJoueurActif(joueur);
+  passerAuJoueur(joueur);
+  demarrerTimer(joueur);
+  afficherNumeroTour(joueur, joueurs[joueur].compteurTour);
+}
+
+function lancerTourAdversaire(joueur, adversaire) {
+  arreterTimer(joueur);
+  reinitialiserTour(joueur);
+  contourJoueurActif(adversaire);
+  passerAuJoueur(adversaire);
+  afficherNumeroTour(adversaire, joueurs[adversaire].compteurTour);
+  demarrerTimer(adversaire);
+}
 
 // =======================================
 // Gestion du Clic Joueurs (Démarrer la partie et passer au joueur suivant)
@@ -188,46 +221,24 @@ $valider.addEventListener("click", () => {
 function gestionClicJoueur(joueur, adversaire) {
   if (etatPartie === ETAT_PARTIE.DEMARREE) {
     if (joueurActif === null) {
-      afficherTerrain();
-      masquerFormulaireEtConsignes();
-      afficherNom();
-      afficherTempsGlobal(joueur, joueurs[joueur].tempsPartie);
-      afficherTempsGlobal(adversaire, joueurs[adversaire].tempsPartie);
-      afficherTempsTour(joueur, joueurs[joueur].tempsTour);
-      afficherTempsTour(adversaire, joueurs[adversaire].tempsTour);
-
-      // Début de partie (Joueur clique et donc lance le timer de l'adversaire qui commence la partie)
-
-      contourJoueurActif(adversaire);
-      demarrerTimer(adversaire);
-      passerAuJoueur(adversaire);
-      afficherNumeroTour(adversaire, joueurs[adversaire].compteurTour);
+      lancerPartie(joueur, adversaire);
     } else if (joueurActif === joueur) {
       // vérifier si les deux joueurs sont à la mi-temps
       if (
         joueurs[joueur].compteurTour === MI_TEMPS &&
         joueurs[adversaire].compteurTour === MI_TEMPS
       ) {
-        arreterTimer(joueur);
-        etatCompteurPause();
-        confirm("Mi temps ! Appuyer une fois prêt pour lancer le timer ?");
-        etatCompteurPause();
-        reinitialiserTour(joueur);
-        contourJoueurActif(joueur);
-        passerAuJoueur(joueur);
-        demarrerTimer(joueur);
-        afficherNumeroTour(joueur, joueurs[joueur].compteurTour);
+        lancerMiTemps(joueur);
         return;
       }
-      // Si ce n'est pas la mi-temps, le joueur termine son tour, passe à l'adversaire
-      arreterTimer(joueur);
-      reinitialiserTour(joueur);
-      contourJoueurActif(adversaire);
-      passerAuJoueur(adversaire);
-      if (joueurs[joueur].compteurTour < MAX_TOURS) {
-        demarrerTimer(adversaire);
+      if (
+        joueurs[joueur].compteurTour === MAX_TOURS &&
+        joueurs[adversaire].compteurTour === MAX_TOURS
+      ) {
+        confirm("Fin du Mathch officiel ! Vous avez besoin de continuer ?");
       }
-      afficherNumeroTour(adversaire, joueurs[adversaire].compteurTour);
+      // Si ce n'est pas la mi-temps ou si les joueurs veulent faire plus de 16 tours (ne cas de besoin)
+      lancerTourAdversaire(joueur, adversaire);
     }
   }
 }
@@ -246,7 +257,7 @@ joueurs[2].$btnStart.addEventListener("click", () => {
 
 $pause.addEventListener("click", () => {
   if (etatPartie === ETAT_PARTIE.DEMARREE) {
-    let etatCompeur = etatCompteurPause();
+    let etatCompeur = basculerPause();
 
     if (etatCompeur === PAUSE_ON) {
       arreterTimer(joueurActif);
@@ -255,8 +266,6 @@ $pause.addEventListener("click", () => {
     }
   }
 });
-
-
 
 // =======================================
 // Gestion du onbeforeunload

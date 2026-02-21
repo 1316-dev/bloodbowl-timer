@@ -38,7 +38,7 @@ const nombreDeJoueurs = Object.keys(joueurs).length;
 // Paramètre lié au règle du jeu
 //==================================
 
-export const MAX_TOURS = 17;
+export const MAX_TOURS = 16;
 export const MI_TEMPS = 8;
 
 // =====================================================
@@ -159,7 +159,7 @@ export const PAUSE_ON = 1;
 export const PAUSE_OFF = 0;
 let compteurPause = PAUSE_OFF;
 
-export function etatCompteurPause() {
+export function basculerPause() {
   if (compteurPause === PAUSE_OFF) {
     compteurPause = PAUSE_ON;
   } else compteurPause = PAUSE_OFF;
