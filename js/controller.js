@@ -53,6 +53,15 @@ import {
   $inputTourECJ2,
 } from "./view.js";
 
+//=====================================
+// Etat de partie
+//=====================================
+const ETAT_PARTIE = {
+  INITIAL: 0,
+  DEMARREE: 1,
+};
+
+
 //========================================
 // Fonctions de Contrôleur (Gère les interactions entre le Model et la View)
 // =======================================
@@ -60,6 +69,8 @@ gestionBoutonsRadio();
 gestionSwitch();
 joueurs[1].$btnStart = $startJ1;
 joueurs[2].$btnStart = $startJ2;
+
+
 
 // =======================================
 // Fonctions de Timer (Gère l'intervalle)
@@ -112,8 +123,8 @@ $nomJ2.addEventListener("input", () => {
 
 function validerInputsJoueur(heures, minutes, tour = null) {
   if (
-    isNaN(heures) ||
-    isNaN(minutes) ||
+    Number.isNaN(heures) ||
+    Number.isNaN(minutes) ||
     heures === "" ||
     minutes === "" ||
     heures < 0 ||
@@ -122,14 +133,14 @@ function validerInputsJoueur(heures, minutes, tour = null) {
     return false;
   }
   if (tour !== null) {
-    if (isNaN(tour) || tour === "" || tour <= 0) {
+    if (Number.isNaN(tour) || tour === "" || tour <= 0) {
       return false;
     }
   }
   return true;
 }
 
-let etatPartie = 0;
+let etatPartie = ETAT_PARTIE.INITIAL;
 
 $valider.addEventListener("click", () => {
   if (choixPartie !== "enCours") {
@@ -141,7 +152,7 @@ $valider.addEventListener("click", () => {
       calculerTempsInitiaux(heures, minutes);
       // on affiche le temps de tour d'un joueur pour éviter les erreurs d'arrondi
       afficherDureeTour(joueurs[1].tempsTour);
-      etatPartie = 1;
+      etatPartie = ETAT_PARTIE.DEMARREE;
     } else {
       // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
       alert(
@@ -167,13 +178,7 @@ $valider.addEventListener("click", () => {
         "Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.",
       );
     }
-  } else {
-    calculerTempsEncours(1, heuresJ1, minutesJ1, tourJ1);
-    calculerTempsEncours(2, heuresJ2, minutesJ2, tourJ2);
-    // on affiche le temps de tour des joeurs
-    afficherDureeTourEnCours(tempsTourJ1, tempsTourJ2);
-    etatPartie = 1;
-  }
+  } 
 });
 
 // =======================================
@@ -181,7 +186,7 @@ $valider.addEventListener("click", () => {
 // =======================================
 
 function gestionClicJoueur(joueur, adversaire) {
-  if (etatPartie === 1) {
+  if (etatPartie === ETAT_PARTIE.DEMARREE) {
     if (joueurActif === null) {
       afficherTerrain();
       masquerFormulaireEtConsignes();
@@ -240,7 +245,7 @@ joueurs[2].$btnStart.addEventListener("click", () => {
 // =======================================
 
 $pause.addEventListener("click", () => {
-  if (etatPartie === 1) {
+  if (etatPartie === ETAT_PARTIE.DEMARREE) {
     let etatCompeur = etatCompteurPause();
 
     if (etatCompeur === PAUSE_ON) {
