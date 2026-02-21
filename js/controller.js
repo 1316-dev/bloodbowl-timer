@@ -67,33 +67,23 @@ joueurs[2].$btnStart = $startJ2;
 let timerLoopJ1 = null;
 let timerLoopJ2 = null;
 
-function demarrerTimer(joueur) {
-  if (joueur === 1) {
-    if (timerLoopJ1) return; // Déjà démarré
-    timerLoopJ1 = setInterval(() => {
-      decrementerTemps();
-      afficherTempsGlobal(1, joueurs[1].tempsPartie);
-      afficherTempsTour(1, joueurs[1].tempsTour);
+function demarrerTimer(numeroJoueur) {
+ 
+  if (joueurs[numeroJoueur].timerLoop) {
+    return; 
+  }// Déjà démarré
+    joueurs[numeroJoueur].timerLoop = setInterval(() => {
+      decrementerTemps(numeroJoueur);
+      afficherTempsGlobal(numeroJoueur, joueurs[numeroJoueur].tempsPartie);
+      afficherTempsTour(numeroJoueur, joueurs[numeroJoueur].tempsTour);
     }, 1000);
-  } else {
-    if (timerLoopJ2) return; // Déjà démarré
-    timerLoopJ2 = setInterval(() => {
-      decrementerTemps();
-      afficherTempsGlobal(2, joueurs[2].tempsPartie);
-      afficherTempsTour(2, joueurs[2].tempsTour);
-    }, 1000);
-  }
 }
 
-function arreterTimer(joueur) {
-  if (joueur === 1) {
-    clearInterval(timerLoopJ1);
-    timerLoopJ1 = null;
-  } else {
-    clearInterval(timerLoopJ2);
-    timerLoopJ2 = null;
-  }
+function arreterTimer(numeroJoueur) {
+  clearInterval(joueurs[numeroJoueur].timerLoop);
+  joueurs[numeroJoueur].timerLoop = null;
 }
+
 
 //========================================
 // choix radio - Nouvelle Partie ou en cours

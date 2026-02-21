@@ -10,30 +10,29 @@
 // Création des joueurs
 //================================
 export const joueurs = {
-    1: {
-      tempsPartie : 0,
-        tempsRestantGlobal : 0,
-        timerPartie: 0,
-        timerTour: 0,
-        toursRestants: 0,
-        numeroTour: 0,
-        compteurTour: 0,
-        $btnStart : null
-        
-    
-    },
-    2: {
-       tempsPartie : 0,
-        tempsRestantGlobal : 0,
-        timerPartie: 0,
-        timerTour: 0,
-        toursRestants: 0,
-        numeroTour: 0,
-        compteurTour: 0,
-        $btnStart : null
-    }
+  1: {
+    tempsPartie: 0,
+    tempsRestantGlobal: 0,
+    tempsTour: 0,
+    toursRestants: 0,
+    numeroTour: 0,
+    compteurTour: 0,
+    timerLoop: null,
+    $btnStart: null,
+  },
+  2: {
+    tempsPartie: 0,
+    tempsRestantGlobal: 0,
+    tempsTour: 0,
+    toursRestants: 0,
+    numeroTour: 0,
+    compteurTour: 0,
+    timerLoop: null,
+    $btnStart: null,
+  },
 };
 
+const nombreDeJoueurs = Object.keys(joueurs).length;
 
 //=================================
 // Paramètre lié au règle du jeu
@@ -66,7 +65,8 @@ export function calculerTempsInitiaux(
   minutesPartieChoisies,
 ) {
   const tempsPartieTotalMinutes =
-    parseInt(heuresPartieChoisies) * 60 + parseInt(minutesPartieChoisies);
+    Number.parseInt(heuresPartieChoisies, 10) * 60 +
+    Number.parseInt(minutesPartieChoisies, 10);
 
   // Temps de Tour en minutes (float)
   const tempsTourMinutes = tempsPartieTotalMinutes / (NbTourParJoueur * 2);
@@ -76,10 +76,10 @@ export function calculerTempsInitiaux(
   const tempsTourSecondes = tempsTourMinutes * 60;
 
   // Mise à jour de l'état global (en secondes)
-  joueurs[1].tempsPartie = tempsPartieTotalSecondes / 2;
-  joueurs[1].tempsTour = tempsTourSecondes;
-  joueurs[2].tempsPartie = tempsPartieTotalSecondes / 2;
-  joueurs[2].tempsTour = tempsTourSecondes;
+  for (let ii = 1; ii <= nombreDeJoueurs; ii++) {
+    joueurs[ii].tempsPartie = tempsPartieTotalSecondes / nombreDeJoueurs;
+    joueurs[ii].tempsTour = tempsTourSecondes;
+  }
 
   // Retourne la valeur pour l'affichage
   return convertMinutesToMinutesAndSeconds(tempsTourMinutes);
@@ -92,7 +92,8 @@ export function calculerTempsEncours(
   tourEncours,
 ) {
   const tempsPartieTotalMinutes =
-    parseInt(heuresPartieEncours) * 60 + parseInt(minutesPartieEncours);
+    Number.parseInt(heuresPartieEncours, 10) * 60 +
+    Number.parseInt(minutesPartieEncours, 10);
 
   // Temps de Tour en minutes (float)
   const tempsTourMinutes = tempsPartieTotalMinutes / tourEncours;
@@ -101,14 +102,9 @@ export function calculerTempsEncours(
   const tempsPartieTotalSecondes = tempsPartieTotalMinutes * 60;
   const tempsTourSecondes = tempsTourMinutes * 60;
 
-  // Mise à jour de l'état global (en secondes)
-  if (joueur === 1) {
-    joueurs[1].tempsPartie = tempsPartieTotalSecondes;
-    joueurs[1].tempsTour = tempsTourSecondes;
-  } else if (joueur === 2) {
-    joueurs[2].tempsPartie = tempsPartieTotalSecondes;
-    joueurs[2].tempsTour = tempsTourSecondes;
-  }
+  // Mise à jour de l'état global (en secondes) uniquement pour le joueur actif
+  joueurs[joueur].tempsPartie = tempsPartieTotalSecondes;
+  joueurs[joueur].tempsTour = tempsTourSecondes;
 
   // Retourne la valeur pour l'affichage
   return convertMinutesToMinutesAndSeconds(tempsTourMinutes);
@@ -118,13 +114,9 @@ export function calculerTempsEncours(
 // Mise à jour de l'état (fonctions de jeu)
 // =======================================
 
-
-
 export function setCompteurTour(numeroJoueur, nouvelleValeur) {
   joueurs[numeroJoueur].compteurTour = nouvelleValeur;
 }
-
-
 
 // Variables pour les IDs des intervalles, utilisé pour arrêter les timers
 export let timerIdJ1 = null;
@@ -135,34 +127,27 @@ export let timerTourIdJ2 = null;
 // null = pas démarré, 1 = J1, 2 = J2
 export let joueurActif = null;
 
-// L'intervalle de temps (1 seconde)
-export function decrementerTemps() {
-  if (joueurActif === 1) {
-    joueurs[1].tempsPartie = joueurs[1].tempsPartie <= 0 ? 0 : joueurs[1].tempsPartie - 1;
-    joueurs[1].tempsTour = joueurs[1].tempsTour <= 0 ? 0 : joueurs[1].tempsTour - 1;
-  } else if (joueurActif === 2) {
-    joueurs[2].tempsPartie = joueurs[2].tempsPartie <= 0 ? 0 : joueurs[2].tempsPartie - 1;
-    joueurs[2].tempsTour = joueurs[2].tempsTour <= 0 ? 0 : joueurs[2].tempsTour - 1;
+// L'intervalle de temps (1 seconde) etn epas descendre sous zéro
+export function decrementerTemps(joueurActif) {
+  joueurs[joueurActif].tempsPartie = Math.max(0, joueurs[joueurActif].tempsPartie - 1);
+  joueurs[joueurActif].tempsTour = Math.max(0, joueurs[joueurActif].tempsTour - 1);
+}
+
+export function reinitialiserTour(numeroJoueur) {
+  const joueur = joueurs[numeroJoueur];
+
+  // Calcul de la durée du prochain tour : Temps global restants diviser par le nombre de tour restant
+  joueur.tempsRestantGlobal = joueur.tempsPartie;
+  joueur.toursRestants = NbTourParJoueur - joueur.compteurTour;
+
+  if (joueur.toursRestants > 0) {
+    joueur.tempsTour = joueur.tempsRestantGlobal / joueur.toursRestants;
   }
 }
 
-
-export function reinitialiserTour(numeroJoueur) {
-    const joueur = joueurs[numeroJoueur];
-
-  // Calcul de la durée du prochain tour : Temps global restants diviser par le nombre de tour restant
-    joueur.tempsRestantGlobal = joueur.tempsPartie;
-    joueur.toursRestants = NbTourParJoueur - joueur.compteurTour;
-    
-    if (joueur.toursRestants > 0) {
-      // IMPORTANT : on réinitialise le tour du prochain joueur
-      joueur.tempsTour = joueur.tempsRestantGlobal / joueur.toursRestants;
-    }
-  } 
-
-  export function passerAuJoueur(numeroJoueur) {
-    const joueur = joueurs[numeroJoueur];
-    joueur.compteurTour += 1;
+export function passerAuJoueur(numeroJoueur) {
+  const joueur = joueurs[numeroJoueur];
+  joueur.compteurTour += 1;
   joueurActif = numeroJoueur;
 }
 
