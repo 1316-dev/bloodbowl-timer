@@ -60,11 +60,6 @@ export function convertMinutesToMinutesAndSeconds(minutesFloat) {
 // =======================================
 
 export const NbTourParJoueur = 16;
-// Variables d'état (temps en secondes)
-// export let tempsPartieJ1 = 0;
-// export let tempsTourJ1 = 0;
-// export let tempsPartieJ2 = 0;
-// export let tempsTourJ2 = 0;
 
 export function calculerTempsInitiaux(
   heuresPartieChoisies,
@@ -123,20 +118,13 @@ export function calculerTempsEncours(
 // Mise à jour de l'état (fonctions de jeu)
 // =======================================
 
-// export let compteurTourJ1 = 0;
-// export let compteurTourJ2 = 0;
+
 
 export function setCompteurTour(numeroJoueur, nouvelleValeur) {
   joueurs[numeroJoueur].compteurTour = nouvelleValeur;
 }
 
-// export function setCompteurTourJ1(nouvelleValeur) {
-//   compteurTourJ1 = nouvelleValeur;
-// }
 
-// export function setCompteurTourJ2(nouvelleValeur) {
-//   compteurTourJ2 = nouvelleValeur;
-// }
 
 // Variables pour les IDs des intervalles, utilisé pour arrêter les timers
 export let timerIdJ1 = null;
@@ -177,35 +165,6 @@ export function reinitialiserTour(numeroJoueur) {
     joueur.compteurTour += 1;
   joueurActif = numeroJoueur;
 }
-
-// export function reinitialiserTour(joueur) {
-//   // Calcul de la durée du prochain tour : Temps global restants diviser par le nombre de tour restant
-//   if (joueur === 1) {
-//     let tempsRestantGlobalJ2 = tempsPartieJ2;
-//     let toursRestantsJ2 = NbTourParJoueur - compteurTourJ2;
-//     if (toursRestantsJ2 > 0) {
-//       // IMPORTANT : on réinitialise le tour du prochain joueur
-//       tempsTourJ2 = tempsRestantGlobalJ2 / toursRestantsJ2;
-//     }
-//   } else if (joueur === 2) {
-//     let tempsRestantGlobalJ1 = tempsPartieJ1;
-//     let toursRestantsJ1 = NbTourParJoueur - compteurTourJ1;
-//     if (toursRestantsJ1 > 0) {
-//       // IMPORTANT : on réinitialise le tour du prochain joueur
-//       tempsTourJ1 = tempsRestantGlobalJ1 / toursRestantsJ1;
-//       console.log(tempsTourJ1, toursRestantsJ1);
-//     }
-//   }
-// }
-
-// export function passerAuJoueur(joueurSuivant) {
-//   if (joueurSuivant === 1) {
-//     compteurTourJ1 += 1;
-//   } else if (joueurSuivant === 2) {
-//     compteurTourJ2 += 1;
-//   }
-//   joueurActif = joueurSuivant;
-// }
 
 // =======================================
 // Mise à jour de l'état du compteur Pause
