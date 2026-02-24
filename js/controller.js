@@ -1,25 +1,73 @@
 // ===================================
-// controller.js 
+// controller.js
 // faire le lien entre la page html et les fichiers view.js et model.js
 // ===================================
 
 // Importations du Model (Logique/État)
-import { 
-    joueurActif, tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2, 
-    compteurTourJ1, compteurTourJ2, etatCompteurPause, PAUSE_ON, 
-    calculerTempsInitiaux, decrementerTemps, passerAuJoueur, reinitialiserTour,calculerTempsEncours, setCompteurTourJ1, setCompteurTourJ2 
-} from './model.js';
+import {
+  joueurs,
+  MI_TEMPS,
+  MAX_TOURS,
+  joueurActif,
+  //tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2, compteurTourJ1, compteurTourJ2,
+  basculerPause,
+  PAUSE_ON,
+  calculerTempsInitiaux,
+  decrementerTemps,
+  passerAuJoueur,
+  reinitialiserTour,
+  calculerTempsEncours,
+  setCompteurTour,
+} from "./model.js";
 
 // Importations de la View (DOM)
-import { 
-    $inputHeuresPartie, $inputminutesPartie, $nomJ1, $nomJ2,
-    afficherDureeTour, afficherTempsGlobal, afficherTempsTour, afficherNumeroTour, afficherDureeTourEnCours,
-    masquerFormulaireEtConsignes, mettreAJourNoms,
-    $valider, $startJ1, $startJ2, $pause, $switch , $nomAfficheJ1, $nomAfficheJ2,
-    contourJoueurActif, afficherTerrain, choixRadio, $inputHeuresPartieECJ1, $inputMinutesPartieECJ1, $inputTourECJ1, $inputHeuresPartieECJ2, $inputMinutesPartieECJ2, $inputTourECJ2
-} from './view.js';
+import {
+  $inputHeuresPartie,
+  $inputminutesPartie,
+  $nomJ1,
+  $nomJ2,
+  gestionBoutonsRadio,
+  afficherDureeTour,
+  afficherTempsGlobal,
+  afficherTempsTour,
+  afficherNumeroTour,
+  afficherDureeTourEnCours,
+  masquerFormulaireEtConsignes,
+  mettreAJourNoms,
+  $valider,
+  $startJ1,
+  $startJ2,
+  $pause,
+  gestionSwitch,
+  $nomAfficheJ1,
+  $nomAfficheJ2,
+  afficherNom,
+  contourJoueurActif,
+  afficherTerrain,
+  choixRadio,
+  $inputHeuresPartieECJ1,
+  $inputMinutesPartieECJ1,
+  $inputTourECJ1,
+  $inputHeuresPartieECJ2,
+  $inputMinutesPartieECJ2,
+  $inputTourECJ2,
+} from "./view.js";
 
+//=====================================
+// Etat de partie
+//=====================================
+const ETAT_PARTIE = {
+  INITIAL: 0,
+  DEMARREE: 1,
+};
 
+//========================================
+// Fonctions de Contrôleur (Gère les interactions entre le Model et la View)
+// =======================================
+gestionBoutonsRadio();
+gestionSwitch();
+joueurs[1].$btnStart = $startJ1;
+joueurs[2].$btnStart = $startJ2;
 
 // =======================================
 // Fonctions de Timer (Gère l'intervalle)
@@ -27,33 +75,20 @@ import {
 let timerLoopJ1 = null;
 let timerLoopJ2 = null;
 
-function demarrerTimer(joueur) {
-    
-    if (joueur === 1) {
-        if (timerLoopJ1) return; // Déjà démarré
-        timerLoopJ1 = setInterval(() => {
-            decrementerTemps();
-            afficherTempsGlobal(1, tempsPartieJ1);
-            afficherTempsTour(1, tempsTourJ1);
-        }, 1000);
-    } else {
-        if (timerLoopJ2) return; // Déjà démarré
-        timerLoopJ2 = setInterval(() => {
-            decrementerTemps();
-            afficherTempsGlobal(2, tempsPartieJ2);
-            afficherTempsTour(2, tempsTourJ2);
-        }, 1000);
-    }
+function demarrerTimer(numeroJoueur) {
+  if (joueurs[numeroJoueur].timerLoop) {
+    return;
+  } // Déjà démarré
+  joueurs[numeroJoueur].timerLoop = setInterval(() => {
+    decrementerTemps(numeroJoueur);
+    afficherTempsGlobal(numeroJoueur, joueurs[numeroJoueur].tempsPartie);
+    afficherTempsTour(numeroJoueur, joueurs[numeroJoueur].tempsTour);
+  }, 1000);
 }
 
-function arreterTimer(joueur) {
-    if (joueur === 1) {
-        clearInterval(timerLoopJ1);
-        timerLoopJ1 = null;
-    } else {
-        clearInterval(timerLoopJ2);
-        timerLoopJ2 = null;
-    }
+function arreterTimer(numeroJoueur) {
+  clearInterval(joueurs[numeroJoueur].timerLoop);
+  joueurs[numeroJoueur].timerLoop = null;
 }
 
 //========================================
@@ -63,208 +98,170 @@ function arreterTimer(joueur) {
 let choixPartie = "nouvelle";
 
 choixRadio((valeurRecue) => {
-    choixPartie = valeurRecue;
-    console.log(choixPartie);
+  choixPartie = valeurRecue;
 });
-
 
 // =======================================
 // Gestion des Inputs Nom joeurs
 // =======================================
 
-let nomJ1Str = "";
-let nomJ2Str = "";
-
 $nomJ1.addEventListener("input", () => {
-    nomJ1Str = $nomJ1.value;
-    mettreAJourNoms(nomJ1Str, $nomAfficheJ1);
+  mettreAJourNoms($nomJ1.value, $nomAfficheJ1);
 });
 $nomJ2.addEventListener("input", () => {
-    nomJ2Str = $nomJ2.value;
-    mettreAJourNoms(nomJ2Str, $nomAfficheJ2);
+  mettreAJourNoms($nomJ2.value, $nomAfficheJ2);
 });
-
-// =======================================
-// Gestion des Inputs Partie en Cours
-// =======================================
-
-let heuresPartieECJ1 = 0;
-let minutesPartieECJ1 = 0;
-let tourECJ1 = 0;
-
-
-$inputHeuresPartieECJ1.addEventListener("input", () => {
-    heuresPartieECJ1 = $inputHeuresPartieECJ1.value;
-});
-$inputMinutesPartieECJ1.addEventListener("input", () => {
-    minutesPartieECJ1 = $inputMinutesPartieECJ1.value;
-});
-$inputTourECJ1.addEventListener("input", () => {
-    setCompteurTourJ1(Number($inputTourECJ1.value));
-    tourECJ1 = Number($inputTourECJ1.value);
-});
-
-let heuresPartieECJ2 = 0;
-let minutesPartieECJ2 = 0;
-let tourECJ2 = 0;
-
-
-$inputHeuresPartieECJ2.addEventListener("input", () => {
-    heuresPartieECJ2 = $inputHeuresPartieECJ2.value;
-});
-$inputMinutesPartieECJ2.addEventListener("input", () => {
-    minutesPartieECJ2 = $inputMinutesPartieECJ2.value;
-});
-$inputTourECJ2.addEventListener("input", () => {
-    setCompteurTourJ2(Number($inputTourECJ2.value));
-    tourECJ2 = Number($inputTourECJ2.value);
-});
-
-// =======================================
-// Gestion des Inputs Nouvelle Partie
-// =======================================
-
-let heuresPartieChoisies = 0;
-let minutesPartieChoisies = 0;
-
-$inputHeuresPartie.addEventListener("input", () => {
-    heuresPartieChoisies = $inputHeuresPartie.value;
-});
-$inputminutesPartie.addEventListener("input", () => {
-    minutesPartieChoisies = $inputminutesPartie.value;
-});
-
-
 
 // =======================================
 // Gestion du Clic "Valider"
 // =======================================
 
-let etatPartie = 0;
-
-$valider.addEventListener("click", () => {
-    
-    
-    if (choixPartie !== "enCours") {
-        
-        const heures = Number(heuresPartieChoisies);
-        const minutes = Number(minutesPartieChoisies);
-        
-        // 2. Validation stricte
-        if (isNaN(heures) || isNaN(minutes) || heures === "" || minutes === "" || heures < 0 || minutes < 0) {
-            
-            // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
-            alert("Merci de remplir les champs d'heures et de minutes avec des nombres valides.");
-            
-        } else  {
-        
-        calculerTempsInitiaux(heures, minutes);
-        
-        // on affiche le temps de tour d'un joueur pour éviter les erreurs d'arrondi
-        afficherDureeTour(tempsTourJ1);
-        etatPartie = 1;
-        
-        }
+function validerInputsJoueur(heures, minutes, tour = null) {
+  if (
+    Number.isNaN(heures) ||
+    Number.isNaN(minutes) ||
+    heures === "" ||
+    minutes === "" ||
+    heures < 0 ||
+    minutes < 0
+  ) {
+    return false;
+  }
+  if (tour !== null) {
+    if (Number.isNaN(tour) || tour === "" || tour <= 0) {
+      return false;
     }
-    else if (choixPartie === "enCours") {
-        const heuresJ1 = Number(heuresPartieECJ1);
-        const minutesJ1 = Number(minutesPartieECJ1);
-        const tourJ1 = Number(tourECJ1);
-        const heuresJ2 = Number(heuresPartieECJ2);
-        const minutesJ2 = Number(minutesPartieECJ2);
-        const tourJ2 = Number(tourECJ2);    
-        // 2. Validation stricte
-        if (isNaN(heuresJ1) || isNaN(minutesJ1) || isNaN(tourJ1) || heuresJ1 === "" || minutesJ1 === "" || tourJ1 === "" || heuresJ1 < 0 || minutesJ1 < 0 || tourJ1 <= 0 ||
-            isNaN(heuresJ2) || isNaN(minutesJ2) || isNaN(tourJ2) || heuresJ2 === "" || minutesJ2 === "" || tourJ2 === "" || heuresJ2 < 0 || minutesJ2 < 0 || tourJ2 <= 0) {     
-            // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
-            alert("Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.");
-        } else  {
-        calculerTempsEncours(1, heuresJ1, minutesJ1, tourJ1);
-        calculerTempsEncours(2, heuresJ2, minutesJ2, tourJ2);
-        // on affiche le temps de tour des joeurs
-        afficherDureeTourEnCours(tempsTourJ1, tempsTourJ2);
-            
+  }
+  return true;
+}
 
-        console.log("ici" +tempsPartieJ1, tempsTourJ1, tempsPartieJ2, tempsTourJ2);
-        etatPartie = 1;
-        }    
+let etatPartie = ETAT_PARTIE.INITIAL;
+
+$valider.addEventListener("click", () => {  
+  console.log("Choix de partie :", choixPartie);
+  if (choixPartie !== "enCours") {
+    const heures = Number($inputHeuresPartie.value);
+    const minutes = Number($inputminutesPartie.value);
+
+    // 2. Validation stricte
+    if (validerInputsJoueur(heures, minutes)) {
+      calculerTempsInitiaux(heures, minutes);
+      // on affiche le temps de tour d'un joueur pour éviter les erreurs d'arrondi
+      afficherDureeTour(joueurs[1].tempsTour);
+      etatPartie = ETAT_PARTIE.DEMARREE;
+    } else {
+      // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
+      alert(
+        "Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.",
+      );
     }
-});   
-
-// =======================================
-// Gestion du Clic J1
-// =======================================
-
-
-$startJ1.addEventListener("click", () => {
-   
-    if (etatPartie === 1) {
-        if (joueurActif === null){
-            afficherTerrain();
-            masquerFormulaireEtConsignes();
-            afficherTempsGlobal(1, tempsPartieJ1);
-            afficherTempsGlobal(2, tempsPartieJ2);
-            afficherTempsTour(1, tempsTourJ1);
-            afficherTempsTour(2, tempsTourJ2);
-
-            // Début de partie (J1 clique et donc lance le timer de J2 qui commence la partie)
-            
-            contourJoueurActif(2);
-            demarrerTimer(2);
-            passerAuJoueur(2);
-            afficherNumeroTour(2, compteurTourJ2);
-            
-        } else if (joueurActif === 1) {
-            // J1 termine son tour, passe à J2
-            arreterTimer(1);
-            reinitialiserTour(1); // Réinitialise le temps de tour du prochain joueur (J2)  
-            contourJoueurActif(2);
-            passerAuJoueur(2);
-            if (compteurTourJ1 < 17 ) {
-            demarrerTimer(2);
-            }
-            afficherNumeroTour(2, compteurTourJ2);
-        }
+  } else if (choixPartie === "enCours") {
+    const heuresJ1 = Number($inputHeuresPartieECJ1.value);
+    const minutesJ1 = Number($inputMinutesPartieECJ1.value);
+    const tourJ1 = Number($inputTourECJ1.value);
+    joueurs[1].compteurTour = tourJ1;
+    calculerTempsEncours(1, heuresJ1, minutesJ1, tourJ1);
+    setCompteurTour(1, tourJ1);
+    const heuresJ2 = Number($inputHeuresPartieECJ2.value);
+    const minutesJ2 = Number($inputMinutesPartieECJ2.value);
+    const tourJ2 = Number($inputTourECJ2.value);
+    joueurs[2].compteurTour = tourJ2;
+    calculerTempsEncours(2, heuresJ2, minutesJ2, tourJ2);
+    setCompteurTour(2, tourJ2);
+    afficherDureeTour(joueurs[1].tempsTour);
+    afficherDureeTour(joueurs[2].tempsTour);
+    etatPartie = ETAT_PARTIE.DEMARREE;
+    // 2. Validation stricte
+    if (
+      !validerInputsJoueur(heuresJ1, minutesJ1, tourJ1) ||
+      !validerInputsJoueur(heuresJ2, minutesJ2, tourJ2)
+    ) {
+      // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
+      alert(
+        "Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.",
+      );
     }
+    if(tourJ1 - tourJ2 > 1 || tourJ2 - tourJ1 > 1) {
+      alert(
+        "Merci de vérifier que les tours des deux joueurs sont cohérents (écart maximum de 1 tour).",
+      );
+    }
+  }
 });
 
+function lancerPartie(joueur, adversaire) {
+  afficherTerrain();
+  masquerFormulaireEtConsignes();
+  afficherNom();
+  afficherTempsGlobal(joueur, joueurs[joueur].tempsPartie);
+  afficherTempsGlobal(adversaire, joueurs[adversaire].tempsPartie);
+  afficherTempsTour(joueur, joueurs[joueur].tempsTour);
+  afficherTempsTour(adversaire, joueurs[adversaire].tempsTour);
+
+  // Début de partie (Joueur clique et donc lance le timer de l'adversaire qui commence la partie)
+
+  contourJoueurActif(adversaire);
+  demarrerTimer(adversaire);
+  passerAuJoueur(adversaire);
+  afficherNumeroTour(adversaire, joueurs[adversaire].compteurTour);
+}
+
+function lancerMiTemps(joueur) {
+  arreterTimer(joueur);
+  basculerPause();
+  confirm("Mi temps ! Appuyer une fois prêt pour lancer le timer ?");
+  basculerPause();
+  reinitialiserTour(joueur);
+  contourJoueurActif(joueur);
+  passerAuJoueur(joueur);
+  demarrerTimer(joueur);
+  afficherNumeroTour(joueur, joueurs[joueur].compteurTour);
+}
+
+function lancerTourAdversaire(joueur, adversaire) {
+  arreterTimer(joueur);
+  reinitialiserTour(joueur);
+  contourJoueurActif(adversaire);
+  passerAuJoueur(adversaire);
+  afficherNumeroTour(adversaire, joueurs[adversaire].compteurTour);
+  demarrerTimer(adversaire);
+}
+
 // =======================================
-// Gestion du Clic J2
+// Gestion du Clic Joueurs (Démarrer la partie et passer au joueur suivant)
 // =======================================
 
-$startJ2.addEventListener("click", () => {
-    
-    if (etatPartie === 1) {
-        if (joueurActif === null){
-            afficherTerrain();
-            masquerFormulaireEtConsignes();
-            afficherTempsGlobal(1, tempsPartieJ1);
-            afficherTempsGlobal(2, tempsPartieJ2);
-            afficherTempsTour(1, tempsTourJ1);
-            afficherTempsTour(2, tempsTourJ2);
-            // Début de partie (J1 commence)
-            contourJoueurActif(1);
-            passerAuJoueur(1);
-            demarrerTimer(1);
-            
-            afficherNumeroTour(1, compteurTourJ1);
-            
-        } else if (joueurActif === 2) {
-           
-            // J2 termine son tour, passe à J1
-            arreterTimer(2);
-            reinitialiserTour(2);
-             console.log(compteurTourJ1) // Réinitialise le temps de tour du prochain joueur (J1)
-            contourJoueurActif(1);
-            if (compteurTourJ2 < 17 ) {
-            demarrerTimer(1);
-            }
-            passerAuJoueur(1);
-            
-            afficherNumeroTour(1, compteurTourJ1);
-             console.log("CJ1 =" + compteurTourJ1)
-        }
+function gestionClicJoueur(joueur, adversaire) {
+  if (etatPartie === ETAT_PARTIE.DEMARREE) {
+    if (joueurActif === null) {
+      lancerPartie(joueur, adversaire);
+    } else if (joueurActif === joueur) {
+      // vérifier si les deux joueurs sont à la mi-temps
+      if (
+        joueurs[joueur].compteurTour === MI_TEMPS &&
+        joueurs[adversaire].compteurTour === MI_TEMPS
+      ) {
+        lancerMiTemps(joueur);
+        return;
+      }
+      if (
+        joueurs[joueur].compteurTour === MAX_TOURS &&
+        joueurs[adversaire].compteurTour === MAX_TOURS
+      ) {
+        confirm("Fin du Mathch officiel ! Vous avez besoin de continuer ?");
+      }
+      // Si ce n'est pas la mi-temps ou si les joueurs veulent faire plus de 16 tours (ne cas de besoin)
+      lancerTourAdversaire(joueur, adversaire);
     }
+  }
+}
+
+joueurs[1].$btnStart.addEventListener("click", () => {
+  gestionClicJoueur(1, 2);
+});
+
+joueurs[2].$btnStart.addEventListener("click", () => {
+  gestionClicJoueur(2, 1);
 });
 
 // =======================================
@@ -272,75 +269,23 @@ $startJ2.addEventListener("click", () => {
 // =======================================
 
 $pause.addEventListener("click", () => {
+  if (etatPartie === ETAT_PARTIE.DEMARREE) {
+    let etatCompeur = basculerPause();
 
-    if (etatPartie === 1) {
-    let etatCompeur = etatCompteurPause();
-
-    if (joueurActif === 1) {
-        if (etatCompeur === PAUSE_ON) {
-            arreterTimer(1);
-        } else {
-            demarrerTimer(1);
-        }
-    } else if (joueurActif === 2) {
-        if (etatCompeur === PAUSE_ON) {
-            arreterTimer(2);
-        } else {
-            demarrerTimer(2);
-        }
-    }
-}
-});
-
-// =======================================
-// Gestion du switch (Rotation de l'affichage)
-// =======================================
-
-let compteurRotation = 0;
-$switch.addEventListener("click", () => {
-    const $textRotate = document.getElementById("J1"); 
-    if (compteurRotation === 0) {
-        $textRotate.classList.add("rotate");
-        compteurRotation = 1;
+    if (etatCompeur === PAUSE_ON) {
+      arreterTimer(joueurActif);
     } else {
-        $textRotate.classList.remove("rotate");
-        compteurRotation = 0;
+      demarrerTimer(joueurActif);
     }
+  }
 });
 
 // =======================================
 // Gestion du onbeforeunload
 // =======================================
 window.onbeforeunload = function () {
-    // Si la partie est démarrée
-    if (joueurActif !== null) {
-        return "Si vous quittez la page le Timer sera réinitialisé?";
-    }
+  // Si la partie est démarrée
+  if (joueurActif !== null) {
+    return "Si vous quittez la page le Timer sera réinitialisé?";
+  }
 };
-
-// =======================================
-// Gestion des boutons radio (Rotation de l'affichage)
-// =======================================
-
-const $radioNouvelle = document.getElementById("radioNouvelle");
-const $radioEnCours = document.getElementById("radioEnCours");
-const $formNouvelle = document.getElementById("formNouvelle");
-const $formEncours = document.querySelectorAll('.formEncours');
-
-$radioEnCours.addEventListener("click", () => {
-    $formNouvelle.style.display = "none";
-    $formEncours.forEach(form => {
-        form.style.display = "block";
-    });
-    $valider.value = "Valider";
-  
-})
-
-$radioNouvelle.addEventListener("click", () => {
-    $formNouvelle.style.display = "block";
-    $formEncours.forEach(form => {
-        form.style.display = "none";
-    });
-    $valider.value = "Calculer Tour";
-
-})
