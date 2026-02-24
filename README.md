@@ -3,7 +3,7 @@
 
 Un chronomètre intelligent et personnalisé conçu pour les coachs de Blood Bowl. Cet outil permet de gérer le rythme du match tout en offrant des analyses en temps réel sur le temps de réflexion des joueurs.
 
-Tester l'application : 1316-dev.github.io/bloodbowl-timer/
+**Tester l'application ici : [https://1316-dev.github.io/bloodbowl-timer/](https://1316-dev.github.io/bloodbowl-timer/)**
 
 À propos du projet
 
