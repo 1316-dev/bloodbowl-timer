@@ -60,7 +60,7 @@ display: none;
 }
 .imgBackgroundBegin {
   min-height: 70vh;
-  background-image: url('../img/confrontation.png');
+  background-image: url('../img/confrontation_desktop.png');
   background-repeat: no-repeat; 
   background-position: center center; 
   background-size: cover; 
