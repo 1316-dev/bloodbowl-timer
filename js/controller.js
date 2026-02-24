@@ -137,7 +137,8 @@ function validerInputsJoueur(heures, minutes, tour = null) {
 
 let etatPartie = ETAT_PARTIE.INITIAL;
 
-$valider.addEventListener("click", () => {
+$valider.addEventListener("click", () => {  
+  console.log("Choix de partie :", choixPartie);
   if (choixPartie !== "enCours") {
     const heures = Number($inputHeuresPartie.value);
     const minutes = Number($inputminutesPartie.value);
@@ -158,11 +159,18 @@ $valider.addEventListener("click", () => {
     const heuresJ1 = Number($inputHeuresPartieECJ1.value);
     const minutesJ1 = Number($inputMinutesPartieECJ1.value);
     const tourJ1 = Number($inputTourECJ1.value);
+    joueurs[1].compteurTour = tourJ1;
+    calculerTempsEncours(1, heuresJ1, minutesJ1, tourJ1);
     setCompteurTour(1, tourJ1);
     const heuresJ2 = Number($inputHeuresPartieECJ2.value);
     const minutesJ2 = Number($inputMinutesPartieECJ2.value);
     const tourJ2 = Number($inputTourECJ2.value);
+    joueurs[2].compteurTour = tourJ2;
+    calculerTempsEncours(2, heuresJ2, minutesJ2, tourJ2);
     setCompteurTour(2, tourJ2);
+    afficherDureeTour(joueurs[1].tempsTour);
+    afficherDureeTour(joueurs[2].tempsTour);
+    etatPartie = ETAT_PARTIE.DEMARREE;
     // 2. Validation stricte
     if (
       !validerInputsJoueur(heuresJ1, minutesJ1, tourJ1) ||
@@ -171,6 +179,11 @@ $valider.addEventListener("click", () => {
       // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
       alert(
         "Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.",
+      );
+    }
+    if(tourJ1 - tourJ2 > 1 || tourJ2 - tourJ1 > 1) {
+      alert(
+        "Merci de vérifier que les tours des deux joueurs sont cohérents (écart maximum de 1 tour).",
       );
     }
   }

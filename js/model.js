@@ -85,8 +85,8 @@ export function calculerTempsInitiaux(
   return convertMinutesToMinutesAndSeconds(tempsTourMinutes);
 }
 
-export function calculerTempsEncours(
-  joueur,
+    
+export function calculerTempsEncours(numeroJoueur,
   heuresPartieEncours,
   minutesPartieEncours,
   tourEncours,
@@ -96,18 +96,16 @@ export function calculerTempsEncours(
     Number.parseInt(minutesPartieEncours, 10);
 
   // Temps de Tour en minutes (float)
-  const tempsTourMinutes = tempsPartieTotalMinutes / tourEncours;
+  const tempsTourMinutes = tempsPartieTotalMinutes / (MAX_TOURS - tourEncours);
 
   // Temps total en secondes
   const tempsPartieTotalSecondes = tempsPartieTotalMinutes * 60;
   const tempsTourSecondes = tempsTourMinutes * 60;
 
   // Mise à jour de l'état global (en secondes) uniquement pour le joueur actif
-  joueurs[joueur].tempsPartie = tempsPartieTotalSecondes;
-  joueurs[joueur].tempsTour = tempsTourSecondes;
-
-  // Retourne la valeur pour l'affichage
-  return convertMinutesToMinutesAndSeconds(tempsTourMinutes);
+  joueurs[numeroJoueur].tempsPartie = tempsPartieTotalSecondes;
+  joueurs[numeroJoueur].tempsTour = tempsTourSecondes;
+  
 }
 
 // =======================================
