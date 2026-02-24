@@ -4,6 +4,10 @@
 //
 // ===================================
 
+import { 
+    MAX_TOURS 
+} from './model.js';
+
 // Éléments du DOM
 
 // Temps de Jeux choisit par les utilisateurs (input heures et input minutes)
@@ -75,7 +79,7 @@ function formaterTemps(secondesTotal) {
     const minutesStr = minutes < 10 ? "0" + minutes : minutes;
     const secondesStr = secondes < 10 ? "0" + secondes : secondes;
 
-    return `${heuresStr} ${minutesStr} : ${secondesStr}`;
+    return heures > 0 ? `${heuresStr} ${minutesStr} : ${secondesStr}` : `${minutesStr} : ${secondesStr}` ;
 }
 
 /**
@@ -108,7 +112,7 @@ export function afficherDureeTourEnCours(tempsTotalSecondesJ1, tempsTotalSeconde
 
 export function afficherNumeroTour(joueur, numeroTour) {
     const element = joueur === 1 ? $numeroTourJ1 : $numeroTourJ2;
-    if(numeroTour < 17) {
+    if(numeroTour < MAX_TOURS) {
     element.innerText = `Tour n° ${numeroTour}`;
     } else element.innerText = `Fin de partie`;
 }
@@ -132,27 +136,27 @@ export function masquerFormulaireEtConsignes() {
     $consigneJ2.style.display = "none";
     $inputRadio.classList.remove('d-flex', 'justify-content-center', 'align-items-center');
     $inputRadio.classList.add('d-none');
-    // Rendez les zones d'affichage des noms visibles si elles étaient cachées
+}
+
+export function afficherNom() {
     $nomAfficheJ1.style.display = "block";
     $nomAfficheJ2.style.display = "block";
 }
 
 export function contourJoueurActif(joueur) {
     const elementJoueurActif = joueur === 1 ? $startJ1 : $startJ2;
-    elementJoueurActif.style.border = "thick solid white";
-    elementJoueurActif.style.boxShadow = "0 0 8px grey";
-    elementJoueurActif.style.fontWeight = "600";
+    elementJoueurActif.classList.add("joueurActif");
+    elementJoueurActif.classList.remove("grise");
     const elementJoueurPassif = joueur === 1 ? $startJ2 : $startJ1;
-    elementJoueurPassif.style.border = "";
-    elementJoueurPassif.style.boxShadow = "";
-    elementJoueurPassif.style.fontWeight = "400";
+    elementJoueurPassif.classList.remove("joueurActif");
+    elementJoueurPassif.classList.add("grise");
 }
 
 const $background = document.getElementById("background");
 
 export function afficherTerrain(){
     $background.classList.remove('imgBackgroundBegin');
-    $background.classList.add('imgBackground')
+    $background.classList.add('imgBackground');
 }
 
 
@@ -164,4 +168,53 @@ export function choixRadio(callback) {
   }
 });
 
+}
+
+// =======================================
+// Gestion du switch (Rotation de l'affichage)
+// =======================================
+
+let compteurRotation = 0;
+
+export function gestionSwitch() {
+$switch.addEventListener("click", () => {
+    const $textRotate = document.getElementById("J1"); 
+    if (compteurRotation === 0) {
+        $textRotate.classList.add("rotate");
+        compteurRotation = 1;
+    } else {
+        $textRotate.classList.remove("rotate");
+        compteurRotation = 0;
+    }
+});
+}
+
+// =======================================
+// Gestion des boutons radio
+// =======================================
+
+export const gestionBoutonsRadio = () => {
+
+const $radioNouvelle = document.getElementById("radioNouvelle");
+const $radioEnCours = document.getElementById("radioEnCours");
+const $formNouvelle = document.getElementById("formNouvelle");
+const $formEncours = document.querySelectorAll('.formEncours');
+
+$radioEnCours.addEventListener("click", () => {
+    $formNouvelle.style.display = "none";
+    $formEncours.forEach(form => {
+        form.style.display = "block";
+    });
+    $valider.value = "Valider";
+  
+})
+
+$radioNouvelle.addEventListener("click", () => {
+    $formNouvelle.style.display = "block";
+    $formEncours.forEach(form => {
+        form.style.display = "none";
+    });
+    $valider.value = "Calculer Tour";
+
+})
 }

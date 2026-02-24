@@ -1,0 +1,20 @@
+METTRE DES GETER DANS LA VIEW
+
+REFACTOR J1 ET J2 dans controller et model
+
+type :
+
+const joueursDOM = {
+    1: {
+        timerPartie: timerPartieElementJ1,
+        timerTour: timerTourElementJ1,
+        numeroTour: $numeroTourJ1,
+        bouton: $startJ1
+    },
+    2: {
+        timerPartie: timerPartieElementJ2,
+        timerTour: timerTourElementJ2,
+        numeroTour: $numeroTourJ2,
+        bouton: $startJ2
+    }
+};
