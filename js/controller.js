@@ -139,7 +139,6 @@ function validerInputsJoueur(heures, minutes, tour = null) {
 let etatPartie = ETAT_PARTIE.INITIAL;
 
 $valider.addEventListener("click", () => {  
-  console.log("Choix de partie :", choixPartie);
   if (choixPartie !== "enCours") {
     const heures = Number($inputHeuresPartie.value);
     const minutes = Number($inputminutesPartie.value);
@@ -258,7 +257,6 @@ function gestionClicJoueur(joueur, adversaire) {
         if (!tourAdditionnel) {
           finDePartie(joueur, adversaire);
           afficherFinPartie();
-          alert("Fin de partie ! Merci d'avoir utilisé le Bloodbowl Timer !");
           return;
         }
       }
