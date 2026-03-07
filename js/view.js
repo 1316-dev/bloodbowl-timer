@@ -112,9 +112,9 @@ export function afficherDureeTourEnCours(tempsTotalSecondesJ1, tempsTotalSeconde
 
 export function afficherNumeroTour(joueur, numeroTour) {
     const element = joueur === 1 ? $numeroTourJ1 : $numeroTourJ2;
-    if(numeroTour < MAX_TOURS) {
-    element.innerText = `Tour n° ${numeroTour}`;
-    } else element.innerText = `Fin de partie`;
+    if(numeroTour === MAX_TOURS) {
+    element.innerText = `Dernier Tour !`;
+    } else element.innerText = `Tour n° ${numeroTour}`;
 }
 
 export function mettreAJourNoms(nomJoueurStr, $nomAfficheJoueur) {
@@ -168,6 +168,11 @@ export function choixRadio(callback) {
   }
 });
 
+}
+
+export function afficherFinPartie() {
+    const $finDePartie = document.getElementById("finDePartie");
+    $finDePartie.style.display = "block";
 }
 
 // =======================================

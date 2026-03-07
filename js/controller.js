@@ -51,6 +51,7 @@ import {
   $inputHeuresPartieECJ2,
   $inputMinutesPartieECJ2,
   $inputTourECJ2,
+  afficherFinPartie,
 } from "./view.js";
 
 //=====================================
@@ -227,6 +228,11 @@ function lancerTourAdversaire(joueur, adversaire) {
   demarrerTimer(adversaire);
 }
 
+function finDePartie(numeroJoueur, adversaire) {
+  arreterTimer(numeroJoueur);
+  arreterTimer(adversaire);
+}
+
 // =======================================
 // Gestion du Clic Joueurs (Démarrer la partie et passer au joueur suivant)
 // =======================================
@@ -248,9 +254,15 @@ function gestionClicJoueur(joueur, adversaire) {
         joueurs[joueur].compteurTour === MAX_TOURS &&
         joueurs[adversaire].compteurTour === MAX_TOURS
       ) {
-        confirm("Fin du Mathch officiel ! Vous avez besoin de continuer ?");
+        const tourAdditionnel = confirm("Fin du Mathch officiel ! Continuez ? ou annuler pour terminer la partie !");
+        if (!tourAdditionnel) {
+          finDePartie(joueur, adversaire);
+          afficherFinPartie();
+          alert("Fin de partie ! Merci d'avoir utilisé le Bloodbowl Timer !");
+          return;
+        }
       }
-      // Si ce n'est pas la mi-temps ou si les joueurs veulent faire plus de 16 tours (ne cas de besoin)
+      // Si ce n'est pas la mi-temps ou si les joueurs veulent faire plus de 16 tours (en cas de besoin)
       lancerTourAdversaire(joueur, adversaire);
     }
   }

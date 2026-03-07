@@ -149,6 +149,7 @@ export function passerAuJoueur(numeroJoueur) {
   joueurActif = numeroJoueur;
 }
 
+
 // =======================================
 // Mise à jour de l'état du compteur Pause
 // =======================================

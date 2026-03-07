@@ -44,6 +44,10 @@ display: none;
     box-shadow: var(--shadow-model), 0 0 8px var(--couleur-neutre);
 }
 
+#finDePartie {
+    display: none;
+    z-index: 100;
+}
 
 
 
