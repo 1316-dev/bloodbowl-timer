@@ -1,6 +1,5 @@
 const CACHE = 'bb-timer-v1';
 const FILES = [
-  '/bloodbowl-timer/',
   '/bloodbowl-timer/index.html',
   '/bloodbowl-timer/css/styles.css',
   '/bloodbowl-timer/css/switch.css',
