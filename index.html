@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="./css/switch.css" />
     <title>Bloodbowl Timer</title>
     <link rel="icon" type="image/x-icon" href="img/favicon.png" alt="icone ballon" >
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#c8a951">
+    <meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
     <header>
@@ -368,6 +371,22 @@
         <p class="text-center fst-italic">
             Si vous quittez la page, le Timer sera réinitialisé
         </p>
+
+        <div class="modal fade" id="bbModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-body text-center p-4">
+        <div id="bbModalIcon" class="fs-1 mb-2"></div>
+        <h5 id="bbModalTitle" class="fw-bold mb-2"></h5>
+        <p id="bbModalMsg" class="text-muted mb-4"></p>
+        <div class="d-flex gap-2">
+          <button id="bbModalCancel" class="btn btn-outline-secondary w-50"></button>
+          <button id="bbModalOk" class="btn w-50"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     </div>
     <footer class="bg-dark text-white mt-5">
         <div class="container py-4">

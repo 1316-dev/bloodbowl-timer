@@ -209,13 +209,24 @@ function lancerPartie(joueur, adversaire) {
 function lancerMiTemps(joueur) {
   arreterTimer(joueur);
   basculerPause();
-  confirm("Mi temps ! Appuyer une fois prêt pour lancer le timer ?");
-  basculerPause();
-  reinitialiserTour(joueur);
-  contourJoueurActif(joueur);
-  passerAuJoueur(joueur);
-  demarrerTimer(joueur);
-  afficherNumeroTour(joueur, joueurs[joueur].compteurTour);
+
+  bbConfirm({
+    icon: '⏱️',
+    title: 'Mi-temps !',
+    message: 'Appuyez quand vous êtes prêt à reprendre.',
+    okLabel: '▶ Lancer le timer',
+    okClass: 'btn-warning',
+    showCancel: false, 
+    onOk: () => {
+      basculerPause();
+      reinitialiserTour(joueur);
+      contourJoueurActif(joueur);
+      passerAuJoueur(joueur);
+      demarrerTimer(joueur);
+      afficherNumeroTour(joueur, joueurs[joueur].compteurTour);
+    }
+  });
+
 }
 
 function lancerTourAdversaire(joueur, adversaire) {
@@ -253,14 +264,25 @@ function gestionClicJoueur(joueur, adversaire) {
         joueurs[joueur].compteurTour === MAX_TOURS &&
         joueurs[adversaire].compteurTour === MAX_TOURS
       ) {
-        const tourAdditionnel = confirm("Fin du Mathch officiel ! Continuez ? ou annuler pour terminer la partie !");
-        if (!tourAdditionnel) {
-          finDePartie(joueur, adversaire);
-          afficherFinPartie();
-          return;
-        }
+        
+        bbConfirm({
+          icon: '🏆',
+          title: 'Fin du match officiel !',
+          message: 'Voulez-vous disputer des tours supplémentaires ?',
+          okLabel: 'Continuer',
+          okClass: 'btn-warning',
+          cancelLabel: 'Terminer la partie',
+          onOk: () => {
+            lancerTourAdversaire(joueur, adversaire);
+          },
+          onCancel: () => {
+            finDePartie(joueur, adversaire);
+            afficherFinPartie();
+          }
+        });
+        return; 
       }
-      // Si ce n'est pas la mi-temps ou si les joueurs veulent faire plus de 16 tours (en cas de besoin)
+    
       lancerTourAdversaire(joueur, adversaire);
     }
   }
@@ -299,3 +321,38 @@ window.onbeforeunload = function () {
     return "Si vous quittez la page le Timer sera réinitialisé?";
   }
 };
+
+// =======================================
+// Gestion modale
+// =======================================
+
+function bbConfirm({ icon, title, message, okLabel, okClass,
+                     cancelLabel, showCancel = true, onOk, onCancel }) {
+
+  document.getElementById('bbModalIcon').textContent = icon;
+  document.getElementById('bbModalTitle').textContent = title;
+  document.getElementById('bbModalMsg').textContent = message;
+
+  const okBtn = document.getElementById('bbModalOk');
+  okBtn.textContent = okLabel;
+  okBtn.className = 'btn w-50 ' + okClass;
+
+  const cancelBtn = document.getElementById('bbModalCancel');
+  cancelBtn.textContent = cancelLabel ?? 'Annuler';
+
+
+  cancelBtn.style.display = showCancel ? '' : 'none';
+  okBtn.className = 'btn ' + (showCancel ? 'w-50' : 'w-100') + ' ' + okClass;
+
+  const modal = new bootstrap.Modal(document.getElementById('bbModal'));
+  okBtn.onclick = () => { modal.hide(); if (onOk) onOk(); };
+  cancelBtn.onclick = () => { modal.hide(); if (onCancel) onCancel(); };
+  modal.show();
+}
+
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/bloodbowl-timer/sw.js')
+    .then(() => console.log('SW enregistré'))
+    .catch(err => console.error('SW erreur:', err));
+}
