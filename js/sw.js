@@ -1,6 +1,19 @@
 const CACHE = 'bb-timer-v1';
-const FILES = ['/', '/index.html', '/css/style.css',
-               '/js/app.js', '/img/Turn-Yellow-600x450.jpg'];
+const FILES = [
+  '/bloodbowl-timer/',
+  '/bloodbowl-timer/index.html',
+  '/bloodbowl-timer/css/styles.css',
+  '/bloodbowl-timer/css/switch.css',
+  '/bloodbowl-timer/js/controller.js',
+  '/bloodbowl-timer/js/model.js',
+  '/bloodbowl-timer/js/view.js',
+  '/bloodbowl-timer/img/favicon192.png',
+  '/bloodbowl-timer/img/favicon512.png',
+  '/bloodbowl-timer/img/favicon.png',
+  '/bloodbowl-timer/img/confrontation_desktop.png',
+  '/bloodbowl-timer/img/terrain.png',
+  '/bloodbowl-timer/img/Turn-Yellow-600x450.jpg'
+];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
