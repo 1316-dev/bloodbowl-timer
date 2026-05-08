@@ -18,6 +18,10 @@ import {
   reinitialiserTour,
   calculerTempsEncours,
   setCompteurTour,
+  sortiePause,
+  sauvegarderEtat,
+  restaurerEtat,
+  supprimerEtat,
 } from "./model.js";
 
 // Importations de la View (DOM)
@@ -71,6 +75,40 @@ joueurs[1].$btnStart = $startJ1;
 joueurs[2].$btnStart = $startJ2;
 
 // =======================================
+// vérification de l'état sauvegardé
+// =======================================
+
+const etatSauvegarde = restaurerEtat();
+if (etatSauvegarde) {
+    bbConfirm({
+        icon: '🔄',
+        title: 'Partie en cours détectée',
+        message: 'Voulez-vous reprendre la partie précédente ?',
+        okLabel: 'Reprendre',
+        okClass: 'btn-success',
+        cancelLabel: 'Nouvelle partie',
+        onOk: () => {
+            etatPartie = ETAT_PARTIE.DEMARREE;
+            afficherTerrain();
+            activerWakeLock();
+            masquerFormulaireEtConsignes();
+            afficherNom();
+            afficherTempsGlobal(1, joueurs[1].tempsPartie);
+            afficherTempsGlobal(2, joueurs[2].tempsPartie);
+            afficherTempsTour(1, joueurs[1].tempsTour);
+            afficherTempsTour(2, joueurs[2].tempsTour);
+            afficherNumeroTour(1, joueurs[1].compteurTour);
+            afficherNumeroTour(2, joueurs[2].compteurTour);
+            contourJoueurActif(etatSauvegarde.joueurActif);
+            demarrerTimer(etatSauvegarde.joueurActif);
+        },
+        onCancel: () => {
+            supprimerEtat();
+        }
+    });
+}
+
+// =======================================
 // Fonctions de Timer (Gère l'intervalle)
 // =======================================
 let timerLoopJ1 = null;
@@ -84,6 +122,7 @@ function demarrerTimer(numeroJoueur) {
     decrementerTemps(numeroJoueur);
     afficherTempsGlobal(numeroJoueur, joueurs[numeroJoueur].tempsPartie);
     afficherTempsTour(numeroJoueur, joueurs[numeroJoueur].tempsTour);
+    sauvegarderEtat();
   }, 1000);
 }
 
@@ -190,6 +229,7 @@ $valider.addEventListener("click", () => {
 });
 
 function lancerPartie(joueur, adversaire) {
+  activerWakeLock();
   afficherTerrain();
   masquerFormulaireEtConsignes();
   afficherNom();
@@ -241,6 +281,7 @@ function lancerTourAdversaire(joueur, adversaire) {
 function finDePartie(numeroJoueur, adversaire) {
   arreterTimer(numeroJoueur);
   arreterTimer(adversaire);
+  supprimerEtat();
 }
 
 // =======================================
@@ -248,6 +289,7 @@ function finDePartie(numeroJoueur, adversaire) {
 // =======================================
 
 function gestionClicJoueur(joueur, adversaire) {
+  sortiePause(); 
   if (etatPartie === ETAT_PARTIE.DEMARREE) {
     if (joueurActif === null) {
       lancerPartie(joueur, adversaire);
@@ -323,6 +365,32 @@ window.onbeforeunload = function () {
 };
 
 // =======================================
+// Choix rapide durée de partie
+// =======================================
+document.querySelectorAll('input[name="dureePartie"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        const heuresInput = document.getElementById('inputHeuresPartie');
+        const minutesInput = document.getElementById('inputminutesPartie');
+
+        switch(e.target.value) {
+            case '2h':
+                heuresInput.value = 2;
+                minutesInput.value = 0;
+                break;
+            case '2h30':
+                heuresInput.value = 2;
+                minutesInput.value = 30;
+                break;
+            case 'perso':
+            default:
+                heuresInput.value = '';
+                minutesInput.value = '';
+                break;
+        }
+    });
+});
+
+// =======================================
 // Gestion modale
 // =======================================
 
@@ -355,4 +423,65 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/bloodbowl-timer/sw.js')
     .then(() => console.log('SW enregistré'))
     .catch(err => console.error('SW erreur:', err));
+}
+
+document.getElementById('selectNomJ1').addEventListener('change', (e) => {
+    document.getElementById('inputNomJ1').value = e.target.value;
+    mettreAJourNoms(e.target.value, $nomAfficheJ1); // ← ajout
+});
+
+document.getElementById('selectNomJ2').addEventListener('change', (e) => {
+    document.getElementById('inputNomJ2').value = e.target.value;
+    mettreAJourNoms(e.target.value, $nomAfficheJ2); // ← ajout
+});
+
+// =======================================
+// Wake Lock — empêche la mise en veille
+// =======================================
+let wakeLock = null;
+let wakeLockToggleInitialized = false;
+
+async function activerWakeLock() {
+    if (!('wakeLock' in navigator)) {
+        document.getElementById('wakeLockUnsupported').style.display = 'block';
+        return;
+    }
+
+    try {
+        wakeLock = await navigator.wakeLock.request('screen');
+        console.log('Wake Lock activé');
+
+        // Toast discret en haut à droite
+        const toastEl = document.getElementById('wakeLockToast');
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+
+        // Toggle sous le bouton Pause
+        document.getElementById('wakeLockInfo').style.display = 'block';
+
+        if (!wakeLockToggleInitialized) {
+            wakeLockToggleInitialized = true;
+            document.getElementById('wakeLockToggle').addEventListener('change', async (e) => {
+                if (e.target.checked) {
+                    try {
+                        wakeLock = await navigator.wakeLock.request('screen');
+                        // Toast à la réactivation aussi
+                        new bootstrap.Toast(toastEl).show();
+                        console.log('Wake Lock réactivé');
+                    } catch (err) {
+                        console.error('Wake Lock refusé:', err);
+                    }
+                } else {
+                    if (wakeLock) {
+                        await wakeLock.release();
+                        wakeLock = null;
+                        console.log('Wake Lock désactivé');
+                    }
+                }
+            });
+        }
+
+    } catch (err) {
+        console.error('Wake Lock refusé:', err);
+    }
 }

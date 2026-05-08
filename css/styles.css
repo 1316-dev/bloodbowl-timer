@@ -1,87 +1,645 @@
-:root {
-    --couleur-vert: rgba(40, 167, 69, 0.5);
-    --couleur-jaune: rgba(255, 193, 7, 0.5);
-    --couleur-neutre: rgba(100, 102, 101, 0.5);
-    
-    --shadow-model: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+/* =============================================
+   Blood Bowl Timer — styles.css
+   Thème : scoreboard football américain
+   ============================================= */
+
+/* barlow-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/barlow-v13-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
+/* barlow-500 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/barlow-v13-latin-500.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* barlow-condensed-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/barlow-condensed-v13-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* barlow-condensed-600 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/barlow-condensed-v13-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* barlow-condensed-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/barlow-condensed-v13-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* barlow-condensed-800 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 800;
+  src: url('../fonts/barlow-condensed-v13-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+
+/* =============================================
+   Variables
+   ============================================= */
+:root {
+    --bb-dark:        #0a0a0f;
+    --bb-dark-2:      #12121c;
+    --bb-dark-3:      #1a1a28;
+    --bb-dark-4:      #22223a;
+    --bb-accent:      #f5c518;
+    --bb-accent-dim:  #c49b10;
+    --bb-vert:        #1a7a3c;
+    --bb-vert-light:  #25a855;
+    --bb-vert-bg:     rgba(26, 122, 60, 0.88);
+    --bb-jaune:       #c47f00;
+    --bb-jaune-light: #f5a800;
+    --bb-jaune-bg:    rgba(196, 127, 0, 0.88);
+    --bb-text:        #e8e8f0;
+    --bb-text-muted:  #7a7a9a;
+    --bb-border:      rgba(255,255,255,0.08);
+
+    --couleur-vert:   rgba(26, 122, 60, 0.5);
+    --couleur-jaune:  rgba(196, 127, 0, 0.5);
+    --couleur-neutre: rgba(100, 102, 101, 0.5);
+    --shadow-model:   inset 0 1px 1px rgba(0,0,0,0.15);
+}
+
+/* =============================================
+   Base
+   ============================================= */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bb-dark);
+    color: var(--bb-text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 16px;
+    min-height: 100vh;
+}
 
 h1 {
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--bb-accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-#form {
-    display: block;
+h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.04em;
 }
 
-.formEncours{
-    display: none;
+/* =============================================
+   Navbar
+   ============================================= */
+.navbar {
+    background-color: var(--bb-dark-2) !important;
+    border-bottom: 2px solid var(--bb-accent);
+    padding: 0.5rem 1rem;
 }
 
-#consigneJ1, #consigneJ2 {
-display: block;
+.navbar-brand {
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 1.3rem !important;
+    color: var(--bb-accent) !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
+/* =============================================
+   Accordéon
+   ============================================= */
+.accordion-item {
+    background-color: var(--bb-dark-2);
+    border: 1px solid var(--bb-border) !important;
+    margin-bottom: 4px;
+    border-radius: 4px !important;
+    overflow: hidden;
+}
+
+.accordion-button {
+    background-color: var(--bb-dark-2) !important;
+    color: var(--bb-text) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: none !important;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--bb-accent) !important;
+    border-bottom: 1px solid var(--bb-border);
+}
+
+.accordion-button::after {
+    filter: invert(1) brightness(0.6);
+}
+
+.accordion-body {
+    background-color: var(--bb-dark-3);
+    color: var(--bb-text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* =============================================
+   Switch & radio
+   ============================================= */
+.text-secondary {
+    color: var(--bb-text-muted) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.form-check-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--bb-text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.form-check-input:checked {
+    background-color: var(--bb-accent);
+    border-color: var(--bb-accent);
+}
+
+/* =============================================
+   Boutons radio durée (btn-group)
+   ============================================= */
+.btn-outline-secondary {
+    color: var(--bb-text-muted);
+    border-color: var(--bb-border);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background-color: var(--bb-dark-3);
+    transition: all 0.15s ease;
+}
+
+.btn-outline-secondary:hover,
+.btn-check:checked + .btn-outline-secondary {
+    background-color: var(--bb-accent);
+    border-color: var(--bb-accent);
+    color: var(--bb-dark);
+    font-weight: 800;
+}
+
+/* =============================================
+   Inputs & Selects
+   ============================================= */
+.form-control,
+.form-select {
+    background-color: var(--bb-dark-3);
+    border: 1px solid var(--bb-border);
+    color: var(--bb-text);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+}
+
+.form-control::placeholder {
+    color: var(--bb-text-muted);
+    font-weight: 400;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--bb-dark-3);
+    color: var(--bb-text);
+    border-color: var(--bb-accent);
+    box-shadow: 0 0 0 2px rgba(245, 197, 24, 0.15);
+}
+
+.form-select option {
+    background-color: var(--bb-dark-2);
+    color: var(--bb-text);
+}
+
+.form-control-sm {
+    background-color: var(--bb-dark-3);
+    border: 1px solid var(--bb-border);
+    color: var(--bb-text);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+}
+
+.form-control-sm:focus {
+    background-color: var(--bb-dark-3);
+    color: var(--bb-text);
+    box-shadow: 0 0 0 2px rgba(245, 197, 24, 0.15);
+}
+
+/* Focus colorés par joueur */
+#inputNomJ1:focus,
+#inputTourECJ1:focus,
+#inputMinutesPartieECJ1:focus,
+#inputHeuresPartieECJ1:focus {
+    box-shadow: var(--shadow-model), 0 0 0 2px rgba(37, 168, 85, 0.35);
+    border-color: var(--bb-vert-light);
+}
+
+#inputNomJ2:focus,
+#inputTourECJ2:focus,
+#inputMinutesPartieECJ2:focus,
+#inputHeuresPartieECJ2:focus {
+    box-shadow: var(--shadow-model), 0 0 0 2px rgba(245, 168, 0, 0.35);
+    border-color: var(--bb-jaune-light);
+}
+
+#inputHeuresPartie:focus,
+#inputminutesPartie:focus {
+    box-shadow: var(--shadow-model), 0 0 0 2px rgba(245, 197, 24, 0.2);
+    border-color: var(--bb-accent);
+}
+
+.border-success { border-color: var(--bb-vert) !important; }
+.border-warning { border-color: var(--bb-jaune) !important; }
+
+/* =============================================
+   Bouton Valider / Pause
+   ============================================= */
+.btn-secondary {
+    background-color: var(--bb-dark-3);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--bb-text);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.15s ease;
+    border-radius: 3px;
+}
+
+.btn-secondary:hover {
+    background-color: var(--bb-dark-2);
+    border-color: var(--bb-accent);
+    color: var(--bb-accent);
+}
+
+.btn-lg {
+    padding: 0.55rem 2.5rem;
+    font-size: 15px;
+}
+
+/* =============================================
+   Labels formulaire
+   ============================================= */
+.form-label {
+    color: var(--bb-text-muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* =============================================
+   Durée d'un tour
+   ============================================= */
 #tempstour {
     white-space: pre-line;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--bb-accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-#nomJ1, #nomJ2{
-display: none;
-}
-
-#inputNomJ1:focus, #inputTourECJ1:focus, #inputMinutesPartieECJ1:focus, #inputheuresPartieECJ1:focus  {
-    box-shadow: var(--shadow-model), 0 0 8px var(--couleur-vert);
-}
-
-#inputNomJ2:focus, #inputTourECJ2:focus, #inputMinutesPartieECJ2:focus, #inputheuresPartieECJ2:focus  {
-    box-shadow: var(--shadow-model), 0 0 8px var(----couleur-jaune);
-
-}
-
-#inputHeuresPartie:focus, #inputMinutesPartie:focus {
-    box-shadow: var(--shadow-model), 0 0 8px var(--couleur-neutre);
-}
-
-#finDePartie {
-    display: none;
-    z-index: 100;
-}
-
-
-
-.timerDisplay {
-    font-size: 1.5em;
+/* =============================================
+   Terrain — background + fondu
+   ============================================= */
+.imgBackgroundBegin {
+    min-height: 70vh;
+    background-image: url('../img/confrontation_desktop.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 6px;
 }
 
 .imgBackground {
-  min-height: 70vh;
-  background-image: url('../img/terrain.png');
-  background-repeat: no-repeat; 
-  background-position: center center; 
-  background-size: cover; 
-}
-.imgBackgroundBegin {
-  min-height: 70vh;
-  background-image: url('../img/confrontation_desktop.png');
-  background-repeat: no-repeat; 
-  background-position: center center; 
-  background-size: cover; 
+    min-height: 70vh;
+    background-image: url('../img/terrain.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 6px;
+    animation: terrainFondu 0.6s ease forwards;
 }
 
-.rotate { 
+@keyframes terrainFondu {
+    from { opacity: 0; transform: scale(0.99); }
+    to   { opacity: 1; transform: scale(1); }
+}
 
-    transform: rotate(180deg); 
+/* =============================================
+   Boutons joueurs J1 / J2 — style scoreboard
+   ============================================= */
+.btn-success {
+    background-color: var(--bb-vert-bg) !important;
+    border: 2px solid var(--bb-vert-light) !important;
+    color: #ffffff !important;
+    border-radius: 4px !important;
+    min-width: 200px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
 
-   } 
+.btn-success:hover {
+    background-color: rgba(37, 168, 85, 0.95) !important;
+    border-color: #4ddb7a !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+}
 
+.btn-warning {
+    background-color: var(--bb-jaune-bg) !important;
+    border: 2px solid var(--bb-jaune-light) !important;
+    color: #ffffff !important;
+    border-radius: 4px !important;
+    min-width: 200px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.btn-warning:hover {
+    background-color: rgba(245, 168, 0, 0.95) !important;
+    border-color: #ffc83d !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+}
+
+/* =============================================
+   Nom du joueur — gros, blanc, lisible
+   ============================================= */
+#nomJ1, #nomJ2 {
+    display: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+    margin-bottom: 4px;
+    line-height: 1.1;
+}
+
+#consigneJ1, #consigneJ2 {
+    display: block;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+/* =============================================
+   Timer display — style scoreboard LED
+   ============================================= */
+.timerDisplay {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+    line-height: 1.3;
+    margin-top: 6px;
+}
+
+#numeroTourJ1, #numeroTourJ2 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 2px;
+}
+
+/* =============================================
+   Joueur actif / inactif
+   ============================================= */
 .joueurActif {
-  border: thick solid white;
-  box-shadow: 0 0 8px grey;
-  font-weight: 600;
+    border-color: var(--bb-text) !important;
+    box-shadow: 0 0 0 2px var(--bb-text), 0 6px 28px rgba(0,0,0,0.5) !important;
 }
 
 .grise {
-    opacity: 0.8;         
+    opacity: 0.45;
+    filter: saturate(0.3) brightness(0.7);
+    transition: all 0.3s ease;
+}
+
+/* =============================================
+   Rotation mode duel
+   ============================================= */
+.rotate {
+    transform: rotate(180deg);
+}
+
+/* =============================================
+   Fin de partie
+   ============================================= */
+#finDePartie {
+    display: none;
+    z-index: 100;
+    animation: terrainFondu 0.4s ease forwards;
+}
+
+#finDePartie .card {
+    background-color: var(--bb-dark-2);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--bb-text);
+    border-radius: 6px;
+}
+
+#finDePartie .card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    color: var(--bb-accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* =============================================
+   Modale bbModal
+   ============================================= */
+.modal-content {
+    background-color: var(--bb-dark-2) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: var(--bb-text) !important;
+    border-radius: 6px !important;
+}
+
+.modal-content h5 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    color: var(--bb-accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+
+.modal-content .text-muted {
+    color: var(--bb-text-muted) !important;
+    font-size: 15px;
+}
+
+.modal-content .btn-outline-secondary {
+    color: var(--bb-text-muted);
+    border-color: rgba(255,255,255,0.15);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.modal-content .btn-warning {
+    background-color: var(--bb-accent) !important;
+    border-color: var(--bb-accent) !important;
+    color: var(--bb-dark) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.modal-content .btn-success {
+    background-color: var(--bb-vert) !important;
+    border-color: var(--bb-vert-light) !important;
+    color: #fff !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.modal-content .btn-danger {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* =============================================
+   Toast Wake Lock
+   ============================================= */
+.toast {
+    background-color: var(--bb-dark-2) !important;
+    border: 1px solid rgba(245, 197, 24, 0.3) !important;
+    color: var(--bb-accent) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.btn-close-white {
+    filter: invert(80%) sepia(40%) saturate(400%) hue-rotate(5deg);
+}
+
+#wakeLockInfo .form-check-label {
+    color: var(--bb-text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+#wakeLockInfo .form-check-input:checked {
+    background-color: var(--bb-accent);
+    border-color: var(--bb-accent);
+}
+
+/* =============================================
+   Avertissement / sauvegarde
+   ============================================= */
+.fst-italic {
+    font-family: 'Barlow', sans-serif;
+    color: var(--bb-text-muted) !important;
+    font-size: 13px;
+}
+
+/* =============================================
+   Footer
+   ============================================= */
+footer {
+    background-color: var(--bb-dark-2) !important;
+    border-top: 2px solid var(--bb-accent);
+}
+
+footer h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    color: var(--bb-accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+
+footer p {
+    color: var(--bb-text-muted);
+    font-size: 13px;
+}
+
+/* =============================================
+   Formulaire state
+   ============================================= */
+#form        { display: block; }
+.formEncours { display: none; }
+
+/* =============================================
+   Transitions ciblées uniquement
+   Pas sur les timers pour éviter le scintillement
+   ============================================= */
+.btn, .form-control, .form-select,
+.accordion-button, .joueurActif, .grise {
+    transition: all 0.2s ease;
+}
+
+.timerDisplay,
+#timerTourJ1, #timerTourJ2,
+#timerPartieJ1, #timerPartieJ2,
+#numeroTourJ1, #numeroTourJ2 {
+    transition: none;
 }

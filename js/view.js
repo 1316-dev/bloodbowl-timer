@@ -10,6 +10,7 @@ import {
 
 // Éléments du DOM
 
+export const $accordionRules = document.getElementById("accordionRules");
 // Temps de Jeux choisit par les utilisateurs (input heures et input minutes)
 // cette div nommé "form Nouvelle Partie" disparaitra au lancement de la partie
 export const $form = document.getElementById("form");
@@ -136,6 +137,7 @@ export function masquerFormulaireEtConsignes() {
     $consigneJ2.style.display = "none";
     $inputRadio.classList.remove('d-flex', 'justify-content-center', 'align-items-center');
     $inputRadio.classList.add('d-none');
+    $accordionRules.classList.add('d-none');
 }
 
 export function afficherNom() {
@@ -211,6 +213,7 @@ $radioEnCours.addEventListener("click", () => {
         form.style.display = "block";
     });
     $valider.value = "Valider";
+     document.getElementById('dureePartieGroup').style.display = 'none';
   
 })
 
@@ -220,6 +223,10 @@ $radioNouvelle.addEventListener("click", () => {
         form.style.display = "none";
     });
     $valider.value = "Calculer Tour";
+    document.getElementById('dureePartieGroup').style.display = '';
 
 })
 }
+
+
+
