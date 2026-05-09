@@ -230,3 +230,6 @@ $radioNouvelle.addEventListener("click", () => {
 
 
 
+export function afficherBoutonMenu() {
+    document.getElementById('btnMenu').style.display = 'inline-block';
+}

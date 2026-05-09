@@ -56,6 +56,7 @@ import {
   $inputMinutesPartieECJ2,
   $inputTourECJ2,
   afficherFinPartie,
+  afficherBoutonMenu
 } from "./view.js";
 
 //=====================================
@@ -91,6 +92,7 @@ if (etatSauvegarde) {
             etatPartie = ETAT_PARTIE.DEMARREE;
             afficherTerrain();
             activerWakeLock();
+            afficherBoutonMenu();
             masquerFormulaireEtConsignes();
             afficherNom();
             afficherTempsGlobal(1, joueurs[1].tempsPartie);
@@ -230,6 +232,7 @@ $valider.addEventListener("click", () => {
 
 function lancerPartie(joueur, adversaire) {
   activerWakeLock();
+  afficherBoutonMenu();
   afficherTerrain();
   masquerFormulaireEtConsignes();
   afficherNom();

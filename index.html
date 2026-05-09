@@ -22,20 +22,21 @@
     <!-- ===== HEADER ===== -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img
-                        src="img/Turn-Yellow-600x450.jpg"
-                        alt="Logo bloodbowl timer"
-                        width="30"
-                        height="30"
-                        class="d-inline-block align-text-top me-2"
-                        loading="lazy"
-                    />
-                    Bloodbowl Timer
-                </a>
-            </div>
-        </nav>
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="img/Turn-Yellow-600x450.jpg" alt="Logo bloodbowl timer"
+                width="30" height="30"
+                class="d-inline-block align-text-top me-2" loading="lazy"/>
+            Bloodbowl Timer
+        </a>
+
+        <button id="btnMenu" class="btn btn-outline-secondary btn-sm ms-auto"
+            style="display:none;"
+            onclick="location.reload()">
+            ↩ Menu
+        </button>
+    </div>
+</nav>
     </header>
 
     <!-- ===== CONTENU PRINCIPAL ===== -->
@@ -91,7 +92,7 @@
                         Lorsque le joueur actif a fini son tour, il appuie sur sa couleur pour stopper
                         son timer et lancer celui de l'adversaire. Si besoin, mettez en pause avec le
                         bouton en bas de page. <strong>Activez le mode duel pour vos parties en face à face</strong>
-                        (rotation timer vert). <strong>Attention : si vous quittez la page, le compteur sera réinitialisé.</strong>
+                        (rotation timer bleu). <strong>Attention : si vous quittez la page, le compteur sera réinitialisé.</strong>
                     </div>
                 </div>
             </div>
@@ -180,7 +181,7 @@
                         <option value="Pierrick">Pierrick</option>
                         <option value="Quentin">Quentin</option>
                     </select>
-                    <input type="text" id="inputNomJ1" placeholder="Nom du joueur vert"
+                    <input type="text" id="inputNomJ1" placeholder="Nom du joueur bleu"
                         class="form-control text-center border border-success" />
                 </div>
             </div>
@@ -219,7 +220,7 @@
                         <option value="Pierrick">Pierrick</option>
                         <option value="Quentin">Quentin</option>
                     </select>
-                    <input type="text" id="inputNomJ2" placeholder="Nom du joueur jaune"
+                    <input type="text" id="inputNomJ2" placeholder="Nom du joueur rouge"
                         class="form-control text-center border border-warning" />
                 </div>
             </div>

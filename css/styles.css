@@ -62,26 +62,27 @@
    Variables
    ============================================= */
 :root {
-    --bb-dark:        #0a0a0f;
-    --bb-dark-2:      #12121c;
-    --bb-dark-3:      #1a1a28;
-    --bb-dark-4:      #22223a;
-    --bb-accent:      #f5c518;
-    --bb-accent-dim:  #c49b10;
-    --bb-vert:        #1a7a3c;
-    --bb-vert-light:  #25a855;
-    --bb-vert-bg:     rgba(26, 122, 60, 0.88);
-    --bb-jaune:       #c47f00;
-    --bb-jaune-light: #f5a800;
-    --bb-jaune-bg:    rgba(196, 127, 0, 0.88);
+    --bb-dark:        #0a0f1a;
+    --bb-dark-2:      #0f1828;
+    --bb-dark-3:      #1a2a40;
+    --bb-dark-4:      #1a3a6b;
+      --bb-accent:      #d4181e;  
+    --bb-accent-dim:  #b31217;  
+    --bb-bleu:        #1a3a6b;  
+    --bb-bleu-light:  #2a5aa0;
+    --bb-bleu-bg:     rgba(26, 58, 107, 0.88);
+    --bb-rouge:       #8b1217;  
+    --bb-rouge-light: #d4181e;  
+    --bb-rouge-bg:    rgba(179, 18, 23, 0.88); 
     --bb-text:        #e8e8f0;
     --bb-text-muted:  #7a7a9a;
     --bb-border:      rgba(255,255,255,0.08);
 
-    --couleur-vert:   rgba(26, 122, 60, 0.5);
-    --couleur-jaune:  rgba(196, 127, 0, 0.5);
+    --couleur-bleu:   rgba(26, 122, 60, 0.5);
+    --couleur-rouge:  rgba(196, 127, 0, 0.5);
     --couleur-neutre: rgba(100, 102, 101, 0.5);
     --shadow-model:   inset 0 1px 1px rgba(0,0,0,0.15);
+     --color-toggle: #159426;
 }
 
 /* =============================================
@@ -103,7 +104,7 @@ h1 {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
     font-size: 2rem;
-    color: var(--bb-accent);
+    color: var(--bb-text);
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -127,7 +128,7 @@ h3 {
     font-family: 'Barlow Condensed', sans-serif !important;
     font-weight: 800 !important;
     font-size: 1.3rem !important;
-    color: var(--bb-accent) !important;
+    color: var(--bb-text) !important;
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
@@ -213,9 +214,9 @@ h3 {
 
 .btn-outline-secondary:hover,
 .btn-check:checked + .btn-outline-secondary {
-    background-color: var(--bb-accent);
-    border-color: var(--bb-accent);
-    color: var(--bb-dark);
+    background-color: var(--bb-text);
+    border-color: var(--bb-text);
+    color: var(--bb-bleu);
     font-weight: 800;
 }
 
@@ -271,7 +272,7 @@ h3 {
 #inputMinutesPartieECJ1:focus,
 #inputHeuresPartieECJ1:focus {
     box-shadow: var(--shadow-model), 0 0 0 2px rgba(37, 168, 85, 0.35);
-    border-color: var(--bb-vert-light);
+    border-color: var(--bb-bleu-light);
 }
 
 #inputNomJ2:focus,
@@ -279,7 +280,7 @@ h3 {
 #inputMinutesPartieECJ2:focus,
 #inputHeuresPartieECJ2:focus {
     box-shadow: var(--shadow-model), 0 0 0 2px rgba(245, 168, 0, 0.35);
-    border-color: var(--bb-jaune-light);
+    border-color: var(--bb-rouge-light);
 }
 
 #inputHeuresPartie:focus,
@@ -288,8 +289,8 @@ h3 {
     border-color: var(--bb-accent);
 }
 
-.border-success { border-color: var(--bb-vert) !important; }
-.border-warning { border-color: var(--bb-jaune) !important; }
+.border-success { border-color: var(--bb-bleu) !important; }
+.border-warning { border-color: var(--bb-rouge) !important; }
 
 /* =============================================
    Bouton Valider / Pause
@@ -338,7 +339,7 @@ h3 {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700;
     font-size: 1.1rem;
-    color: var(--bb-accent);
+    color: var(--bb-text);
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -360,6 +361,7 @@ h3 {
     background-image: url('../img/terrain.png');
     background-repeat: no-repeat;
     background-position: center center;
+    padding-top: 2rem;
     background-size: cover;
     border-radius: 6px;
     animation: terrainFondu 0.6s ease forwards;
@@ -374,8 +376,8 @@ h3 {
    Boutons joueurs J1 / J2 — style scoreboard
    ============================================= */
 .btn-success {
-    background-color: var(--bb-vert-bg) !important;
-    border: 2px solid var(--bb-vert-light) !important;
+    background-color: var(--bb-bleu-bg) !important;
+    border: 2px solid var(--bb-bleu-light) !important;
     color: #ffffff !important;
     border-radius: 4px !important;
     min-width: 200px;
@@ -384,15 +386,14 @@ h3 {
 }
 
 .btn-success:hover {
-    background-color: rgba(37, 168, 85, 0.95) !important;
-    border-color: #4ddb7a !important;
-    transform: translateY(-1px);
+    background-color: var(--bb-bleu-light) !important;
+    border-color: var(--bb-bleu-bg) !important;
     box-shadow: 0 6px 24px rgba(0,0,0,0.5);
 }
 
 .btn-warning {
-    background-color: var(--bb-jaune-bg) !important;
-    border: 2px solid var(--bb-jaune-light) !important;
+    background-color: var(--bb-rouge-bg) !important;
+    border: 2px solid var(--bb-rouge-light) !important;
     color: #ffffff !important;
     border-radius: 4px !important;
     min-width: 200px;
@@ -401,9 +402,8 @@ h3 {
 }
 
 .btn-warning:hover {
-    background-color: rgba(245, 168, 0, 0.95) !important;
-    border-color: #ffc83d !important;
-    transform: translateY(-1px);
+    background-color: var(--bb-rouge-light) !important;
+    border-color: var(--bb-rouge-bg) !important;
     box-shadow: 0 6px 24px rgba(0,0,0,0.5);
 }
 
@@ -470,12 +470,6 @@ h3 {
     transition: all 0.3s ease;
 }
 
-/* =============================================
-   Rotation mode duel
-   ============================================= */
-.rotate {
-    transform: rotate(180deg);
-}
 
 /* =============================================
    Fin de partie
@@ -514,7 +508,7 @@ h3 {
 .modal-content h5 {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
-    color: var(--bb-accent);
+    color: var(--bb-text);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     font-size: 1.2rem;
@@ -545,8 +539,8 @@ h3 {
 }
 
 .modal-content .btn-success {
-    background-color: var(--bb-vert) !important;
-    border-color: var(--bb-vert-light) !important;
+    background-color: var(--bb-bleu) !important;
+    border-color: var(--bb-bleu-light) !important;
     color: #fff !important;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
@@ -567,7 +561,7 @@ h3 {
 .toast {
     background-color: var(--bb-dark-2) !important;
     border: 1px solid rgba(245, 197, 24, 0.3) !important;
-    color: var(--bb-accent) !important;
+    color: var(--bb-text) !important;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 600;
     font-size: 13px;
@@ -587,8 +581,8 @@ h3 {
 }
 
 #wakeLockInfo .form-check-input:checked {
-    background-color: var(--bb-accent);
-    border-color: var(--bb-accent);
+    background-color: var(--color-toggle);
+    border-color: var(--color-toggle);
 }
 
 /* =============================================
@@ -611,7 +605,7 @@ footer {
 footer h4 {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
-    color: var(--bb-accent);
+    color: var(--bb-text);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     font-size: 1rem;
@@ -630,13 +624,38 @@ footer p {
 
 /* =============================================
    Transitions ciblées uniquement
-   Pas sur les timers pour éviter le scintillement
    ============================================= */
-.btn, .form-control, .form-select,
-.accordion-button, .joueurActif, .grise {
+
+/* Boutons joueurs : exclure transform pour ne pas bloquer .rotate */
+.btn-success,
+.btn-warning {
+    transition: background-color 0.2s ease, 
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                opacity 0.2s ease !important;
+}
+
+/* Autres boutons normaux */
+.btn-secondary,
+.btn-outline-secondary {
+    transition: background-color 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease;
+}
+
+/* Rotation mode duel */
+.rotate {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+/* Inputs et selects */
+.form-control, .form-select, .accordion-button,
+.joueurActif, .grise {
     transition: all 0.2s ease;
 }
 
+/* Jamais de transition sur les timers */
 .timerDisplay,
 #timerTourJ1, #timerTourJ2,
 #timerPartieJ1, #timerPartieJ2,
