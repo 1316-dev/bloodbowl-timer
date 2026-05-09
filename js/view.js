@@ -41,16 +41,19 @@ export const $consigneJ2 = document.getElementById("consigneJ2");
 // le nombre de tour
 // le timer Partie
 // le timer Tour
+export const $containerTimerJoueurs = document.getElementById("containerTimerJoueurs"); 
+
 export const $nomAfficheJ1 = document.getElementById("nomJ1");
 export const timerPartieElementJ1 = document.getElementById("timerPartieJ1");
 export const timerTourElementJ1 = document.getElementById("timerTourJ1");
 export const $numeroTourJ1 = document.getElementById("numeroTourJ1");
+export const $nomAdversaireJ1 = document.getElementById("nomAdversaireJ1");
 
 export const $nomAfficheJ2 = document.getElementById("nomJ2"); 
 export const timerPartieElementJ2 = document.getElementById("timerPartieJ2");
 export const timerTourElementJ2 = document.getElementById("timerTourJ2");
 export const $numeroTourJ2 = document.getElementById("numeroTourJ2");
-
+export const $nomAdversaireJ2 = document.getElementById("nomAdversaireJ2");
 // Éléments DOM Actifs (Boutons, Inputs, etc.)
 export const $valider = document.getElementById("valider"); 
 export const $startJ1 = document.getElementById("J1");
@@ -145,6 +148,12 @@ export function afficherNom() {
     $nomAfficheJ2.style.display = "block";
 }
 
+export function afficherTimerJoueurs() {
+    $containerTimerJoueurs.style.display = "block";
+    $nomAdversaireJ1.innerText = $nomJ2.value;
+    $nomAdversaireJ2.innerText = $nomJ1.value;
+}
+
 export function contourJoueurActif(joueur) {
     const elementJoueurActif = joueur === 1 ? $startJ1 : $startJ2;
     elementJoueurActif.classList.add("joueurActif");
@@ -194,6 +203,16 @@ $switch.addEventListener("click", () => {
         compteurRotation = 0;
     }
 });
+}
+
+export function afficherSwitch() {
+     document.getElementById('switchContainer').style.display = 'flex';
+     $switch.checked = true;
+    
+    // Déclencher le rotate sur J1
+    const $textRotate = document.getElementById("J1");
+    $textRotate.classList.add("rotate");
+    compteurRotation = 1;
 }
 
 // =======================================

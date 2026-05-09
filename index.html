@@ -99,7 +99,7 @@
         </div>
 
         <!-- Mode duel switch -->
-        <div class="d-flex justify-content-center align-items-center mt-3">
+        <div class="justify-content-center align-items-center mt-3" id="switchContainer">
             <p class="text-secondary me-2 mb-0">Mode Duel</p>
             <label class="switch">
                 <input type="checkbox" autocomplete="off" id="switch"/>
@@ -262,37 +262,38 @@
         <!-- ===== TERRAIN ===== -->
         <div class="align-items-center imgBackgroundBegin" id="background">
 
-            <!-- Boutons joueurs -->
-            <div class="text-center mt-4">
-                <div id="J1" class="btn btn-success p-4">
-                    <h3 id="nomJ1"></h3>
-                    <h3 id="consigneJ1">Cliquez ici pour lancer <br/>le timer de l'adversaire</h3>
-                    <div class="timerDisplay">
-                        <div id="numeroTourJ1"></div>
-                        <div id="timerTourJ1"></div>
-                        <div id="timerPartieJ1"></div>
+            <div id="containerTimerJoueurs">
+                <!-- Boutons joueurs -->
+                <div class="text-center mt-4">
+                    <div id="J1" class="btn btn-success p-4">
+                            <h3 id="nomJ1"></h3>
+                            <h3 id="consigneJ1">Cliquez ici pour lancer <br/>le timer de votre adversaire : <span id="nomAdversaireJ1"></span></h3>
+                        <div class="timerDisplay">
+                            <div id="numeroTourJ1"></div>
+                            <div id="timerTourJ1"></div>
+                            <div id="timerPartieJ1"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="text-center mt-4">
-                <div id="J2" class="btn btn-danger p-4">
-                    <h3 id="nomJ2"></h3>
-                    <h3 id="consigneJ2">Cliquez ici pour lancer <br/>le timer de l'adversaire</h3>
-                    <div class="timerDisplay">
-                        <div id="numeroTourJ2"></div>
-                        <div id="timerTourJ2"></div>
-                        <div id="timerPartieJ2"></div>
+                <div class="text-center mt-4">
+                    <div id="J2" class="btn btn-danger p-4">
+                        <h3 id="nomJ2"></h3>
+                        <h3 id="consigneJ2">Cliquez ici pour lancer <br/>le timer de votre adversaire : <span id="nomAdversaireJ2"></span></h3>
+                        <div class="timerDisplay">
+                            <div id="numeroTourJ2"></div>
+                            <div id="timerTourJ2"></div>
+                            <div id="timerPartieJ2"></div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Bouton pause -->
+                <div class="text-center mt-4 pb-4">
+                    <input type="button" value="Pause" id="pause" class="btn btn-secondary btn-lg" />
+
+                </div>
             </div>
-
-            <!-- Bouton pause -->
-            <div class="text-center mt-4 pb-4">
-                <input type="button" value="Pause" id="pause" class="btn btn-secondary btn-lg" />
-
-            </div>
-
         </div>
         <!-- fin #background -->
 

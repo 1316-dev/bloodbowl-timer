@@ -57,7 +57,9 @@ import {
   $inputMinutesPartieECJ2,
   $inputTourECJ2,
   afficherFinPartie,
-  afficherBoutonMenu
+  afficherBoutonMenu,
+  afficherSwitch,
+  afficherTimerJoueurs
 } from "./view.js";
 
 //=====================================
@@ -94,6 +96,7 @@ if (etatSauvegarde) {
             afficherTerrain();
             activerWakeLock();
             afficherBoutonMenu();
+            afficherSwitch();
             masquerFormulaireEtConsignes();
             afficherNom();
             afficherTempsGlobal(1, joueurs[1].tempsPartie);
@@ -191,6 +194,7 @@ $valider.addEventListener("click", () => {
       calculerTempsInitiaux(heures, minutes);
       // on affiche le temps de tour d'un joueur pour éviter les erreurs d'arrondi
       afficherDureeTour(joueurs[1].tempsTour);
+      afficherTimerJoueurs();
       etatPartie = ETAT_PARTIE.DEMARREE;
     } else {
       // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
@@ -213,6 +217,7 @@ $valider.addEventListener("click", () => {
     setCompteurTour(2, tourJ2);
     afficherDureeTour(joueurs[1].tempsTour);
     afficherDureeTour(joueurs[2].tempsTour);
+    afficherTimerJoueurs();
     etatPartie = ETAT_PARTIE.DEMARREE;
     // 2. Validation stricte
     if (
@@ -238,6 +243,8 @@ function lancerPartie(joueur, adversaire) {
   afficherTerrain();
   masquerFormulaireEtConsignes();
   afficherNom();
+  afficherSwitch();
+  
   afficherTempsGlobal(joueur, joueurs[joueur].tempsPartie);
   afficherTempsGlobal(adversaire, joueurs[adversaire].tempsPartie);
   afficherTempsTour(joueur, joueurs[joueur].tempsTour);

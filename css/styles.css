@@ -198,6 +198,10 @@ h3 {
     border-color: var(--bb-accent);
 }
 
+#switchContainer {
+ display: none;
+}
+
 /* =============================================
    Boutons radio durée (btn-group)
    ============================================= */
@@ -428,7 +432,12 @@ h3 {
 /* =============================================
    Boutons joueurs J1 / J2 — style scoreboard
    ============================================= */
-.btn-success {
+
+#containerTimerJoueurs {
+    display: none;
+}
+
+   .btn-success {
     background-color: var(--bb-bleu-bg) !important;
     border: 2px solid var(--bb-bleu-light) !important;
     color: #ffffff !important;
@@ -518,8 +527,8 @@ h3 {
 }
 
 .grise {
-    opacity: 0.45;
-    filter: saturate(0.3) brightness(0.7);
+    opacity: 0.90;
+    filter: saturate(0.5) brightness(0.8);
     transition: all 0.3s ease;
 }
 
