@@ -115,6 +115,7 @@ h3 {
     letter-spacing: 0.04em;
 }
 
+
 /* =============================================
    Navbar
    ============================================= */
@@ -271,7 +272,7 @@ h3 {
 #inputTourECJ1:focus,
 #inputMinutesPartieECJ1:focus,
 #inputHeuresPartieECJ1:focus {
-    box-shadow: var(--shadow-model), 0 0 0 2px rgba(37, 168, 85, 0.35);
+    box-shadow: var(--shadow-model), 0 0 0 2px rgba(12, 25, 134, 0.35);
     border-color: var(--bb-bleu-light);
 }
 
@@ -279,8 +280,60 @@ h3 {
 #inputTourECJ2:focus,
 #inputMinutesPartieECJ2:focus,
 #inputHeuresPartieECJ2:focus {
-    box-shadow: var(--shadow-model), 0 0 0 2px rgba(245, 168, 0, 0.35);
+    box-shadow: var(--shadow-model), 0 0 0 2px rgba(245, 8, 0, 0.35);
     border-color: var(--bb-rouge-light);
+}
+
+#inputNomJ2,
+#inputTourECJ2,
+#inputMinutesPartieECJ2,
+#inputHeuresPartieECJ2,
+#selectNomJ2 {
+   background-color: var(--bb-rouge-bg);
+    border-color: var(--bb-rouge-light);
+    color: var(--bb-text);
+}
+
+#inputNomJ2::placeholder,
+#inputTourECJ2::placeholder,
+#inputMinutesPartieECJ2::placeholder,
+#inputHeuresPartieECJ2::placeholder {
+    color: var(--bb-text)
+}
+
+#selectNomJ2 {
+    color: rgba(212, 24, 30, 0.5);
+}
+
+/* Quand une option est sélectionnée, texte blanc */
+#selectNomJ2:not(:invalid) {
+    color: var(--bb-text);
+}
+
+#inputNomJ1,
+#inputTourECJ1,
+#inputMinutesPartieECJ1,
+#inputHeuresPartieECJ1,
+#selectNomJ1 {
+   background-color: var(--bb-bleu-bg);
+    border-color: var(--bb-bleu-light);
+    color: var(--bb-text);
+}
+
+#inputNomJ1::placeholder,
+#inputTourECJ1::placeholder,
+#inputMinutesPartieECJ1::placeholder,
+#inputHeuresPartieECJ1::placeholder {
+    color: var(--bb-text)
+}
+
+#selectNomJ1 {
+    color: var(--bb-bleu-bg)
+}
+
+/* Quand une option est sélectionnée, texte blanc */
+#selectNomJ1:not(:invalid) {
+    color: var(--bb-text);
 }
 
 #inputHeuresPartie:focus,
@@ -290,7 +343,7 @@ h3 {
 }
 
 .border-success { border-color: var(--bb-bleu) !important; }
-.border-warning { border-color: var(--bb-rouge) !important; }
+.border-danger { border-color: var(--bb-rouge) !important; }
 
 /* =============================================
    Bouton Valider / Pause

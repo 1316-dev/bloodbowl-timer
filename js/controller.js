@@ -22,6 +22,7 @@ import {
   sauvegarderEtat,
   restaurerEtat,
   supprimerEtat,
+  reinitialiserJoueurs
 } from "./model.js";
 
 // Importations de la View (DOM)
@@ -106,6 +107,7 @@ if (etatSauvegarde) {
         },
         onCancel: () => {
             supprimerEtat();
+             reinitialiserJoueurs();
         }
     });
 }

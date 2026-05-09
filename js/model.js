@@ -217,3 +217,16 @@ export function restaurerEtat() {
 export function supprimerEtat() {
     localStorage.removeItem('bbState');
 }
+
+
+export function reinitialiserJoueurs() {
+    for (let i = 1; i <= 2; i++) {
+        joueurs[i].tempsPartie  = 0;
+        joueurs[i].tempsTour    = 0;
+        joueurs[i].compteurTour = 0;
+        joueurs[i].timerLoop    = null;
+        joueurs[i].toursRestants = 0;
+        joueurs[i].tempsRestantGlobal = 0;
+    }
+    joueurActif = null;
+}
