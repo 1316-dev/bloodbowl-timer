@@ -166,7 +166,6 @@ export function contourJoueurActif(joueur) {
 const $background = document.getElementById("background");
 
 export function afficherTerrain(){
-    $background.classList.remove('imgBackgroundBegin');
     $background.classList.add('imgBackground');
 }
 
@@ -251,4 +250,11 @@ $radioNouvelle.addEventListener("click", () => {
 
 export function afficherBoutonMenu() {
     document.getElementById('btnMenu').style.display = 'inline-block';
+}
+
+
+export function reinitialiserBoutonPause() {
+    $pause.value = "Pause";
+    $pause.classList.remove('btn-pause-active');
+    $pause.classList.add('btn-pause-inactive');
 }
