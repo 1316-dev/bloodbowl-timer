@@ -139,7 +139,7 @@
         <div id="form">
 
             <div class="row mt-4" id="dureePartieGroup">
-                <div class="col-sm-2 mx-auto w-50">
+                <div class="col-sm-2 mx-auto w-50 w-sm-80">
                     <div class="btn-group w-100" role="group">
                         <input type="radio" class="btn-check" name="dureePartie" id="dureePerso" value="perso" checked autocomplete="off">
                         <label class="btn btn-outline-secondary" for="dureePerso">Personnalisé</label>
@@ -156,14 +156,14 @@
             <!-- Nouvelle partie -->
             <div id="formNouvelle">
                 <div class="row mt-4">
-                    <div class="col-sm-2 mx-auto w-50">
+                    <div class="col-sm-2 mx-auto w-50 w-sm-80">
                         <label for="inputHeuresPartie" class="visually-hidden">Heures</label>
                         <input type="number" id="inputHeuresPartie" placeholder="heures"
                             class="form-control text-center" required min="0" />
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-sm-2 mx-auto w-50">
+                    <div class="col-sm-2 mx-auto w-50 w-sm-80   ">
                         <label for="inputminutesPartie" class="visually-hidden">Minutes</label>
                         <input type="number" id="inputminutesPartie" placeholder="minutes"
                             class="form-control text-center" required min="1" />
@@ -173,7 +173,7 @@
 
             <!-- Select + Input Joueur 1 -->
             <div class="row mt-5">
-                <div class="col-sm-2 mx-auto w-50">
+                <div class="col-sm-2 mx-auto w-50 w-sm-80 ">
                     <select id="selectNomJ1" class="form-select text-center border border-success mb-2">
                         <option value="">-- Choisir un joueur --</option>
                         <option value="Guillian">Guillian</option>
@@ -212,7 +212,7 @@
 
             <!-- Select + Input Joueur 2 -->
             <div class="row mt-3">
-                <div class="col-sm-2 mx-auto w-50">
+                <div class="col-sm-2 mx-auto w-50 w-sm-80   ">
                     <select id="selectNomJ2" class="form-select text-center border border-danger mb-2">
                         <option value="">-- Choisir un joueur --</option>
                         <option value="Guillian">Guillian</option>
@@ -260,14 +260,14 @@
         <!-- fin #form -->
 
         <!-- ===== TERRAIN ===== -->
-        <div class="align-items-center imgBackgroundBegin" id="background">
+        <div class="align-items-center" id="background">
 
             <div id="containerTimerJoueurs">
                 <!-- Boutons joueurs -->
                 <div class="text-center mt-4">
                     <div id="J1" class="btn btn-success p-4">
                             <h3 id="nomJ1"></h3>
-                            <h3 id="consigneJ1">Cliquez ici pour lancer <br/>le timer de votre adversaire : <span id="nomAdversaireJ1"></span></h3>
+                            <h3 id="consigneJ1">Cliquez ici <br/> pour lancer le timer <br/> de <span id="nomAdversaireJ1">  </span>  </h3>
                         <div class="timerDisplay">
                             <div id="numeroTourJ1"></div>
                             <div id="timerTourJ1"></div>
@@ -279,7 +279,7 @@
                 <div class="text-center mt-4">
                     <div id="J2" class="btn btn-danger p-4">
                         <h3 id="nomJ2"></h3>
-                        <h3 id="consigneJ2">Cliquez ici pour lancer <br/>le timer de votre adversaire : <span id="nomAdversaireJ2"></span></h3>
+                        <h3 id="consigneJ2">Cliquez ici <br/> pour lancer le timer <br/> de <span id="nomAdversaireJ2">  </span>  </h3>
                         <div class="timerDisplay">
                             <div id="numeroTourJ2"></div>
                             <div id="timerTourJ2"></div>
@@ -290,7 +290,7 @@
 
                 <!-- Bouton pause -->
                 <div class="text-center mt-4 pb-4">
-                    <input type="button" value="Pause" id="pause" class="btn btn-secondary btn-lg" />
+                    <input type="button" value="Pause" id="pause" class="btn btn-pause-inactive btn-lg" />
 
                 </div>
             </div>
