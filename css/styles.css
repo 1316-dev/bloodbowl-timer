@@ -57,6 +57,12 @@
   src: url('../fonts/barlow-condensed-v13-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
+@media (max-width: 576px) {
+    .w-sm-80 {
+        width: 80% !important;
+    }
+}
+
 
 /* =============================================
    Variables
@@ -271,6 +277,14 @@ h3 {
     box-shadow: 0 0 0 2px rgba(245, 197, 24, 0.15);
 }
 
+#form {
+    display: block;
+    background-image: url('../img/confrontation_desktop.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
 /* Focus colorés par joueur */
 #inputNomJ1:focus,
 #inputTourECJ1:focus,
@@ -376,6 +390,39 @@ h3 {
     font-size: 15px;
 }
 
+.btn-pause-active {
+    background-color: var(--bb-dark-2) !important;
+    border-color: var(--bb-accent) !important;
+    color: var(--bb-accent) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.15s ease;
+    border-radius: 3px;
+}
+
+.btn-pause-active:hover,
+.btn-pause-inactive:hover {
+    background-color: var(--bb-accent-dim) !important;
+    border-color: var(--bb-accent-dim) !important;
+    color: var(--bb-dark) !important;
+}
+
+.btn-pause-inactive {
+    background-color: var(--bb-dark-3) !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.15s ease;
+    border-radius: 3px;
+    color: var(--bb-text);
+}
+
+
 /* =============================================
    Labels formulaire
    ============================================= */
@@ -404,14 +451,14 @@ h3 {
 /* =============================================
    Terrain — background + fondu
    ============================================= */
-.imgBackgroundBegin {
+/* .imgBackgroundBegin {
     min-height: 70vh;
     background-image: url('../img/confrontation_desktop.png');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     border-radius: 6px;
-}
+} */
 
 .imgBackground {
     min-height: 70vh;
@@ -453,7 +500,7 @@ h3 {
     box-shadow: 0 6px 24px rgba(0,0,0,0.5);
 }
 
-.btn-warning {
+.btn-danger {
     background-color: var(--bb-rouge-bg) !important;
     border: 2px solid var(--bb-rouge-light) !important;
     color: #ffffff !important;
@@ -463,10 +510,14 @@ h3 {
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
-.btn-warning:hover {
+.btn-danger:hover {
     background-color: var(--bb-rouge-light) !important;
     border-color: var(--bb-rouge-bg) !important;
     box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+}
+
+#consigneJ1, #consigneJ2 {
+    line-height: 2;
 }
 
 /* =============================================
@@ -479,7 +530,7 @@ h3 {
     font-size: 1.8rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #ffffff;
+     color: var(--bb-text);
     text-shadow: 0 2px 8px rgba(0,0,0,0.9);
     margin-bottom: 4px;
     line-height: 1.1;
@@ -490,7 +541,7 @@ h3 {
     font-family: 'Barlow', sans-serif;
     font-weight: 400;
     font-size: 0.9rem;
-    color: rgba(255,255,255,0.75);
+    color: var(--bb-text);
     margin-bottom: 4px;
     line-height: 1.4;
 }
