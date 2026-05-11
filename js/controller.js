@@ -59,7 +59,8 @@ import {
   afficherFinPartie,
   afficherBoutonMenu,
   afficherSwitch,
-  afficherTimerJoueurs
+  afficherTimerJoueurs,
+  reinitialiserBoutonPause
 } from "./view.js";
 
 //=====================================
@@ -97,6 +98,7 @@ if (etatSauvegarde) {
             activerWakeLock();
             afficherBoutonMenu();
             afficherSwitch();
+            afficherTimerJoueurs();
             masquerFormulaireEtConsignes();
             afficherNom();
             afficherTempsGlobal(1, joueurs[1].tempsPartie);
@@ -302,6 +304,7 @@ function finDePartie(numeroJoueur, adversaire) {
 
 function gestionClicJoueur(joueur, adversaire) {
   sortiePause(); 
+  reinitialiserBoutonPause();
   if (etatPartie === ETAT_PARTIE.DEMARREE) {
     if (joueurActif === null) {
       lancerPartie(joueur, adversaire);
@@ -355,15 +358,21 @@ joueurs[2].$btnStart.addEventListener("click", () => {
 // =======================================
 
 $pause.addEventListener("click", () => {
-  if (etatPartie === ETAT_PARTIE.DEMARREE) {
-    let etatCompeur = basculerPause();
+    if (etatPartie === ETAT_PARTIE.DEMARREE) {
+        let etatCompeur = basculerPause();
 
-    if (etatCompeur === PAUSE_ON) {
-      arreterTimer(joueurActif);
-    } else {
-      demarrerTimer(joueurActif);
+        if (etatCompeur === PAUSE_ON) {
+            arreterTimer(joueurActif);
+            $pause.value = "▶ Reprendre";
+            $pause.classList.add('btn-pause-active');
+              $pause.classList.remove('btn-pause-inactive');
+        } else {
+            demarrerTimer(joueurActif);
+            $pause.value = "Pause";
+            $pause.classList.remove('btn-pause-active');
+            $pause.classList.add('btn-pause-inactive');
+        }
     }
-  }
 });
 
 // =======================================
@@ -387,7 +396,7 @@ document.querySelectorAll('input[name="dureePartie"]').forEach(radio => {
         switch(e.target.value) {
             case '2h':
                 heuresInput.value = 2;
-                minutesInput.value = 0;
+                minutesInput.value = '00';
                 break;
             case '2h30':
                 heuresInput.value = 2;
@@ -468,7 +477,7 @@ async function activerWakeLock() {
         const toast = new bootstrap.Toast(toastEl);
         toast.show();
 
-        // Toggle sous le bouton Pause
+        // Toggle haut dessus du terrain pour permettre à l'utilisateur de réactiver le Wake Lock si jamais il est désactivé (ex: changement d'onglet)
         document.getElementById('wakeLockInfo').style.display = 'block';
 
         if (!wakeLockToggleInitialized) {
