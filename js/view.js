@@ -11,6 +11,7 @@ import {
 // Éléments du DOM
 
 export const $accordionRules = document.getElementById("accordionRules");
+const $beginBackground = document.getElementById("beginBackground");
 // Temps de Jeux choisit par les utilisateurs (input heures et input minutes)
 // cette div nommé "form Nouvelle Partie" disparaitra au lancement de la partie
 export const $form = document.getElementById("form");
@@ -167,6 +168,8 @@ const $background = document.getElementById("background");
 
 export function afficherTerrain(){
     $background.classList.add('imgBackground');
+    $beginBackground.style.display = "none";
+    
 }
 
 

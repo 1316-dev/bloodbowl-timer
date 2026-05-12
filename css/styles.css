@@ -121,6 +121,24 @@ h3 {
     letter-spacing: 0.04em;
 }
 
+/* =============================================
+   Background de début
+   ============================================= */
+
+
+#beginBackground {
+    position: fixed;
+    top: 100;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/confrontation_desktop.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    z-index: -1;
+    pointer-events: none;
+}
 
 /* =============================================
    Navbar
@@ -277,13 +295,13 @@ h3 {
     box-shadow: 0 0 0 2px rgba(245, 197, 24, 0.15);
 }
 
-#form {
+/* #form {
     display: block;
     background-image: url('../img/confrontation_desktop.png');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-}
+} */
 
 /* Focus colorés par joueur */
 #inputNomJ1:focus,

@@ -246,7 +246,6 @@ function lancerPartie(joueur, adversaire) {
   masquerFormulaireEtConsignes();
   afficherNom();
   afficherSwitch();
-  
   afficherTempsGlobal(joueur, joueurs[joueur].tempsPartie);
   afficherTempsGlobal(adversaire, joueurs[adversaire].tempsPartie);
   afficherTempsTour(joueur, joueurs[joueur].tempsTour);
