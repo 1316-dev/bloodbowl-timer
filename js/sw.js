@@ -28,7 +28,7 @@ self.addEventListener('install', e => {
       .then(c => c.addAll(FILES))
       .then(() => console.log('SW installé avec succès'))
       .catch(err => {
-        console.error('SW installation échouée :', err); 
+        console.error('SW installation échouée :', err); // ← va voir quel fichier pose problème
         throw err;
       })
   );

@@ -10,6 +10,8 @@ import {
 
 // Éléments du DOM
 
+export const $accordionRules = document.getElementById("accordionRules");
+const $beginBackground = document.getElementById("beginBackground");
 // Temps de Jeux choisit par les utilisateurs (input heures et input minutes)
 // cette div nommé "form Nouvelle Partie" disparaitra au lancement de la partie
 export const $form = document.getElementById("form");
@@ -29,8 +31,8 @@ export const $inputTourECJ2 = document.getElementById("inputTourECJ2");
 export const $tempstourElement = document.getElementById("tempstour");
 
 // Nom des joueurs
-export const $nomJ1 = document.getElementById("inputNomJ1"); 
-export const $nomJ2 = document.getElementById("inputNomJ2"); 
+export const $inputNomJ1 = document.getElementById("inputNomJ1"); 
+export const $inputNomJ2 = document.getElementById("inputNomJ2"); 
 
 // Consigne qui doivent disparaitre au démarrage
 export const $consigneJ1 = document.getElementById("consigneJ1");
@@ -40,16 +42,19 @@ export const $consigneJ2 = document.getElementById("consigneJ2");
 // le nombre de tour
 // le timer Partie
 // le timer Tour
+export const $containerTimerJoueurs = document.getElementById("containerTimerJoueurs"); 
+
 export const $nomAfficheJ1 = document.getElementById("nomJ1");
 export const timerPartieElementJ1 = document.getElementById("timerPartieJ1");
 export const timerTourElementJ1 = document.getElementById("timerTourJ1");
 export const $numeroTourJ1 = document.getElementById("numeroTourJ1");
+export const $nomAdversaireJ1 = document.getElementById("nomAdversaireJ1");
 
 export const $nomAfficheJ2 = document.getElementById("nomJ2"); 
 export const timerPartieElementJ2 = document.getElementById("timerPartieJ2");
 export const timerTourElementJ2 = document.getElementById("timerTourJ2");
 export const $numeroTourJ2 = document.getElementById("numeroTourJ2");
-
+export const $nomAdversaireJ2 = document.getElementById("nomAdversaireJ2");
 // Éléments DOM Actifs (Boutons, Inputs, etc.)
 export const $valider = document.getElementById("valider"); 
 export const $startJ1 = document.getElementById("J1");
@@ -117,8 +122,14 @@ export function afficherNumeroTour(joueur, numeroTour) {
     } else element.innerText = `Tour n° ${numeroTour}`;
 }
 
-export function mettreAJourNoms(nomJoueurStr, $nomAfficheJoueur) {
+export function mettreAJourNoms(nomJoueurStr, $nomAfficheJoueur, $inputNomJoueur) {
+    if (nomJoueurStr === "Autre") {
+        $inputNomJoueur.classList.remove('d-none');
+        $nomAfficheJoueur.innerText = nomJoueurStr;        
+        return;
+    }
     $nomAfficheJoueur.innerText = nomJoueurStr;
+    if ($inputNomJoueur) {$inputNomJoueur.classList.add('d-none');}
    
 }
 
@@ -126,7 +137,7 @@ export function mettreAJourNoms(nomJoueurStr, $nomAfficheJoueur) {
 /**
  * Une fois la partie lancer plusieurs éléments changent d'état
  * Le formulaire du choix de l'heure et les consignes passent en display none
- * et les noms des joueurs deviennet visible
+ * et les noms des joueurs deviennent visible
  */
 
 
@@ -136,11 +147,18 @@ export function masquerFormulaireEtConsignes() {
     $consigneJ2.style.display = "none";
     $inputRadio.classList.remove('d-flex', 'justify-content-center', 'align-items-center');
     $inputRadio.classList.add('d-none');
+    $accordionRules.classList.add('d-none');
 }
 
 export function afficherNom() {
     $nomAfficheJ1.style.display = "block";
     $nomAfficheJ2.style.display = "block";
+}
+
+export function afficherTimerJoueurs() {
+    $containerTimerJoueurs.style.display = "block";
+    $nomAdversaireJ1.innerText = $inputNomJ2.value;
+    $nomAdversaireJ2.innerText = $inputNomJ1.value;
 }
 
 export function contourJoueurActif(joueur) {
@@ -155,10 +173,10 @@ export function contourJoueurActif(joueur) {
 const $background = document.getElementById("background");
 
 export function afficherTerrain(){
-    $background.classList.remove('imgBackgroundBegin');
     $background.classList.add('imgBackground');
+    $beginBackground.style.display = "none";
+    
 }
-
 
 
 export function choixRadio(callback) {
@@ -194,6 +212,16 @@ $switch.addEventListener("click", () => {
 });
 }
 
+export function afficherSwitch() {
+     document.getElementById('switchContainer').style.display = 'flex';
+     $switch.checked = true;
+    
+    // Déclencher le rotate sur J1
+    const $textRotate = document.getElementById("J1");
+    $textRotate.classList.add("rotate");
+    compteurRotation = 1;
+}
+
 // =======================================
 // Gestion des boutons radio
 // =======================================
@@ -211,6 +239,7 @@ $radioEnCours.addEventListener("click", () => {
         form.style.display = "block";
     });
     $valider.value = "Valider";
+     document.getElementById('dureePartieGroup').style.display = 'none';
   
 })
 
@@ -220,6 +249,20 @@ $radioNouvelle.addEventListener("click", () => {
         form.style.display = "none";
     });
     $valider.value = "Calculer Tour";
+    document.getElementById('dureePartieGroup').style.display = '';
 
 })
+}
+
+
+
+export function afficherBoutonMenu() {
+    document.getElementById('btnMenu').style.display = 'inline-block';
+}
+
+
+export function reinitialiserBoutonPause() {
+    $pause.value = "Pause";
+    $pause.classList.remove('btn-pause-active');
+    $pause.classList.add('btn-pause-inactive');
 }
