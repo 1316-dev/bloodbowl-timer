@@ -134,12 +134,12 @@ h3 {
 
 #beginBackground {
   position: fixed;
-  top: 100;
+  top: 100px;
   left: 0;
   opacity: 0.6;
   width: 100%;
   height: 100%;
-  background-image: url("../img/confrontation_desktop.png");
+  background-image: url("../img/confrontation_mobile.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -147,10 +147,9 @@ h3 {
   pointer-events: none;
 }
 
-@media screen and (max-width: 576px) {
+@media (min-width: 577px) {
   #beginBackground {
-    background-image: url("../img/confrontation_mobile.png");
-    opacity: 0.6;
+    background-image: url("../img/confrontation_desktop.png");
   }
 }
 
