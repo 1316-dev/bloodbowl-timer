@@ -1,4 +1,4 @@
-const CACHE = 'bb-timer-v3';
+const CACHE = 'bb-timer-v4';
 const FILES = [
   'index.html',
   'css/styles.css',
@@ -25,13 +25,12 @@ self.addEventListener('install', e => {
     e.waitUntil(
         caches.open(CACHE)
             .then(c => c.addAll(FILES))
-            .then(() => self.skipWaiting()) 
+            .then(() => self.skipWaiting())
     );
 });
 
 self.addEventListener('activate', e => {
     e.waitUntil(
-        // Nettoie les anciens caches
         caches.keys().then(keys => {
             return Promise.all(
                 keys.filter(key => key !== CACHE)
@@ -42,7 +41,21 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+    if (e.request.method !== 'GET') return;
+    if (e.request.url.startsWith('chrome-extension://')) return;
+
     e.respondWith(
-        caches.match(e.request).then(r => r || fetch(e.request))
+        caches.match(e.request)
+            .then(cached => {
+                if (cached) return cached;
+                return fetch(e.request)
+                    .then(response => {
+                        if (!response || response.status !== 200) return response;
+                        const clone = response.clone();
+                        caches.open(CACHE).then(c => c.put(e.request, clone));
+                        return response;
+                    });
+            })
+            .catch(() => caches.match('index.html'))
     );
 });
