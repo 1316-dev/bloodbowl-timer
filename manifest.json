@@ -1,10 +1,11 @@
 {
   "name": "Blood Bowl Timer",
   "short_name": "BB Timer",
+  "description": "Timer personnalisé pour les matches de Bloodbowl",
   "start_url": "/bloodbowl-timer/",
   "display": "standalone",
   "background_color": "#1a1a2e",
-  "theme_color": "#c8a951",
+  "theme_color": "#d4181e",
   "icons": [
     { "src": "./img/favicon192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "./img/favicon512.png", "sizes": "512x512", "type": "image/png" }

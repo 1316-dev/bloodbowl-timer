@@ -10,6 +10,7 @@ const FILES = [
   '/bloodbowl-timer/img/favicon512.png',
   '/bloodbowl-timer/img/favicon.png',
   '/bloodbowl-timer/img/confrontation_desktop.png',
+  '/bloodbowl-timer/img/confrontation_mobile.png',
   '/bloodbowl-timer/img/terrain.png',
   '/bloodbowl-timer/img/Turn-Yellow-600x450.jpg',
     '/bloodbowl-timer/fonts/barlow-v13-latin-regular.woff2',
