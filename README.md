@@ -1,23 +1,53 @@
-🏈 Blood Bowl Timer
+# 🏈 Blood Bowl Timer
 
+[![Hébergement - GitHub Pages](https://img.shields.io/badge/H%C3%A9bergement-GitHub%20Pages-blue?style=flat-square&logo=github)](https://1316-dev.github.io/bloodbowl-timer/)
+[![Langage - Vanilla JS](https://img.shields.io/badge/Langage-Vanilla%20JS-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/fr/docs/Web/JavaScript)
+[![Style - CSS3](https://img.shields.io/badge/Style-CSS3-1572B6?style=flat-square&logo=css3)](https://developer.mozilla.org/fr/docs/Web/CSS)
+[![Framework - Bootstrap](https://img.shields.io/badge/Framework-Bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
+[![Techno - PWA](https://img.shields.io/badge/Techno-PWA-5A0FC8?style=flat-square&logo=progressive-web-apps&logoColor=white)](https://web.dev/progressive-web-apps/)
 
-Un chronomètre intelligent et personnalisé conçu pour les coachs de Blood Bowl. Cet outil permet de gérer le rythme du match tout en offrant des analyses en temps réel sur le temps de réflexion des joueurs.
+> Une application web responsive (Single Page Application) conçue pour chronométrer et rythmer les tours de jeu du célèbre jeu de plateau **Blood Bowl**. 
 
-**Tester l'application ici : [https://1316-dev.github.io/bloodbowl-timer/](https://1316-dev.github.io/bloodbowl-timer/)**
+🔗 **[Accéder à l'application en ligne](https://1316-dev.github.io/bloodbowl-timer/)**
 
-À propos du projet
+---
 
-Dans le cadre d'un groupe de joueurs passionnés, ce timer a été développé pour répondre à des besoins spécifiques. L'objectif est de fluidifier les parties sans sacrifier la profondeur stratégique.
-Pourquoi ce timer ?
+## 📌 Présentation du projet
 
-Contrairement à un simple compte à rebours, cet outil aide les coachs à s'auto-réguler en calculant dynamiquement leur cadence de jeu.
+Dans le cadre du jeu de plateau Blood Bowl, la gestion du temps par tour est cruciale pour maintenir le rythme et l'intensité des matchs. Cette application offre une solution mobile et accessible directement sur le terrain (à côté du plateau) pour automatiser le décompte des tours et le temps imparti à chaque coach. Le calcul du temps moyen par tour permet également aux joueurs de se projeter sur la durée globale de la partie.
 
-Le timer intègre quatre indicateurs demandés par le groupe de joueur pilote du projet :
+### Fonctionnalités clés
+* ⏱️ **Chronomètre asynchrone :** Gestion précise du temps par tour avec décompte visuel en temps réel et calcul de la moyenne de temps par tour.
+* 🔄 **Alternance des tours :** Passage instantané d'un joueur à l'autre avec réinitialisation automatique du timer.
+* ⏸️ **Gestion des pauses :** Possibilité de suspendre le temps à tout moment (gestion des litiges ou des mi-temps).
+* 📱 **Design Mobile-First :** Interface entièrement responsive, pensée pour une utilisation sur smartphone ou tablette au bord du plateau.
+* 📶 **Mode Hors-ligne (PWA) :** L'application est installable et reste 100% fonctionnelle même sans connexion internet.
 
-    - Temps du tour actuel : Pour ne pas dépasser la limite légale et mettre la pression sur l'adversaire.
-    
-    - Calcul du temps moyen : pour optimiser votre réflexion. Le timer recalcule la moyenne de temps passée sur chaque tour.
-    
-    - Temps de partie restant : Une vue globale pour l'ensemble du match !
-    
-    - Compteur de tours : Suivi précis de la progression de la mi-temps.
+---
+
+## 🛠️ Architecture & Choix Techniques
+
+Pour ce projet, l'accent a été mis sur la maîtrise des technologies web fondamentales couplées à des outils professionnels, afin de garantir des performances optimales, un chargement instantané et un grand confort utilisateur.
+
+* **HTML5 Semantic :** Structuration propre du DOM pour garantir une bonne accessibilité.
+* **Bootstrap 5 & CSS3 :** Utilisation du framework CSS combiné à des ajustements personnalisés pour concevoir une interface moderne, thématique et responsive.
+* **Vanilla JavaScript (ES6+) :** Programmation de toute la logique métier côté client :
+  * Utilisation d'algorithmes de gestion du temps basés sur l'asynchronisme JavaScript (`setInterval`, `clearInterval`).
+  * Manipulation dynamique du DOM pour mettre à jour l'affichage et les statistiques en temps réel selon l'état du jeu.
+* **Progressive Web App (PWA) & API Web avancées :**
+  * Implémentation d'un **Web App Manifest** pour permettre l'installation de l'application sur l'écran d'accueil des appareils mobiles.
+  * Mise en place d'un **Service Worker** pour gérer la mise en cache des ressources critiques (HTML, CSS, JS, images), garantissant un fonctionnement optimal hors-ligne.
+  * Exploitation de l'API **Screen Wake Lock** pour maintenir l'écran de l'appareil allumé pendant toute la durée du match, évitant ainsi les verrouillages intempestifs en cours de jeu.
+  * Utilisation du **LocalStorage** pour la persistance des données, permettant de sauvegarder et de restaurer l'état de la partie en cours en cas de fermeture accidentelle du navigateur.
+
+---
+
+## 🚀 Installation et Déploiement Local
+
+### Prérequis
+Aucun serveur ni base de données requis. Un simple navigateur web suffit.
+
+### Lancement en local
+1. Cloner le dépôt :
+   ```bash
+   git clone [https://github.com/1316-dev/bloodbowl-timer.git](https://github.com/1316-dev/bloodbowl-timer.git)
