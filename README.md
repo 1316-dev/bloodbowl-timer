@@ -16,18 +16,22 @@
 
 Dans le cadre du jeu de plateau Blood Bowl, la gestion du temps par tour est cruciale pour maintenir le rythme et l'intensité des matchs. Cette application offre une solution mobile et accessible directement sur le terrain (à côté du plateau) pour automatiser le décompte des tours et le temps imparti à chaque coach. Le calcul du temps moyen par tour permet également aux joueurs de se projeter sur la durée globale de la partie.
 
+![Aperçu du timer](img/screen_timer.png)
+
 ### Fonctionnalités clés
 * ⏱️ **Chronomètre asynchrone :** Gestion précise du temps par tour avec décompte visuel en temps réel et calcul de la moyenne de temps par tour.
 * 🔄 **Alternance des tours :** Passage instantané d'un joueur à l'autre avec réinitialisation automatique du timer.
 * ⏸️ **Gestion des pauses :** Possibilité de suspendre le temps à tout moment (gestion des litiges ou des mi-temps).
 * 📱 **Design Mobile-First :** Interface entièrement responsive, pensée pour une utilisation sur smartphone ou tablette au bord du plateau.
+* 🔄 **Mode Duel :** rotation automatique de l'affichage pour les parties en face à face
 * 📶 **Mode Hors-ligne (PWA) :** L'application est installable et reste 100% fonctionnelle même sans connexion internet.
+* 🔆 **API Screen Wake Lock :** pour maintenir l'écran allumé pendant la partie (toggle on/off)
 
 ---
 
 ## 🛠️ Architecture & Choix Techniques
 
-Pour ce projet, l'accent a été mis sur la maîtrise des technologies web fondamentales couplées à des outils professionnels, afin de garantir des performances optimales, un chargement instantané et un grand confort utilisateur.
+Le projet suit une architecture **MVC (Model-View-Controller)** en Vanilla JavaScript.
 
 * **HTML5 Semantic :** Structuration propre du DOM pour garantir une bonne accessibilité.
 * **Bootstrap 5 & CSS3 :** Utilisation du framework CSS combiné à des ajustements personnalisés pour concevoir une interface moderne, thématique et responsive.
@@ -48,6 +52,5 @@ Pour ce projet, l'accent a été mis sur la maîtrise des technologies web fonda
 Aucun serveur ni base de données requis. Un simple navigateur web suffit.
 
 ### Lancement en local
-1. Cloner le dépôt :
-   ```bash
-   git clone [https://github.com/1316-dev/bloodbowl-timer.git](https://github.com/1316-dev/bloodbowl-timer.git)
+git clone https://github.com/1316-dev/bloodbowl-timer.git
+
