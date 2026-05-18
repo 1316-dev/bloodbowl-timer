@@ -207,7 +207,7 @@ export function choixRadio(callback) {
 
 export function afficherFinPartie() {
   const $finDePartie = document.getElementById("finDePartie");
-  $finDePartie.style.display = "block";
+  $finDePartie.classList.remove("d-none");
 }
 
 // =======================================
