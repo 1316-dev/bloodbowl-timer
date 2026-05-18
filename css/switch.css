@@ -9,6 +9,7 @@
  --color-green: #159426;
 }
 
+
 .slider {
  display: inline-block;
  width: var(--button-width);
