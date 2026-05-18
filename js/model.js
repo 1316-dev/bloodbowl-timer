@@ -85,8 +85,8 @@ export function calculerTempsInitiaux(
   return convertMinutesToMinutesAndSeconds(tempsTourMinutes);
 }
 
-    
-export function calculerTempsEncours(numeroJoueur,
+export function calculerTempsEncours(
+  numeroJoueur,
   heuresPartieEncours,
   minutesPartieEncours,
   tourEncours,
@@ -105,7 +105,6 @@ export function calculerTempsEncours(numeroJoueur,
   // Mise à jour de l'état global (en secondes) uniquement pour le joueur actif
   joueurs[numeroJoueur].tempsPartie = tempsPartieTotalSecondes;
   joueurs[numeroJoueur].tempsTour = tempsTourSecondes;
-  
 }
 
 // =======================================
@@ -127,8 +126,14 @@ export let joueurActif = null;
 
 // L'intervalle de temps (1 seconde) etn epas descendre sous zéro
 export function decrementerTemps(joueurActif) {
-  joueurs[joueurActif].tempsPartie = Math.max(0, joueurs[joueurActif].tempsPartie - 1);
-  joueurs[joueurActif].tempsTour = Math.max(0, joueurs[joueurActif].tempsTour - 1);
+  joueurs[joueurActif].tempsPartie = Math.max(
+    0,
+    joueurs[joueurActif].tempsPartie - 1,
+  );
+  joueurs[joueurActif].tempsTour = Math.max(
+    0,
+    joueurs[joueurActif].tempsTour - 1,
+  );
 }
 
 export function reinitialiserTour(numeroJoueur) {
@@ -149,7 +154,6 @@ export function passerAuJoueur(numeroJoueur) {
   joueurActif = numeroJoueur;
 }
 
-
 // =======================================
 // Mise à jour de l'état du compteur Pause
 // =======================================
@@ -166,7 +170,7 @@ export function basculerPause() {
 }
 
 export function sortiePause() {
-  if(compteurPause === PAUSE_ON) {
+  if (compteurPause === PAUSE_ON) {
     compteurPause = PAUSE_OFF;
   }
   return compteurPause;
@@ -177,56 +181,58 @@ export function sortiePause() {
 // =======================================
 
 export function sauvegarderEtat() {
-    localStorage.setItem('bbState', JSON.stringify({
-        j1: {
-            tempsPartie: joueurs[1].tempsPartie,
-            tempsTour: joueurs[1].tempsTour,
-            compteurTour: joueurs[1].compteurTour,
-        },
-        j2: {
-            tempsPartie: joueurs[2].tempsPartie,
-            tempsTour: joueurs[2].tempsTour,
-            compteurTour: joueurs[2].compteurTour,
-        },
-        joueurActif,
-    }));
+  localStorage.setItem(
+    "bbState",
+    JSON.stringify({
+      j1: {
+        tempsPartie: joueurs[1].tempsPartie,
+        tempsTour: joueurs[1].tempsTour,
+        compteurTour: joueurs[1].compteurTour,
+      },
+      j2: {
+        tempsPartie: joueurs[2].tempsPartie,
+        tempsTour: joueurs[2].tempsTour,
+        compteurTour: joueurs[2].compteurTour,
+      },
+      joueurActif,
+    }),
+  );
 }
 
 export function restaurerEtat() {
-    try {
-        const saved = JSON.parse(localStorage.getItem('bbState'));
-        if (!saved) return false;
+  try {
+    const saved = JSON.parse(localStorage.getItem("bbState"));
+    if (!saved) return false;
 
-        joueurs[1].tempsPartie  = saved.j1.tempsPartie;
-        joueurs[1].tempsTour    = saved.j1.tempsTour;
-        joueurs[1].compteurTour = saved.j1.compteurTour;
+    joueurs[1].tempsPartie = saved.j1.tempsPartie;
+    joueurs[1].tempsTour = saved.j1.tempsTour;
+    joueurs[1].compteurTour = saved.j1.compteurTour;
 
-        joueurs[2].tempsPartie  = saved.j2.tempsPartie;
-        joueurs[2].tempsTour    = saved.j2.tempsTour;
-        joueurs[2].compteurTour = saved.j2.compteurTour;
+    joueurs[2].tempsPartie = saved.j2.tempsPartie;
+    joueurs[2].tempsTour = saved.j2.tempsTour;
+    joueurs[2].compteurTour = saved.j2.compteurTour;
 
-        joueurActif = saved.joueurActif;
+    joueurActif = saved.joueurActif;
 
-        return saved; // retourne les données pour les utiliser dans le controller
-    } catch {
-        localStorage.removeItem('bbState'); // données corrompues → on nettoie
-        return false;
-    }
+    return saved; // retourne les données pour les utiliser dans le controller
+  } catch {
+    localStorage.removeItem("bbState"); // données corrompues → on nettoie
+    return false;
+  }
 }
 
 export function supprimerEtat() {
-    localStorage.removeItem('bbState');
+  localStorage.removeItem("bbState");
 }
 
-
 export function reinitialiserJoueurs() {
-    for (let i = 1; i <= 2; i++) {
-        joueurs[i].tempsPartie  = 0;
-        joueurs[i].tempsTour    = 0;
-        joueurs[i].compteurTour = 0;
-        joueurs[i].timerLoop    = null;
-        joueurs[i].toursRestants = 0;
-        joueurs[i].tempsRestantGlobal = 0;
-    }
-    joueurActif = null;
+  for (let i = 1; i <= 2; i++) {
+    joueurs[i].tempsPartie = 0;
+    joueurs[i].tempsTour = 0;
+    joueurs[i].compteurTour = 0;
+    joueurs[i].timerLoop = null;
+    joueurs[i].toursRestants = 0;
+    joueurs[i].tempsRestantGlobal = 0;
+  }
+  joueurActif = null;
 }
