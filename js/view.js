@@ -31,8 +31,8 @@ export const $inputTourECJ2 = document.getElementById("inputTourECJ2");
 export const $tempstourElement = document.getElementById("tempstour");
 
 // Nom des joueurs
-export const $nomJ1 = document.getElementById("inputNomJ1"); 
-export const $nomJ2 = document.getElementById("inputNomJ2"); 
+export const $inputNomJ1 = document.getElementById("inputNomJ1"); 
+export const $inputNomJ2 = document.getElementById("inputNomJ2"); 
 
 // Consigne qui doivent disparaitre au démarrage
 export const $consigneJ1 = document.getElementById("consigneJ1");
@@ -122,8 +122,14 @@ export function afficherNumeroTour(joueur, numeroTour) {
     } else element.innerText = `Tour n° ${numeroTour}`;
 }
 
-export function mettreAJourNoms(nomJoueurStr, $nomAfficheJoueur) {
+export function mettreAJourNoms(nomJoueurStr, $nomAfficheJoueur, $inputNomJoueur) {
+    if (nomJoueurStr === "Autre") {
+        $inputNomJoueur.classList.remove('d-none');
+        $nomAfficheJoueur.innerText = nomJoueurStr;        
+        return;
+    }
     $nomAfficheJoueur.innerText = nomJoueurStr;
+    if ($inputNomJoueur) {$inputNomJoueur.classList.add('d-none');}
    
 }
 
@@ -131,7 +137,7 @@ export function mettreAJourNoms(nomJoueurStr, $nomAfficheJoueur) {
 /**
  * Une fois la partie lancer plusieurs éléments changent d'état
  * Le formulaire du choix de l'heure et les consignes passent en display none
- * et les noms des joueurs deviennet visible
+ * et les noms des joueurs deviennent visible
  */
 
 
@@ -151,8 +157,8 @@ export function afficherNom() {
 
 export function afficherTimerJoueurs() {
     $containerTimerJoueurs.style.display = "block";
-    $nomAdversaireJ1.innerText = $nomJ2.value;
-    $nomAdversaireJ2.innerText = $nomJ1.value;
+    $nomAdversaireJ1.innerText = $inputNomJ2.value;
+    $nomAdversaireJ2.innerText = $inputNomJ1.value;
 }
 
 export function contourJoueurActif(joueur) {
@@ -171,7 +177,6 @@ export function afficherTerrain(){
     $beginBackground.style.display = "none";
     
 }
-
 
 
 export function choixRadio(callback) {

@@ -29,8 +29,8 @@ import {
 import {
   $inputHeuresPartie,
   $inputminutesPartie,
-  $nomJ1,
-  $nomJ2,
+  $inputNomJ1,
+  $inputNomJ2,
   gestionBoutonsRadio,
   afficherDureeTour,
   afficherTempsGlobal,
@@ -154,11 +154,11 @@ choixRadio((valeurRecue) => {
 // Gestion des Inputs Nom joeurs
 // =======================================
 
-$nomJ1.addEventListener("input", () => {
-  mettreAJourNoms($nomJ1.value, $nomAfficheJ1);
+$inputNomJ1.addEventListener("input", () => {
+  mettreAJourNoms($inputNomJ1.value, $nomAfficheJ1);
 });
-$nomJ2.addEventListener("input", () => {
-  mettreAJourNoms($nomJ2.value, $nomAfficheJ2);
+$inputNomJ2.addEventListener("input", () => {
+  mettreAJourNoms($inputNomJ2.value, $nomAfficheJ2);
 });
 
 // =======================================
@@ -446,13 +446,21 @@ if ('serviceWorker' in navigator) {
 }
 
 document.getElementById('selectNomJ1').addEventListener('change', (e) => {
+  if (e.target.value === "Autre") {
+    document.getElementById('inputNomJ1').value = '';
+  } else {
     document.getElementById('inputNomJ1').value = e.target.value;
-    mettreAJourNoms(e.target.value, $nomAfficheJ1); // ← ajout
+  }
+    mettreAJourNoms(e.target.value, $nomAfficheJ1, $inputNomJ1); 
 });
 
 document.getElementById('selectNomJ2').addEventListener('change', (e) => {
+  if (e.target.value === "Autre") {
+    document.getElementById('inputNomJ2').value = '';
+  } else {
     document.getElementById('inputNomJ2').value = e.target.value;
-    mettreAJourNoms(e.target.value, $nomAfficheJ2); // ← ajout
+  }
+    mettreAJourNoms(e.target.value, $nomAfficheJ2, $inputNomJ2); 
 });
 
 // =======================================
