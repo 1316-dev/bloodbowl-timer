@@ -1,4 +1,4 @@
-const CACHE = 'bb-timer-v2';
+const CACHE = 'bb-timer-v3';
 const FILES = [
   '/bloodbowl-timer/index.html',
   '/bloodbowl-timer/css/styles.css',
@@ -23,7 +23,15 @@ const FILES = [
 ];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
+  e.waitUntil(
+    caches.open(CACHE)
+      .then(c => c.addAll(FILES))
+      .then(() => console.log('SW installé avec succès'))
+      .catch(err => {
+        console.error('SW installation échouée :', err); 
+        throw err;
+      })
+  );
 });
 
 self.addEventListener('fetch', e => {
