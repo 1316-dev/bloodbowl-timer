@@ -69,7 +69,7 @@ export const $valider = document.getElementById("valider");
 export const $startJ1 = document.getElementById("J1");
 export const $startJ2 = document.getElementById("J2");
 export const $pause = document.getElementById("pause");
-export const $switch = document.getElementById("switch");
+
 export const $inputRadio = document.getElementById("radio");
 
 // =======================================
@@ -119,6 +119,7 @@ export function afficherTempsTour(joueur, tempsTotalSecondes) {
 }
 
 export function afficherDureeTour(tempsTotalSecondes) {
+  $tempstourElement.classList.remove("d-none");
   $tempstourElement.innerText = `Durée d'un tour ${formaterTemps(tempsTotalSecondes)}`;
 }
 export function afficherDureeTourEnCours(
@@ -181,13 +182,14 @@ export function afficherTimerJoueurs() {
   $nomAdversaireJ2.innerText = $inputNomJ1.value;
 }
 
-export function contourJoueurActif(joueur) {
-  const elementJoueurActif = joueur === 1 ? $startJ1 : $startJ2;
-  elementJoueurActif.classList.add("joueurActif");
-  elementJoueurActif.classList.remove("grise");
-  const elementJoueurPassif = joueur === 1 ? $startJ2 : $startJ1;
-  elementJoueurPassif.classList.remove("joueurActif");
-  elementJoueurPassif.classList.add("grise");
+export function focusJoueurActif(joueur) {
+  const boutonJoueurActif = joueur === 1 ? $startJ1 : $startJ2;
+  boutonJoueurActif.classList.add("joueurActif");
+  boutonJoueurActif.disabled = false;
+  
+  const boutonJoueurInactif = joueur === 1 ? $startJ2 : $startJ1;
+  boutonJoueurInactif.classList.remove("joueurActif");
+  boutonJoueurInactif.disabled = true;
 }
 
 const $background = document.getElementById("background");
@@ -214,29 +216,35 @@ export function afficherFinPartie() {
 // Gestion du switch (Rotation de l'affichage)
 // =======================================
 
-let compteurRotation = 0;
+const $textRotate = document.getElementById("J1");
+export const $switch = document.getElementById("switch");
 
-export function gestionSwitch() {
-  $switch.addEventListener("click", () => {
-    const $textRotate = document.getElementById("J1");
-    if (compteurRotation === 0) {
+export function setRotation(isActive) {
+    if (isActive) {
       $textRotate.classList.add("rotate");
-      compteurRotation = 1;
     } else {
       $textRotate.classList.remove("rotate");
-      compteurRotation = 0;
     }
-  });
 }
 
 export function afficherSwitch() {
   document.getElementById("switchContainer").style.display = "flex";
+  if (largeScreenMQ.matches) {
+    $switch.checked = false;
+    setRotation(false);
+  } else {
   $switch.checked = true;
+  setRotation(true);
+  }
+}
 
-  // Déclencher le rotate sur J1
-  const $textRotate = document.getElementById("J1");
-  $textRotate.classList.add("rotate");
-  compteurRotation = 1;
+export const largeScreenMQ = globalThis.matchMedia("(min-width: 768px)");
+
+export function checkScreenSize(mediaQuery) {
+  if (mediaQuery.matches) {
+    $switch.checked = false;
+    $textRotate.classList.remove("rotate");
+  }
 }
 
 // =======================================
@@ -269,7 +277,7 @@ export const gestionBoutonsRadio = () => {
 };
 
 export function afficherBoutonMenu() {
-  document.getElementById("btnMenu").style.display = "inline-block";
+  document.getElementById("btnMenuNouvellePartie").classList.remove("d-none");
 }
 
 export function reinitialiserBoutonPause() {

@@ -15,7 +15,7 @@ import {
   calculerTempsInitiaux,
   decrementerTemps,
   passerAuJoueur,
-  reinitialiserTour,
+  calculerTempsProchainTour,
   calculerTempsEncours,
   setCompteurTour,
   sortiePause,
@@ -43,11 +43,11 @@ import {
   $startJ1,
   $startJ2,
   $pause,
-  gestionSwitch,
+  setRotation,
   $nomAfficheJ1,
   $nomAfficheJ2,
   afficherNom,
-  contourJoueurActif,
+  focusJoueurActif,
   afficherTerrain,
   choixRadio,
   $inputHeuresPartieECJ1,
@@ -61,6 +61,9 @@ import {
   afficherSwitch,
   afficherTimerJoueurs,
   reinitialiserBoutonPause,
+  checkScreenSize,
+  largeScreenMQ,
+  $switch
 } from "./view.js";
 
 //=====================================
@@ -75,9 +78,17 @@ const ETAT_PARTIE = {
 // Fonctions de Contrôleur (Gère les interactions entre le Model et la View)
 // =======================================
 gestionBoutonsRadio();
-gestionSwitch();
-joueurs[1].$btnStart = $startJ1;
-joueurs[2].$btnStart = $startJ2;
+
+$switch.addEventListener("change", () => {
+  setRotation($switch.checked);
+});
+
+//========================================
+// Gestion du bouton revenir au menu (recharger la page)
+// =======================================
+document.getElementById('btnMenuNouvellePartie').addEventListener('click', () => {
+    globalThis.location.replace('./index.html');
+});
 
 // =======================================
 // vérification de l'état sauvegardé
@@ -107,7 +118,7 @@ if (etatSauvegarde) {
       afficherTempsTour(2, joueurs[2].tempsTour);
       afficherNumeroTour(1, joueurs[1].compteurTour);
       afficherNumeroTour(2, joueurs[2].compteurTour);
-      contourJoueurActif(etatSauvegarde.joueurActif);
+      focusJoueurActif(etatSauvegarde.joueurActif);
       demarrerTimer(etatSauvegarde.joueurActif);
     },
     onCancel: () => {
@@ -120,8 +131,7 @@ if (etatSauvegarde) {
 // =======================================
 // Fonctions de Timer (Gère l'intervalle)
 // =======================================
-let timerLoopJ1 = null;
-let timerLoopJ2 = null;
+
 
 function demarrerTimer(numeroJoueur) {
   if (joueurs[numeroJoueur].timerLoop) {
@@ -253,7 +263,7 @@ function lancerPartie(joueur, adversaire) {
 
   // Début de partie (Joueur clique et donc lance le timer de l'adversaire qui commence la partie)
 
-  contourJoueurActif(adversaire);
+  focusJoueurActif(adversaire);
   demarrerTimer(adversaire);
   passerAuJoueur(adversaire);
   afficherNumeroTour(adversaire, joueurs[adversaire].compteurTour);
@@ -272,8 +282,8 @@ function lancerMiTemps(joueur) {
     showCancel: false,
     onOk: () => {
       basculerPause();
-      reinitialiserTour(joueur);
-      contourJoueurActif(joueur);
+      calculerTempsProchainTour(joueur);
+      focusJoueurActif(joueur);
       passerAuJoueur(joueur);
       demarrerTimer(joueur);
       afficherNumeroTour(joueur, joueurs[joueur].compteurTour);
@@ -283,8 +293,8 @@ function lancerMiTemps(joueur) {
 
 function lancerTourAdversaire(joueur, adversaire) {
   arreterTimer(joueur);
-  reinitialiserTour(joueur);
-  contourJoueurActif(adversaire);
+  calculerTempsProchainTour(joueur);
+  focusJoueurActif(adversaire);
   passerAuJoueur(adversaire);
   afficherNumeroTour(adversaire, joueurs[adversaire].compteurTour);
   demarrerTimer(adversaire);
@@ -342,11 +352,11 @@ function gestionClicJoueur(joueur, adversaire) {
   }
 }
 
-joueurs[1].$btnStart.addEventListener("click", () => {
+$startJ1.addEventListener("click", () => {
   gestionClicJoueur(1, 2);
 });
 
-joueurs[2].$btnStart.addEventListener("click", () => {
+$startJ2.addEventListener("click", () => {
   gestionClicJoueur(2, 1);
 });
 
@@ -525,3 +535,10 @@ async function activerWakeLock() {
     console.error("Wake Lock refusé:", err);
   }
 }
+
+// =======================================
+// Gestion switch sur grand écran
+// =======================================
+
+largeScreenMQ.addEventListener("change", checkScreenSize);
+
