@@ -15,7 +15,7 @@ import {
   calculerTempsInitiaux,
   decrementerTemps,
   passerAuJoueur,
-  reinitialiserTour,
+  calculerTempsProchainTour,
   calculerTempsEncours,
   setCompteurTour,
   sortiePause,
@@ -43,11 +43,11 @@ import {
   $startJ1,
   $startJ2,
   $pause,
-  gestionSwitch,
+  setRotation,
   $nomAfficheJ1,
   $nomAfficheJ2,
   afficherNom,
-  contourJoueurActif,
+  focusJoueurActif,
   afficherTerrain,
   choixRadio,
   $inputHeuresPartieECJ1,
@@ -61,6 +61,9 @@ import {
   afficherSwitch,
   afficherTimerJoueurs,
   reinitialiserBoutonPause,
+  checkScreenSize,
+  largeScreenMQ,
+  $switch
 } from "./view.js";
 
 //=====================================
@@ -75,9 +78,17 @@ const ETAT_PARTIE = {
 // Fonctions de Contrôleur (Gère les interactions entre le Model et la View)
 // =======================================
 gestionBoutonsRadio();
-gestionSwitch();
-joueurs[1].$btnStart = $startJ1;
-joueurs[2].$btnStart = $startJ2;
+
+$switch.addEventListener("change", () => {
+  setRotation($switch.checked);
+});
+
+//========================================
+// Gestion du bouton revenir au menu (recharger la page)
+// =======================================
+document.getElementById('btnMenuNouvellePartie').addEventListener('click', () => {
+    globalThis.location.replace('./index.html');
+});
 
 // =======================================
 // vérification de l'état sauvegardé
@@ -107,7 +118,7 @@ if (etatSauvegarde) {
       afficherTempsTour(2, joueurs[2].tempsTour);
       afficherNumeroTour(1, joueurs[1].compteurTour);
       afficherNumeroTour(2, joueurs[2].compteurTour);
-      contourJoueurActif(etatSauvegarde.joueurActif);
+      focusJoueurActif(etatSauvegarde.joueurActif);
       demarrerTimer(etatSauvegarde.joueurActif);
     },
     onCancel: () => {
@@ -120,8 +131,7 @@ if (etatSauvegarde) {
 // =======================================
 // Fonctions de Timer (Gère l'intervalle)
 // =======================================
-let timerLoopJ1 = null;
-let timerLoopJ2 = null;
+
 
 function demarrerTimer(numeroJoueur) {
   if (joueurs[numeroJoueur].timerLoop) {
@@ -166,21 +176,28 @@ $inputNomJ2.addEventListener("input", () => {
 // =======================================
 
 function validerInputsJoueur(heures, minutes, tour = null) {
-  if (
-    Number.isNaN(heures) ||
-    Number.isNaN(minutes) ||
-    heures === "" ||
-    minutes === "" ||
-    heures < 0 ||
-    minutes < 0
-  ) {
+  // 1. On vérifie que les valeurs sont des nombres valides
+  if (Number.isNaN(heures) || Number.isNaN(minutes)) {
     return false;
   }
+
+  // 2. On vérifie que les nombres sont positifs
+  if (heures < 0 || minutes < 0) {
+    return false;
+  }
+
+  // 3. Cas spécifique du champ vide ou d'une partie configurée à 00h00
+  if (heures === 0 && minutes === 0) {
+    return false; // Une partie ne peut pas durer 0 minute
+  }
+
+  // 4. Validation du temps de tour si fourni
   if (tour !== null) {
-    if (Number.isNaN(tour) || tour === "" || tour <= 0) {
+    if (Number.isNaN(tour) || tour <= 0) {
       return false;
     }
   }
+
   return true;
 }
 
@@ -199,10 +216,20 @@ $valider.addEventListener("click", () => {
       afficherTimerJoueurs();
       etatPartie = ETAT_PARTIE.DEMARREE;
     } else {
-      // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
-      alert(
-        "Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.",
-      );
+      
+      bbConfirm({
+        icon: "",                                    
+        title: "Configuration invalide",              
+        message: "Merci de remplir les champs d'heures et de minutes avec des nombres valides (la partie ne peut pas être de 00h00).",
+        okLabel: "Compris",                           
+        okClass: "btn-danger",                        
+        showCancel: false,                             
+        onOk: () => {
+          console.log("L'utilisateur a fermé l'alerte.");
+          // Optionnel : tu peux forcer le focus sur l'input des heures pour l'aider
+          $inputHeuresPartie.focus();
+        }
+      });
     }
   } else if (choixPartie === "enCours") {
     const heuresJ1 = Number($inputHeuresPartieECJ1.value);
@@ -227,9 +254,18 @@ $valider.addEventListener("click", () => {
       !validerInputsJoueur(heuresJ2, minutesJ2, tourJ2)
     ) {
       // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
-      alert(
-        "Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.",
-      );
+      bbConfirm({
+        icon: "",
+        title: "Configuration invalide",
+        message: "Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.",
+        okLabel: "Compris",
+        okClass: "btn-danger",
+        showCancel: false,
+        onOk: () => {
+          console.log("L'utilisateur a fermé l'alerte.");
+          $inputHeuresPartieECJ1.focus();
+        }
+      });
     }
     if (tourJ1 - tourJ2 > 1 || tourJ2 - tourJ1 > 1) {
       alert(
@@ -253,7 +289,7 @@ function lancerPartie(joueur, adversaire) {
 
   // Début de partie (Joueur clique et donc lance le timer de l'adversaire qui commence la partie)
 
-  contourJoueurActif(adversaire);
+  focusJoueurActif(adversaire);
   demarrerTimer(adversaire);
   passerAuJoueur(adversaire);
   afficherNumeroTour(adversaire, joueurs[adversaire].compteurTour);
@@ -272,8 +308,8 @@ function lancerMiTemps(joueur) {
     showCancel: false,
     onOk: () => {
       basculerPause();
-      reinitialiserTour(joueur);
-      contourJoueurActif(joueur);
+      calculerTempsProchainTour(joueur);
+      focusJoueurActif(joueur);
       passerAuJoueur(joueur);
       demarrerTimer(joueur);
       afficherNumeroTour(joueur, joueurs[joueur].compteurTour);
@@ -283,8 +319,8 @@ function lancerMiTemps(joueur) {
 
 function lancerTourAdversaire(joueur, adversaire) {
   arreterTimer(joueur);
-  reinitialiserTour(joueur);
-  contourJoueurActif(adversaire);
+  calculerTempsProchainTour(joueur);
+  focusJoueurActif(adversaire);
   passerAuJoueur(adversaire);
   afficherNumeroTour(adversaire, joueurs[adversaire].compteurTour);
   demarrerTimer(adversaire);
@@ -342,11 +378,11 @@ function gestionClicJoueur(joueur, adversaire) {
   }
 }
 
-joueurs[1].$btnStart.addEventListener("click", () => {
+$startJ1.addEventListener("click", () => {
   gestionClicJoueur(1, 2);
 });
 
-joueurs[2].$btnStart.addEventListener("click", () => {
+$startJ2.addEventListener("click", () => {
   gestionClicJoueur(2, 1);
 });
 
@@ -525,3 +561,10 @@ async function activerWakeLock() {
     console.error("Wake Lock refusé:", err);
   }
 }
+
+// =======================================
+// Gestion switch sur grand écran
+// =======================================
+
+largeScreenMQ.addEventListener("change", checkScreenSize);
+

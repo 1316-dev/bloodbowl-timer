@@ -12,23 +12,19 @@
 export const joueurs = {
   1: {
     tempsPartie: 0,
-    tempsRestantGlobal: 0,
     tempsTour: 0,
     toursRestants: 0,
     numeroTour: 0,
     compteurTour: 0,
     timerLoop: null,
-    $btnStart: null,
   },
   2: {
     tempsPartie: 0,
-    tempsRestantGlobal: 0,
     tempsTour: 0,
     toursRestants: 0,
     numeroTour: 0,
     compteurTour: 0,
     timerLoop: null,
-    $btnStart: null,
   },
 };
 
@@ -124,27 +120,18 @@ export let timerTourIdJ2 = null;
 // null = pas démarré, 1 = J1, 2 = J2
 export let joueurActif = null;
 
-// L'intervalle de temps (1 seconde) etn epas descendre sous zéro
+// L'intervalle de temps (1 seconde) et ne pas descendre sous zéro
 export function decrementerTemps(joueurActif) {
-  joueurs[joueurActif].tempsPartie = Math.max(
-    0,
-    joueurs[joueurActif].tempsPartie - 1,
-  );
-  joueurs[joueurActif].tempsTour = Math.max(
-    0,
-    joueurs[joueurActif].tempsTour - 1,
-  );
+  joueurs[joueurActif].tempsPartie = Math.max(0, joueurs[joueurActif].tempsPartie - 1,);
+  joueurs[joueurActif].tempsTour = Math.max(0,joueurs[joueurActif].tempsTour - 1,);
 }
 
-export function reinitialiserTour(numeroJoueur) {
+export function calculerTempsProchainTour(numeroJoueur) {
   const joueur = joueurs[numeroJoueur];
-
-  // Calcul de la durée du prochain tour : Temps global restants diviser par le nombre de tour restant
-  joueur.tempsRestantGlobal = joueur.tempsPartie;
   joueur.toursRestants = NbTourParJoueur - joueur.compteurTour;
 
   if (joueur.toursRestants > 0) {
-    joueur.tempsTour = joueur.tempsRestantGlobal / joueur.toursRestants;
+    joueur.tempsTour = joueur.tempsPartie / joueur.toursRestants;
   }
 }
 
@@ -232,7 +219,6 @@ export function reinitialiserJoueurs() {
     joueurs[i].compteurTour = 0;
     joueurs[i].timerLoop = null;
     joueurs[i].toursRestants = 0;
-    joueurs[i].tempsRestantGlobal = 0;
   }
   joueurActif = null;
 }
