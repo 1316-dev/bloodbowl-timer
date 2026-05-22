@@ -176,21 +176,28 @@ $inputNomJ2.addEventListener("input", () => {
 // =======================================
 
 function validerInputsJoueur(heures, minutes, tour = null) {
-  if (
-    Number.isNaN(heures) ||
-    Number.isNaN(minutes) ||
-    heures === "" ||
-    minutes === "" ||
-    heures < 0 ||
-    minutes < 0
-  ) {
+  // 1. On vérifie que les valeurs sont des nombres valides
+  if (Number.isNaN(heures) || Number.isNaN(minutes)) {
     return false;
   }
+
+  // 2. On vérifie que les nombres sont positifs
+  if (heures < 0 || minutes < 0) {
+    return false;
+  }
+
+  // 3. Cas spécifique du champ vide ou d'une partie configurée à 00h00
+  if (heures === 0 && minutes === 0) {
+    return false; // Une partie ne peut pas durer 0 minute
+  }
+
+  // 4. Validation du temps de tour si fourni
   if (tour !== null) {
-    if (Number.isNaN(tour) || tour === "" || tour <= 0) {
+    if (Number.isNaN(tour) || tour <= 0) {
       return false;
     }
   }
+
   return true;
 }
 
@@ -209,10 +216,20 @@ $valider.addEventListener("click", () => {
       afficherTimerJoueurs();
       etatPartie = ETAT_PARTIE.DEMARREE;
     } else {
-      // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
-      alert(
-        "Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.",
-      );
+      
+      bbConfirm({
+        icon: "",                                    
+        title: "Configuration invalide",              
+        message: "Merci de remplir les champs d'heures et de minutes avec des nombres valides (la partie ne peut pas être de 00h00).",
+        okLabel: "Compris",                           
+        okClass: "btn-danger",                        
+        showCancel: false,                             
+        onOk: () => {
+          console.log("L'utilisateur a fermé l'alerte.");
+          // Optionnel : tu peux forcer le focus sur l'input des heures pour l'aider
+          $inputHeuresPartie.focus();
+        }
+      });
     }
   } else if (choixPartie === "enCours") {
     const heuresJ1 = Number($inputHeuresPartieECJ1.value);
@@ -237,9 +254,18 @@ $valider.addEventListener("click", () => {
       !validerInputsJoueur(heuresJ2, minutesJ2, tourJ2)
     ) {
       // La popup s'affiche si la conversion échoue (NaN), si le champ est vide, ou si la valeur est négative
-      alert(
-        "Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.",
-      );
+      bbConfirm({
+        icon: "",
+        title: "Configuration invalide",
+        message: "Merci de remplir les champs d'heures, de minutes et de tour avec des nombres valides.",
+        okLabel: "Compris",
+        okClass: "btn-danger",
+        showCancel: false,
+        onOk: () => {
+          console.log("L'utilisateur a fermé l'alerte.");
+          $inputHeuresPartieECJ1.focus();
+        }
+      });
     }
     if (tourJ1 - tourJ2 > 1 || tourJ2 - tourJ1 > 1) {
       alert(

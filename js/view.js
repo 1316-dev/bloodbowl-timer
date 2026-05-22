@@ -178,8 +178,8 @@ export function afficherNom() {
 
 export function afficherTimerJoueurs() {
   $containerTimerJoueurs.style.display = "block";
-  $nomAdversaireJ1.innerText = $inputNomJ2.value;
-  $nomAdversaireJ2.innerText = $inputNomJ1.value;
+  $nomAdversaireJ1.innerText = $inputNomJ2.value.trim();
+  $nomAdversaireJ2.innerText = $inputNomJ1.value.trim();
 }
 
 export function focusJoueurActif(joueur) {
